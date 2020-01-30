@@ -2,6 +2,22 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:700|Roboto:900&display=swap");
 
+
+html,
+body {
+  font-family: "Roboto Condensed", sans-serif;
+  color: #17252a;
+}
+
+#app {
+  font-family: "Roboto Condensed", sans-serif;
+  color: #17252a;
+}
+
+.h1-login{
+  padding-top: 60px;
+}
+
 .b-navbar-brand {
     letter-spacing: 2.3px;
     font-family: "Open Sans", sans-serif;
@@ -14,4 +30,14 @@
 
   .b-nav-item-dropdown{
     font-family: "Open Sans", sans-serif;
+  }
+  
+  .b-card-login {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 90%;
+    margin-top: 20px;
+    max-width: 500px !important;
   }

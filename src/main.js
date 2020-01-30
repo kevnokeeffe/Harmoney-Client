@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+// import axios from 'axios'
 import './assets/css/style.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import Vuelidate from 'vuelidate'
+Vue.use(Vuelidate)
 // This imports all the layout components such as <b-container>, <b-row>, <b-col>:
 import { LayoutPlugin } from 'bootstrap-vue'
 Vue.use(LayoutPlugin)
@@ -27,8 +29,10 @@ Vue.use(TablePlugin)
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
-Vue.config.productionTip = false
+import FlatSurfaceShader from 'vue-flat-surface-shader'
+Vue.use(FlatSurfaceShader)
 
+Vue.config.productionTip = false
 new Vue({
   router,
   store,

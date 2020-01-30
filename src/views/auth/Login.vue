@@ -1,8 +1,10 @@
 <template>
   <div class="container-login">
-    <h1 class="h1-login">Login</h1>
     <b-card class="b-card-login">
-      <b-form @submit="onSubmit" v-if="show">
+      <div class="h1-login-div">
+      <h1 class="h1-login">Login</h1>
+      </div>
+      <b-form class="custom-form" v-on:submit.prevent="onSubmit">
         <b-form-group
           id="input-group-email"
           label="Email address:"
@@ -11,11 +13,22 @@
         >
           <b-form-input
             id="input-email"
-            v-model="form.email"
+            v-model.trim="$v.form.email.$model"
+            :class="{
+              'is-invalid': $v.form.email.$error,
+              'is-valid': !$v.form.email.$invalid
+            }"
             type="email"
+            class="form-control"
             required
             placeholder="Enter email"
           ></b-form-input>
+          <div class="valid-feedback">Your e-mail is valid!</div>
+          <div class="invalid-feedback">
+            <span v-if="!$v.form.email.required">E-mail Required</span>
+            <span v-if="!$v.form.email.minLength">E-mail must be valid</span>
+            <span v-if="!$v.form.email.maxLength">E-mail is too long!</span>
+          </div>
         </b-form-group>
 
         <b-form-group
@@ -26,61 +39,98 @@
           <b-form-input
             id="password"
             type="password"
-            v-model="form.password"
+            v-model.trim="$v.form.password.$model"
+            :class="{
+              'is-invalid': $v.form.password.$error,
+              'is-valid': !$v.form.password.$invalid
+            }"
             required
             placeholder="Enter password"
           ></b-form-input>
+          <div class="valid-feedback">Your password is valid!</div>
+          <div class="invalid-feedback">
+            <span v-if="!$v.form.password.required">Password Required</span>
+            <span v-if="!$v.form.password.minLength"
+              >Password must be valid</span
+            >
+            <span v-if="!$v.form.password.maxLength"
+              >Password is too long!</span
+            >
+          </div>
         </b-form-group>
 
-        <b-form-group id="input-group-4">
-          <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
-            <b-form-checkbox value="me">Remember Me</b-form-checkbox>
-          </b-form-checkbox-group>
-        </b-form-group>
-
-        <b-button type="submit" variant="primary">Submit</b-button>
+        <div class="form-group">
+          <b-button
+            :disabled="buttonDisabled()"
+            type="submit"
+            class="btn btn-secondary"
+            >Submit {{ submitStatus }}</b-button
+          >
+        </div>
       </b-form>
     </b-card>
   </div>
 </template>
 
 <script>
-// import * as auth from '../../services/AuthService'
-// import { minLength } from 'vuelidate/lib/validators'
+import * as auth from '../../../services/AuthService'
+import {
+  required,
+  minLength,
+  maxLength,
+  email
+} from 'vuelidate/lib/validators'
 export default {
-  name: 'Login',
-  data () {
+  name: 'login',
+  data() {
     return {
       form: {
         email: '',
         password: '',
-        submitted: false,
-        submitStatus: null,
-        checked: [],
-        errorMsg: null,
-        validationerror: false
-      },
-      show: true
+        submitStatus: null
+      }
     }
   },
-//   validations: {
-//     message: {
-//       minLength: minLength(0)
-//     }
-//   },
-//   methods: {
-//     onSubmit: async function () {
-//       const user = {
-//         email: this.form.email,
-//         password: this.form.password
-//       }
-//       await auth.login(user)
-//       this.$router.push({ name: 'DashBoard' })
-//     },
-//     buttonDisabled: function () {
-//       return !this.email || !this.password
-//     }
-//   }
+  validations: {
+    form: {
+      email: {
+        required,
+        email,
+        minLength: minLength(0),
+        maxLength: maxLength(50)
+      },
+      password: {
+        required,
+       
+        minLength: minLength(6),
+        maxLength: maxLength(20)
+      }
+    }
+  },
+  methods: {
+    onSubmit: async function(event) {
+      event.preventDefault()
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        this.submitStatus = 'ERROR'
+      } else {
+        const user = {
+          email: this.form.email,
+          password: this.form.password
+        }
+        const loginPromise = await auth.login(user)
+        await Promise.all([loginPromise])
+        await this.$router.push({ path: '/' })
+        this.submitStatus = 'PENDING'
+        setTimeout(() => {
+          this.submitStatus = 'OK'
+        }, 500)
+      }
+    },
+    buttonDisabled: function() {
+      return !this.form.email || !this.form.password
+    }
+  }
 }
 </script>
 
@@ -88,18 +138,23 @@ export default {
 .h1-login {
   text-align: center;
   color: #17252a;
-  font-family: "Roboto", sans-serif;
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 2em;
 }
 
-/* .container-login{
-    max-width: 100%;
-    background-image: url('@/../../../assets/backgroundThreeColors.png');
-    image-rendering: auto;
-    max-height: 100%;
-    padding-bottom: 400px;
-} */
+.h1-login-div {
+  width:100%;
+  height:100%;
+  padding: 15px;
+  margin-bottom:15px;
+}
 
+.container-login {
+  background: rgb(249,190,2);
+  background: linear-gradient(90deg, rgba(249,190,2,1) 0%, rgba(249,190,2,1) 22%, rgba(255,255,240,1) 22%);
+  padding-top: 4px;
+  padding-bottom:30%;
+}
 
 </style>

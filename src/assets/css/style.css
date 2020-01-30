@@ -14,10 +14,6 @@ body {
   color: #17252a;
 }
 
-.h1-login{
-  padding-top: 60px;
-}
-
 .b-navbar-brand {
     letter-spacing: 2.3px;
     font-family: "Open Sans", sans-serif;
@@ -38,6 +34,8 @@ body {
     margin-right: auto;
     position: relative;
     width: 90%;
-    margin-top: 20px;
+    margin-top: 60px;
     max-width: 500px !important;
+    background: rgb(220,199,170);
+background: linear-gradient(180deg, rgba(220,199,170,1) 27%, rgba(254,254,254,1) 27%, rgba(255,255,255,1) 94%, rgba(107,122,143,1) 94%);
   }

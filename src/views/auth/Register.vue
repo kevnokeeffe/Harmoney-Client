@@ -2,7 +2,7 @@
   <div class="container-register">
     <h1 class="h1-register">Sign-Up</h1>
     <b-card class="b-card-register">
-      <b-form @submit.prevent="onSubmit">
+      <b-form class="custom-form" @submit.prevent="onSubmit">
         <b-form-group
           id="input-group-fName"
           label="First Name:"
@@ -144,9 +144,9 @@
   <label class="form-check-label" for="showpassword">Show password</label>
   </b-form-checkbox>
 </div> -->
-  <b-form-group
+  <!-- <b-form-group
           id="input-repeat-password"
-          label="Rrepeat Password:"
+          label="Repeat Password:"
           label-for="repeat-password"
           description="Must match password exactly."
         >
@@ -171,9 +171,9 @@
               >Password is too long!</span
             >
           </div>
-        </b-form-group>
-
-        <b-card class="b-card-register-uploads" label="First Name:">
+        </b-form-group> -->
+<!-- 
+        <b-card class="b-card-register-uploads">
           <b-form-group
             id="input-group-head-shot"
             label="Head Shot:"
@@ -189,8 +189,8 @@
             ></b-form-file>
           </b-form-group>
 
-          <!-- <b-button @click="clearHeadShot" class="mr-2 mb-4">Reset Upload</b-button> -->
-
+           <b-button @click="clearHeadShot" class="mr-2 mb-4">Reset Upload</b-button> -->
+<!-- 
           <b-form-group
             id="input-group-passport"
             label="Passport Photo:"
@@ -204,11 +204,19 @@
               placeholder="Upload image"
             ></b-form-file>
           </b-form-group>
-        </b-card>
+        </b-card> -->
         <b-form-group>
           <b-button type="submit" class="btn btn-success">Submit {{ submitStatus }}</b-button>
         </b-form-group>
       </b-form>
+      <p class="typo__p" v-if="submitStatus === 'OK'">User Created!</p>
+      <p class="typo__p" v-if="submitStatus === 'ERROR'">
+        Please Enter Valid Details.
+      </p>
+      <p class="typo__p" v-if="submitStatus === 'PASSWORD'">
+        Password must be at least 6 characters long.
+      </p>
+      <p class="typo__p" v-if="submitStatus === 'PENDING'">Registering...</p>
     </b-card>
   </div>
 </template>
@@ -290,11 +298,11 @@ export default {
   },
   methods: {
     onSubmit: async function() {
-      event.preventDefault()
-      this.$v.$touch()
-      if (this.$v.$invalid) {
-        this.submitStatus = 'FAIL'
-      } else {
+      // this.$v.$touch()
+      // if (this.$v.$invalid) {
+      //   this.submitStatus = 'FAIL'
+      // } else {
+    //   try{
       const user = {
         email: this.form.email,
         password: this.form.password,
@@ -307,16 +315,17 @@ export default {
       await Promise.all([registerPromise])
       const loginPromise = auth.login(user)
       await Promise.all([loginPromise])
-      await this.$router.push({ name: 'Home' })
-      this.submitStatus = 'PENDING'
-        setTimeout(() => {
-          this.submitStatus = 'SUCCESS'
-        }, 500)
-      }
+      await this.$router.push({ path: '/dashboard' })
+      //   }catch{if (this.password.length != this.password.minLength) {
+      //       this.submitStatus = "PASSWORD";
+      //     } else {
+      //       this.submitStatus = "ERROR";
+      //     }}
+      // }
     },
-    buttonDisabled: function() {
-      return !this.email || !this.password
-    },
+    // buttonDisabled: function() {
+    //   return !this.email || !this.fName || !this.lName || !this.password;
+    // },
     clearHeadShot() {
       this.$refs['input-head-shot'].reset()
     },
@@ -337,7 +346,7 @@ export default {
   //     let email = this.form.email.trim();
   //     if(email != ''){
  
-  //      axios.get('ajaxfile.php', {
+  //      axios.get('api/auth/user', {
   //        params: {
   //          email: email
   //        }

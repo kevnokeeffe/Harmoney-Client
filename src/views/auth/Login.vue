@@ -120,7 +120,7 @@ export default {
         }
         const loginPromise = await auth.login(user)
         await Promise.all([loginPromise])
-        await this.$router.push({ path: '/' })
+        await this.$router.push({ path: '/dashboard' })
         this.submitStatus = 'PENDING'
         setTimeout(() => {
           this.submitStatus = 'OK'
@@ -137,7 +137,7 @@ export default {
 <style>
 .h1-login {
   text-align: center;
-  color: #17252a;
+  color: #263347;
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   font-size: 2em;
@@ -149,12 +149,18 @@ export default {
   padding: 15px;
   margin-bottom:15px;
 }
-
+#input-group-email{
+  padding-top:20px;
+}
 .container-login {
   background: rgb(249,190,2);
   background: linear-gradient(90deg, rgba(249,190,2,1) 0%, rgba(249,190,2,1) 22%, rgba(255,255,240,1) 22%);
   padding-top: 4px;
   padding-bottom:30%;
+  height:100%;
+  position:fixed;
+left:0;
+right:0;
 }
 
 </style>

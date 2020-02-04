@@ -89,6 +89,10 @@ export function registerUser(user) {
   return http().post("api/auth/register", user);
 }
 
+export function checkUser(user) {
+  return http().get("api/user/get", user);
+}
+
 export function decodeToken() {
   const token = getToken();
   if (!token) {

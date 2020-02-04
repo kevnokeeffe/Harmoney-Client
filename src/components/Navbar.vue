@@ -8,10 +8,10 @@
     <b-collapse id="nav-collapse" is-nav>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
-        <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" to="/dash-board">Dashboard</b-nav-item>
+        <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" to="/dashboard">Dashboard</b-nav-item>
         <b-nav-item v-if="!$store.state.isLoggedIn" class="b-nav-item" to="/login">Login</b-nav-item>
         <b-nav-item v-if="!$store.state.isLoggedIn" class="b-nav-item" to="/register">Sign-Up</b-nav-item>
-        <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" v-on:click.prevent="logout()" href="#">Logout</b-nav-item>
+        
         <b-nav-item-dropdown v-if="$store.state.isLoggedIn" class="b-nav-item-dropdown" text="Options" right>
           <b-dropdown-item href="#">EN</b-dropdown-item>
           <b-dropdown-item href="#">ES</b-dropdown-item>
@@ -24,9 +24,10 @@
           <template v-slot:button-content>
             <em>User</em>
           </template>
-          <b-dropdown-item to="/dash-board">Dashboard</b-dropdown-item>
+          <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
           <b-dropdown-item v-if="$store.state.isLoggedIn" v-on:click.prevent="logout()">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" v-on:click.prevent="logout()" href="#">Logout</b-nav-item>
         <b-nav-item class="b-nav-name" v-if="$store.state.isLoggedIn"> Welcome, {{ this.$store.state.fName }}
                 {{ this.$store.state.lName }}</b-nav-item>
       </b-navbar-nav>
@@ -60,9 +61,11 @@ export default {
 }
 
 .b-navbar {
-  background-color:#2b7a78!important;
+  background-color:#02353c!important;
 }
-
+.b-nav-name{
+  font-family: "Open Sans", sans-serif;
+}
 #dropdown-menu{
   position: relative;
   display: inline-block;

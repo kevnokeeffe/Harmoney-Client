@@ -36,6 +36,6 @@ body {
     width: 90%;
     margin-top: 60px;
     max-width: 500px !important;
-    background: rgb(220,199,170);
-background: linear-gradient(180deg, rgba(220,199,170,1) 27%, rgba(254,254,254,1) 27%, rgba(255,255,255,1) 94%, rgba(107,122,143,1) 94%);
+    background: rgb(150,206,180);
+    background: linear-gradient(180deg, rgba(150,206,180,1) 27%, rgba(254,254,254,1) 27%, rgba(255,255,255,1) 94%, rgba(255,255,255,1) 94%);
   }

@@ -14,10 +14,6 @@
           <b-form-input
             id="input-email"
             v-model.trim="$v.form.email.$model"
-            :class="{
-              'is-invalid': $v.form.email.$error,
-              'is-valid': !$v.form.email.$invalid
-            }"
             type="email"
             class="form-control"
             required
@@ -40,10 +36,6 @@
             id="password"
             type="password"
             v-model.trim="$v.form.password.$model"
-            :class="{
-              'is-invalid': $v.form.password.$error,
-              'is-valid': !$v.form.password.$invalid
-            }"
             required
             placeholder="Enter password"
           ></b-form-input>
@@ -64,10 +56,14 @@
             :disabled="buttonDisabled()"
             type="submit"
             class="btn btn-secondary"
-            >Submit {{ submitStatus }}</b-button
+            >Submit</b-button
           >
         </div>
       </b-form>
+      <p class="typo__p" v-if="submitStatus === 'OK'">Logged in!</p>
+        <p class="typo__p" v-if="submitStatus === 'ERROR'">Please Enter Correct Details.</p>
+        <p class="typo__p" v-if="submitStatus === 'PENDING'">Logging in...</p>
+        <p class="typo__p" v-if="submitStatus === 'PASSWORD'">Invalid Password</p>
     </b-card>
   </div>
 </template>

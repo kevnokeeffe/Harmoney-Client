@@ -31,6 +31,45 @@ const routes = [
     }
   },
   {
+    path: '/notifications',
+    name: 'notifications',
+    component: () =>
+      import(/* webpackChunkName: "notifications" */ '../views/pages/Notifications.vue'),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/transactions',
+    name: 'transactions',
+    component: () =>
+      import(/* webpackChunkName: "transactions" */ '../views/pages/Transactions.vue'),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
+    path: '/userprofile',
+    name: 'userprofile',
+    component: () =>
+      import(/* webpackChunkName: "userprofile" */ '../views/pages/UserProfile.vue'),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
     path: '/register',
     name: 'register',
     component: () =>

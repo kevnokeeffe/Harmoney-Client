@@ -57,6 +57,19 @@ const routes = [
     }
   },
   {
+    path: '/addaccount',
+    name: 'addaccount',
+    component: () =>
+      import(/* webpackChunkName: "addaccount" */ '../views/pages/AddAccount.vue'),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
     path: '/userprofile',
     name: 'userprofile',
     component: () =>

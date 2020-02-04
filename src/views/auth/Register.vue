@@ -1,7 +1,8 @@
 <template>
   <div class="container-register">
-    <h1 class="h1-register">Sign-Up</h1>
     <b-card class="b-card-register">
+      <div class="h1-register-div">
+      <h1 class="h1-register">Sign-Up</h1>
       <b-form class="custom-form" @submit.prevent="onSubmit">
         <b-form-group
           id="input-group-fName"
@@ -217,6 +218,7 @@
         Password must be at least 6 characters long.
       </p>
       <p class="typo__p" v-if="submitStatus === 'PENDING'">Registering...</p>
+      </div>
     </b-card>
   </div>
 </template>
@@ -396,8 +398,43 @@ export default {
   height: 100%;
 }
 
+.container-register {
+  background: rgb(249,190,2);
+  background: linear-gradient(90deg, rgba(249,190,2,1) 0%, rgba(249,190,2,1) 22%, rgba(255,255,240,1) 22%);
+  padding-top: 4px;
+  padding-bottom:30%;
+  height:100%;
+left:0;
+right:0;
+}
 .b-card-register-uploads {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+.h1-register {
+  text-align: center;
+  color: #263347;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2em;
+  margin-bottom: 50px;
+}
+
+.h1-register-div {
+  width:100%;
+  height:100%;
+  padding: 15px;
+  margin-bottom:15px;
+}
+.b-card-register {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    width: 90%;
+    margin-top: 60px;
+    max-width: 500px !important;
+    background: rgb(150,206,180);
+    background: linear-gradient(180deg, rgba(150,206,180,1) 12%, rgba(254,254,254,1) 12%, rgba(255,255,255,1) 94%, rgba(255,255,255,1) 94%);
+  }
 </style>

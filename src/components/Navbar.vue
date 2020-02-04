@@ -25,6 +25,7 @@
             <em>User</em>
           </template>
           <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
+          <b-dropdown-item to="/addaccount">Add Account</b-dropdown-item>
           <b-dropdown-item to="/userprofile">User Profile</b-dropdown-item>
           <b-dropdown-item to="/transactions">Transactions</b-dropdown-item>
           <b-dropdown-item to="/notifications">Notifications</b-dropdown-item>

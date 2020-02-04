@@ -25,6 +25,9 @@
             <em>User</em>
           </template>
           <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
+          <b-dropdown-item to="/">User Profile</b-dropdown-item>
+          <b-dropdown-item to="/">Transactions</b-dropdown-item>
+          <b-dropdown-item to="/">Notifications</b-dropdown-item>
           <b-dropdown-item v-if="$store.state.isLoggedIn" v-on:click.prevent="logout()">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
         <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" v-on:click.prevent="logout()" href="#">Logout</b-nav-item>

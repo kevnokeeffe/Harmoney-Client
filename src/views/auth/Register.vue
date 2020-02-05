@@ -413,7 +413,7 @@ right:0;
 }
 .h1-register {
   text-align: center;
-  color: #263347;
+  color: ivory;
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   font-size: 2em;
@@ -434,7 +434,7 @@ right:0;
     width: 90%;
     margin-top: 60px;
     max-width: 500px !important;
-    background: rgb(150,206,180);
-    background: linear-gradient(180deg, rgba(150,206,180,1) 12%, rgba(254,254,254,1) 12%, rgba(255,255,255,1) 94%, rgba(255,255,255,1) 94%);
+    background: rgb(108,100,139);
+background: linear-gradient(180deg, rgba(108,100,139,1) 13%, rgba(255,255,240,1) 13%, rgba(255,255,240,1) 98%, rgba(108,100,139,1) 98%);
   }
 </style>

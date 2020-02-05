@@ -133,7 +133,7 @@ export default {
 <style>
 .h1-login {
   text-align: center;
-  color: #263347;
+  color: ivory;
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   font-size: 2em;

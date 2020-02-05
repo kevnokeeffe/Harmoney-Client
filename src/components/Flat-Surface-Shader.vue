@@ -2,17 +2,17 @@
   <div id="app">
     <flat-surface-shader class="shader"
                          type="canvas" 
-                         :light="{ambient: '#22bc9e', diffuse: '#2b7c6b', draw: false}" 
-                         :mesh="{segments: 10, slices: 10, width: 1.5, height: 1.5}">
+                         :light="{ambient: '#f78888', diffuse: '#f3d250', draw: false}" 
+                         :mesh="{segments: 10, slices: 20, width: 1.5, height: 1.5}">
     </flat-surface-shader>
     <div class="mask">
           <div class="title">
             HARMON€Y
           </div>
-          <div class="subtitle">
-            Your Holistic Accounts Management System
-          </div>
+         <b-button>Enter</b-button>
+         
         </div>
+
 </div>
 </template>
 

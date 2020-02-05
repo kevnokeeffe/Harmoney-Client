@@ -22,10 +22,12 @@ body {
 
   .b-nav-item{
     font-family: "Open Sans", sans-serif;
+    color: ivory;
   }
 
   .b-nav-item-dropdown{
     font-family: "Open Sans", sans-serif;
+    color: ivory;
   }
   
   .b-card-login {
@@ -36,6 +38,6 @@ body {
     width: 90%;
     margin-top: 60px;
     max-width: 500px !important;
-    background: rgb(150,206,180);
-    background: linear-gradient(180deg, rgba(150,206,180,1) 27%, rgba(254,254,254,1) 27%, rgba(255,255,255,1) 94%, rgba(255,255,255,1) 94%);
+    background: rgb(252,74,26);
+background: linear-gradient(180deg, rgba(252,74,26,1) 25%, rgba(254,254,254,1) 25%, rgba(254,254,254,1) 98%, rgba(252,74,26,1) 98%);
   }

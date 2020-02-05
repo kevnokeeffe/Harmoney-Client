@@ -1,43 +1,79 @@
 <template>
   <div>
-  <b-navbar class="b-navbar" toggleable="lg" type="dark" >
-    <b-navbar-brand class="b-navbar-brand" href="/">HARMON€Y</b-navbar-brand>
+    <b-navbar class="b-navbar" toggleable="lg" type="dark">
+      <b-navbar-brand class="b-navbar-brand" href="/">HARMON€Y</b-navbar-brand>
 
-    <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-    <b-collapse id="nav-collapse" is-nav>
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto">
-        <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" to="/dashboard">Dashboard</b-nav-item>
-        <b-nav-item v-if="!$store.state.isLoggedIn" class="b-nav-item" to="/login">Login</b-nav-item>
-        <b-nav-item v-if="!$store.state.isLoggedIn" class="b-nav-item" to="/register">Sign-Up</b-nav-item>
-        
-        <b-nav-item-dropdown v-if="$store.state.isLoggedIn" class="b-nav-item-dropdown" text="Options" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">ES</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
-        </b-nav-item-dropdown>
+      <b-collapse id="nav-collapse" is-nav>
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item
+            v-if="$store.state.isLoggedIn"
+            class="b-nav-item"
+            to="/dashboard"
+            >Dashboard</b-nav-item
+          >
+          <b-nav-item
+            v-if="!$store.state.isLoggedIn"
+            class="b-nav-item"
+            to="/login"
+            >Login</b-nav-item
+          >
+          <b-nav-item
+            v-if="!$store.state.isLoggedIn"
+            class="b-nav-item"
+            to="/register"
+            >Sign-Up</b-nav-item
+          >
 
-        <b-nav-item-dropdown v-if="$store.state.isLoggedIn" class="b-nav-item-dropdown" right>
-          <!-- Using 'button-content' slot -->
-          <template v-slot:button-content>
-            <em>User</em>
-          </template>
-          <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
-          <b-dropdown-item to="/addaccount">Add Account</b-dropdown-item>
-          <b-dropdown-item to="/userprofile">User Profile</b-dropdown-item>
-          <b-dropdown-item to="/transactions">Transactions</b-dropdown-item>
-          <b-dropdown-item to="/notifications">Notifications</b-dropdown-item>
-          <b-dropdown-item v-if="$store.state.isLoggedIn" v-on:click.prevent="logout()">Logout</b-dropdown-item>
-        </b-nav-item-dropdown>
-        <b-nav-item v-if="$store.state.isLoggedIn" class="b-nav-item" v-on:click.prevent="logout()" href="#">Logout</b-nav-item>
-        <b-nav-item class="b-nav-name" v-if="$store.state.isLoggedIn"> Welcome, {{ this.$store.state.fName }}
-                {{ this.$store.state.lName }}</b-nav-item>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
-</div>
+          <b-nav-item-dropdown
+            v-if="$store.state.isLoggedIn"
+            class="b-nav-item-dropdown"
+            text="Options"
+            right
+          >
+            <b-dropdown-item href="#">EN</b-dropdown-item>
+            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item href="#">RU</b-dropdown-item>
+            <b-dropdown-item href="#">FA</b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown
+            v-if="$store.state.isLoggedIn"
+            class="b-nav-item-dropdown"
+            right
+          >
+            <!-- Using 'button-content' slot -->
+            <template v-slot:button-content>
+              <em>User</em>
+            </template>
+            <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
+            <b-dropdown-item to="/addaccount">Add Account</b-dropdown-item>
+            <b-dropdown-item to="/userprofile">User Profile</b-dropdown-item>
+            <b-dropdown-item to="/transactions">Transactions</b-dropdown-item>
+            <b-dropdown-item to="/notifications">Notifications</b-dropdown-item>
+            <b-dropdown-item
+              v-if="$store.state.isLoggedIn"
+              v-on:click.prevent="logout()"
+              >Logout</b-dropdown-item
+            >
+          </b-nav-item-dropdown>
+          <b-nav-item
+            v-if="$store.state.isLoggedIn"
+            class="b-nav-item"
+            v-on:click.prevent="logout()"
+            href="#"
+            >Logout</b-nav-item
+          >
+          <b-nav-item class="b-nav-name" v-if="$store.state.isLoggedIn">
+            Welcome, {{ this.$store.state.fName }}
+            {{ this.$store.state.lName }}</b-nav-item
+          >
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 
 <script>
@@ -46,9 +82,9 @@ export default {
   name: 'Navbar',
   methods: {
     logout: function() {
-      auth.logout();
-      const path = `/`;
-      if (this.$route.path !== path) this.$router.push(path);
+      auth.logout()
+      const path = `/`
+      if (this.$route.path !== path) this.$router.push(path)
     }
   }
 }
@@ -65,12 +101,12 @@ export default {
 }
 
 .b-navbar {
-  background-color:#02353c!important;
+  background-color: #449342;
 }
-.b-nav-name{
-  font-family: "Open Sans", sans-serif;
+.b-nav-name {
+  font-family: 'Open Sans', sans-serif;
 }
-#dropdown-menu{
+#dropdown-menu {
   position: relative;
   display: inline-block;
 }

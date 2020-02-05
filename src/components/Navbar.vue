@@ -101,7 +101,8 @@ export default {
 }
 
 .b-navbar {
-  background-color: #449342;
+ background: rgb(107,186,167);
+background: linear-gradient(180deg, rgba(107,186,167,1) 95%, rgba(107,122,143,1) 95%);
 }
 .b-nav-name {
   font-family: 'Open Sans', sans-serif;

@@ -53,7 +53,12 @@ export default {
     })
       .then(res => res.json())
       .then(res => console.log(res))
-  }
+      fetch('http://localhost:4000/api/test/bank', {
+      method: 'GET'
+    })
+      .then(res => res.json())
+      .then(res => console.log(res))
+  },
 }
 </script>
 

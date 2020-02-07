@@ -60,10 +60,10 @@
           >
         </div>
       </b-form>
-      <p class="typo__p" v-if="submitStatus === 'OK'">Logged in!</p>
-        <p class="typo__p" v-if="submitStatus === 'ERROR'">Please Enter Correct Details.</p>
-        <p class="typo__p" v-if="submitStatus === 'PENDING'">Logging in...</p>
-        <p class="typo__p" v-if="submitStatus === 'PASSWORD'">Invalid Password</p>
+      <p class="typo__p" v-if="form.submitStatus === 'OK'">Logged in!</p>
+        <p class="typo__p" v-if="form.submitStatus === 'ERROR'">Please Enter Correct Details.</p>
+        <p class="typo__p" v-if="form.submitStatus === 'PENDING'">Logging in...</p>
+        <p class="typo__p" v-if="form.submitStatus === 'PASSWORD'">Invalid Password</p>
     </b-card>
   </div>
 </template>

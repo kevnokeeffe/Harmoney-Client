@@ -58,7 +58,7 @@
             class="btn btn-secondary"
             >Submit</b-button
           >
-        </div>
+        </div> 
       </b-form>
       <p class="typo__p" v-if="form.submitStatus === 'OK'">Logged in!</p>
         <p class="typo__p" v-if="form.submitStatus === 'ERROR'">Please Enter Correct Details.</p>

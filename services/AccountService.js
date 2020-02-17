@@ -2,8 +2,16 @@
 import { http } from './HttpService'
 // import jwt from 'jsonwebtoken'
 
-export function getAllCurrentAccounts() {
-  return http().get(`api/account/current-all`)
+// Working function
+export async function getAllCurrentAccounts() {
+  return http()
+    .get(`api/account/current-all`, {
+      method: 'GET'
+    })
+    .then(res => console.log(res))
+    .catch(res => {
+      return console.log(res)
+    })
 }
 
 export function getAllSavingsAccounts() {
@@ -17,4 +25,3 @@ export function getIndividualCurrentAccount(id) {
 export function getIndividualSavingsAccount(id) {
   return http().get(`api/account/current-all/${id}`)
 }
-

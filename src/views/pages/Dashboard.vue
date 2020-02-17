@@ -26,10 +26,10 @@ export default {
   // }
   methods:{
     onGetCurrent: async function() {
-            const accountPromise = await accountService.getAllCurrentAccounts()
+      const accountPromise = await accountService.getAllCurrentAccounts()
       await Promise.all([accountPromise])
-      await this.$router.push({ path: '/dashboard' })
-      console.log(accountPromise)
+      // await this.$router.push({ path: '/' })
+      // console.log(accountPromise)
     },
     logout: function() {
       auth.logout()

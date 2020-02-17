@@ -9,7 +9,14 @@ const routes = [
     path: '/',
     name: 'home',
     component: () => 
-    import(/* webpackChunkName: "home" */ '../views/Home.vue')
+    import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+    beforeEnter: (to, from, next) => {
+      if (!auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/dashboard')
+      }
+    }
   },
   {
     path: '/about',
@@ -26,7 +33,7 @@ const routes = [
       if (!auth.isLoggedIn()) {
         next()
       } else {
-        next('/')
+        next('/dashboard')
       }
     }
   },
@@ -57,8 +64,8 @@ const routes = [
     }
   },
   {
-    path: '/addaccount',
-    name: 'addaccount',
+    path: '/add-account',
+    name: 'add-account',
     component: () =>
       import(/* webpackChunkName: "addaccount" */ '../views/pages/AddAccount.vue'),
     beforeEnter: (to, from, next) => {
@@ -70,7 +77,7 @@ const routes = [
     }
   },
   {
-    path: '/userprofile',
+    path: '/user-profile',
     name: 'userprofile',
     component: () =>
       import(/* webpackChunkName: "userprofile" */ '../views/pages/UserProfile.vue'),
@@ -91,13 +98,13 @@ const routes = [
       if (!auth.isLoggedIn()) {
         next()
       } else {
-        next('/')
+        next('/dashboard')
       }
     }
   },
   {
     path: '/dashboard',
-    name: 'dash-board',
+    name: 'dashboard',
     component: () =>
       import(
         /* webpackChunkName: "dashboard" */ '../views/pages/Dashboard.vue'

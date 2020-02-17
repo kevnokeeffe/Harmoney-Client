@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar class="b-navbar" toggleable="lg" type="dark">
-      <b-navbar-brand class="b-navbar-brand" href="/">HARMON€Y</b-navbar-brand>
+      <b-navbar-brand class="b-navbar-brand">HARMON€Y</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -49,8 +49,8 @@
               <em>User</em>
             </template>
             <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
-            <b-dropdown-item to="/addaccount">Add Account</b-dropdown-item>
-            <b-dropdown-item to="/userprofile">User Profile</b-dropdown-item>
+            <b-dropdown-item to="/add-account">Add Account</b-dropdown-item>
+            <b-dropdown-item to="/user-profile">User Profile</b-dropdown-item>
             <b-dropdown-item to="/transactions">Transactions</b-dropdown-item>
             <b-dropdown-item to="/notifications">Notifications</b-dropdown-item>
             <b-dropdown-item
@@ -66,7 +66,7 @@
             href="#"
             >Logout</b-nav-item
           >
-          <b-nav-item class="b-nav-name" v-if="$store.state.isLoggedIn">
+          <b-nav-item class="b-nav-name" disable active v-if="$store.state.isLoggedIn">
             Welcome, {{ this.$store.state.fName }}
             {{ this.$store.state.lName }}</b-nav-item
           >
@@ -102,7 +102,7 @@ export default {
 
 .b-navbar {
  background: rgb(107,186,167);
-background: linear-gradient(180deg, rgba(107,186,167,1) 95%, rgba(107,122,143,1) 95%);
+background: linear-gradient(180deg, rgba(107,186,167,1) 97%, rgba(107,122,143,1) 97%);
 }
 .b-nav-name {
   font-family: 'Open Sans', sans-serif;

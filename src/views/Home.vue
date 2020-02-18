@@ -4,12 +4,30 @@
       <div>
         <b-tabs content-class="mt-3" justified>
           <b-tab no-body title="Welcome" active>
-            <b-card-img
-              bottom
-              class="b-card-image-welcome"
-              src="https://sociology.uconn.edu/wp-content/uploads/sites/2172/2019/06/WELCOME-ST-IVES.jpg"
-            ></b-card-img>
-            <h2 class="h2-welcome">to HARMON€Y</h2>
+            <div>
+  <b-carousel
+    id="carousel-fade"
+    style="text-shadow: 0px 0px 2px #000"
+    fade
+    indicators
+    img-width="1024"
+    img-height="480"
+  >
+    <b-carousel-slide
+      caption="Nature"
+      img-src="https://picsum.photos/1024/480/?image=10"
+    ></b-carousel-slide>
+    
+    <b-carousel-slide
+      caption="People"
+      img-src="https://picsum.photos/1024/480/?image=22"
+    ></b-carousel-slide>
+    <b-carousel-slide
+      caption="HARMON€Y"
+      img-src="https://picsum.photos/1024/480/?image=12"
+    ></b-carousel-slide>
+  </b-carousel>
+</div>
           </b-tab>
           <b-tab title="Why Join?"><p>Because we love you</p></b-tab>
           <b-tab title="About">
@@ -26,13 +44,7 @@
           >
         </b-tabs>
       </div>
-      <div class="mt-3">
-          <b-button class='b-button-in-card-login' variant="success" to="/login">Login</b-button>
-          <b-button class='b-button-in-card-sign-up' variant="warning" to="/register">Sign-Up</b-button>
-      </div>
-      <div>
-        <b-button class='b-button-in-card-info' variant="info" to="/about">Info</b-button>
-      </div>
+      
     </b-card>
   </div>
 </template>
@@ -122,7 +134,8 @@ export default {
   position: relative;
   width: 80%;
   margin-top: 60px;
-  height: 70%;
+  max-height: 70%;
+  min-height: 40%;
   max-width: 600px;
 }
 

@@ -15,26 +15,21 @@
         Logout</b-button
       >
     </div>
-    <div class="d-flex felx-wrap justify-content-start" v-if="currentAccount && currentAccount.length > 0">
-      <div v-for="currentAccount in accounts" :key="currentAccount.account">
-        <b-card no-body class="overflow-hidden nb-2 ml-2" style="max-width: 540px;">
-          <b-row no-gutters>
-            <b-col md="6">
-              <b-card-img
-                src="https://picsum.photos/200/200/?image=20"
-                class="rounded-0"
-              ></b-card-img>
-            </b-col>
-            <b-col md="6">
-              <b-card-body title="Horizontal Card">
-                <b-card-text>
-                  This is a wider card with supporting text as a natural lead-in
-                  to additional content. This content is a little bit longer.
-                </b-card-text>
-              </b-card-body>
-            </b-col>
-          </b-row>
+    <div class="accounts mb-2 mt-2" v-if="currentAccount && currentAccount.length > 0">
+      <div class="nb-2 mt-2" v-for="currentAccount in currentAccount" :key="currentAccount.currentAccount">
+
+        <b-card class="b-card-account" header-tag="header" footer-tag="footer">
+          <template v-slot:header>
+              <h6 class="mb-0">{{ currentAccount.fiName }}</h6>
+        </template>
+        <b-row>
+          <b-col>
+          <b-row>{{ currentAccount.accountType }}</b-row>
+          <b-row>€{{ currentAccount.balance }}</b-row>
+          </b-col>
+        </b-row>
         </b-card>
+
       </div>
     </div>
   </div>
@@ -54,17 +49,28 @@ export default {
       savingsAccountId: null
     }
   },
-  beforeRouteEnter(to, from, next) {
-    accountService.getAllCurrentAccounts().then(res => {
-      next(vm => {
-        vm.currentAccount = res.data.currentAccount
-      })
+  
+  beforeRouteEnter: async function (currentAccount, from, next) {
+   await accountService.getAllCurrentAccounts()
+   .then(res =>{
+     console.log(res)
+     currentAccount = res
+     console.log(currentAccount)
+     next(vm =>{
+       vm.currentAccount =  res
+       console.log(vm.currentAccount)
+     })
+    
+   }).catch(error => {
+      return console.log(error)
     })
   },
+
   methods: {
     onGetCurrent: async function() {
       const accountPromise = await accountService.getAllCurrentAccounts()
       await Promise.all([accountPromise])
+      console.log(accountPromise)
     },
     logout: function() {
       auth.logout()
@@ -74,3 +80,24 @@ export default {
   }
 }
 </script>
+
+<style>
+
+@media all and (max-width:500px){
+.accounts{
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin: 4px;
+}
+}
+
+.header{
+  background-color: black;
+}
+
+.b-card-account{
+
+}
+</style>

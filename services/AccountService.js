@@ -8,9 +8,9 @@ export async function getAllCurrentAccounts() {
     .get(`api/account/current-all`, {
       method: 'GET'
     })
-    .then(res => console.log(res))
-    .catch(res => {
-      return console.log(res)
+    .then(res => {return res.data})
+    .catch(error => {
+      return console.log(error)
     })
 }
 

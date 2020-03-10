@@ -96,6 +96,7 @@ export default {
   methods: {
     ok: async function(){
       const user = {
+        fi: this.selected,
         email: this.email,
         password: this.password
       }

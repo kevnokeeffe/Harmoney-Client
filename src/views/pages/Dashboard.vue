@@ -53,14 +53,10 @@ export default {
   beforeRouteEnter: async function (currentAccount, from, next) {
    await accountService.getAllCurrentAccounts()
    .then(res =>{
-     console.log(res)
      currentAccount = res
-     console.log(currentAccount)
      next(vm =>{
        vm.currentAccount =  res
-       console.log(vm.currentAccount)
      })
-    
    }).catch(error => {
       return console.log(error)
     })
@@ -70,7 +66,6 @@ export default {
     onGetCurrent: async function() {
       const accountPromise = await accountService.getAllCurrentAccounts()
       await Promise.all([accountPromise])
-      console.log(accountPromise)
     },
     logout: function() {
       auth.logout()

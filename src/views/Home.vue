@@ -59,13 +59,13 @@ export default {
     // HelloWorld
     //FlatSurfaceShader
   },
-  beforeCreate: function() {
+  beforeCreate: async function() {
     fetch(this.$store.state.apiUrl + '/api/test/user', {
       method: 'GET'
     })
       .then(res => res.json())
       .then(res => console.log(res))
-      fetch('http://localhost:4000/api/test/bank', {
+      await fetch('http://localhost:4000/api/test/bank', {
       method: 'GET'
     })
       .then(res => res.json())

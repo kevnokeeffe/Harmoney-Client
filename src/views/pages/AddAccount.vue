@@ -27,12 +27,8 @@
           </b-media-body>
           <div>
             <b-modal id="modal-scoped">
-              <template v-slot:modal-header="{ close }">
-                <!-- Emulate built in modal header close button action -->
-                <b-button size="sm" variant="outline-danger" @click="close()">
-                  Close Modal
-                </b-button>
-                <h5>Modal Header</h5>
+              <template v-slot:modal-header="{}">
+                <h5>Add {{ selected }} Account</h5>
               </template>
 
               <template>
@@ -41,11 +37,11 @@
                     id="input-group-1"
                     label="Email address:"
                     label-for="input-1"
-                    description="We'll never share your email with anyone else."
                   >
                     <b-form-input
                       id="input-1"
                       type="email"
+                      v-model="email"
                       required
                       placeholder="Enter email"
                     ></b-form-input>
@@ -55,33 +51,20 @@
                   <label for="text-password">Password</label>
                   <b-input
                     type="password"
+                    v-model="password"
                     id="text-password"
                     aria-describedby="password-help-block"
                   ></b-input>
-                  <b-form-text id="password-help-block">
-                    Your password must be 8-20 characters long, contain letters
-                    and numbers, and must not contain spaces, special
-                    characters, or emoji.
-                  </b-form-text>
                 </b-form-group>
               </template>
 
-              <template v-slot:modal-footer="{ ok, cancel, hide }">
-                <b>Custom Footer</b>
+              <template v-slot:modal-footer="{ ok, cancel}">
                 <!-- Emulate built in modal footer ok and cancel button actions -->
                 <b-button size="sm" variant="success" @click="ok()">
                   OK
                 </b-button>
                 <b-button size="sm" variant="danger" @click="cancel()">
                   Cancel
-                </b-button>
-                <!-- Button with custom close trigger value -->
-                <b-button
-                  size="sm"
-                  variant="outline-secondary"
-                  @click="hide('forget')"
-                >
-                  Forget it
                 </b-button>
               </template>
             </b-modal>
@@ -92,15 +75,18 @@
 </template>
 
 <script>
+import * as auth from '../../../services/FIService'
 export default {
   data() {
     return {
-      selected: 'None',
+      email:null,
+      password:null,
+      selected: null,
       options: [
-        { item: 'Bank of WIT', name: 'Bank of WIT' },
-        { item: 'An Post', name: 'An Post' },
-        { item: 'Waterford Credit Union', name: 'Waterford Credit Union' },
-        { item: { d: 1 }, name: 'Option D', notEnabled: true }
+        { item: 'Bank of WIT', name: 'Bank of WIT'},
+        { item: 'An Post', name: 'An Post'},
+        { item: 'Waterford Credit Union', name: 'Waterford Credit Union'},
+        { item: 'AIB', name: 'AIB'}
       ],
       name: '',
       nameState: null,
@@ -108,32 +94,13 @@ export default {
     }
   },
   methods: {
-    checkFormValidity() {
-      const valid = this.$refs.form.checkValidity()
-      this.nameState = valid
-      return valid
-    },
-    resetModal() {
-      this.name = ''
-      this.nameState = null
-    },
-    handleOk(bvModalEvt) {
-      // Prevent modal from closing
-      bvModalEvt.preventDefault()
-      // Trigger submit handler
-      this.handleSubmit()
-    },
-    handleSubmit() {
-      // Exit when the form isn't valid
-      if (!this.checkFormValidity()) {
-        return
+    ok: async function(){
+      const user = {
+        email: this.email,
+        password: this.password
       }
-      // Push the name to submitted names
-      this.submittedNames.push(this.name)
-      // Hide the modal manually
-      this.$nextTick(() => {
-        this.$bvModal.hide('modal-prevent-closing')
-      })
+      const registerPromise = auth.financialInstitutionLogin(user)
+      await Promise.all([registerPromise])
     }
   }
 }

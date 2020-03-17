@@ -114,7 +114,7 @@ export default {
           email: this.form.email,
           password: this.form.password
         }
-        const loginPromise = await auth.login(user)
+        const loginPromise = await auth.authyLogin(user)
         await Promise.all([loginPromise])
         await this.$router.push({ path: '/dashboard' })
         this.submitStatus = 'PENDING'

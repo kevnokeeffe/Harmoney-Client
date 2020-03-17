@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar class="b-navbar" toggleable="lg" type="dark">
-      <b-navbar-brand class="b-navbar-brand">HARMON€Y</b-navbar-brand>
+      <b-navbar-brand to="/" class="b-navbar-brand">HARMON€Y</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -23,7 +23,7 @@
           <b-nav-item
             v-if="!$store.state.isLoggedIn"
             class="b-nav-item"
-            to="/register"
+            to="/sign-up"
             >Sign-Up</b-nav-item
           >
 
@@ -33,7 +33,7 @@
             text="Options"
             right
           >
-            <b-dropdown-item href="#">EN</b-dropdown-item>
+            <b-dropdown-item to="/register">Old Register</b-dropdown-item>
             <b-dropdown-item href="#">ES</b-dropdown-item>
             <b-dropdown-item href="#">RU</b-dropdown-item>
             <b-dropdown-item href="#">FA</b-dropdown-item>

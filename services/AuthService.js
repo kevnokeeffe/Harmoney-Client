@@ -7,6 +7,21 @@ export function isLoggedIn() {
   return token != null;
 }
 
+export function authyLogin(user) {
+  return http()
+    .post("api/auth/authy-login", user)
+    .then(res => {
+      if (res) {
+        setToken(res.data.token);
+      }
+    }).catch(err => {
+      if (err) {
+        return 
+      }
+      return
+    })
+}
+
 export function login(user) {
   return http()
     .post("api/auth/login", user)
@@ -88,6 +103,19 @@ export function getUserId() {
 export function registerUser(user) {
   return http().post("api/auth/register", user);
 }
+
+export function registerAuthyUser(user) {
+  return http().post("api/auth/authy-register", user);
+}
+
+export function validateAuthyUser(verify) {
+  return http().post("api/auth/authy-validate", verify);
+}
+
+export function checkValidateAuthyUser(code) {
+  return http().post("api/auth/authy-validate-code", code);
+}
+
 
 export function checkUser(user) {
   return http().get("api/user/get", user);

@@ -7,22 +7,11 @@
 
 <script>
 import Navbar from '@/components/Navbar.vue'
-// import auth from '../services/AuthService'
 export default {
   name:'app',
   components: {
     Navbar
   },
-  // created: ()=>{
-  //   window.addEventListener('beforeunload', auth.logout())
-  // },
-  // methods: {
-  //   logout() {
-  //     const path = `/`
-  //     auth.logout();
-  //     this.$router.push(path);
-  //   },
-  //}
 }
 </script>
 

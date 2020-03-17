@@ -50,26 +50,21 @@
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
-// import FlatSurfaceShader from '@/components/Flat-Surface-Shader.vue'
 export default {
   name: 'home',
   components: {
-    // HelloWorld
-    //FlatSurfaceShader
   },
   beforeCreate: async function() {
-    fetch(this.$store.state.apiUrl + '/api/test/user', {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then(res => console.log(res))
-      await fetch('http://localhost:4000/api/test/bank', {
-      method: 'GET'
-    })
-      .then(res => res.json())
-      .then(res => console.log(res))
+    // fetch(this.$store.state.apiUrl + '/api/test/user', {
+    //   method: 'GET'
+    // })
+    //   .then(res => res.json())
+    //   .then(res => console.log(res))
+    //   await fetch('http://localhost:4000/api/test/bank', {
+    //   method: 'GET'
+    // })
+    //   .then(res => res.json())
+    //   .then(res => console.log(res))
   },
 }
 </script>

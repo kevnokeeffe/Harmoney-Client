@@ -34,6 +34,11 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 import FlatSurfaceShader from 'vue-flat-surface-shader'
 Vue.use(FlatSurfaceShader)
+// International Telephone Input with Vue.
+import VueTelInput from 'vue-tel-input'
+Vue.use(VueTelInput)
+import vueCountryRegionSelect from 'vue-country-region-select'
+Vue.use(vueCountryRegionSelect)
 
 Vue.config.productionTip = false
 new Vue({

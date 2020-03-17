@@ -10,13 +10,13 @@ const routes = [
     name: 'home',
     component: () => 
     import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-    beforeEnter: (to, from, next) => {
-      if (!auth.isLoggedIn()) {
-        next()
-      } else {
-        next('/dashboard')
-      }
-    }
+    // beforeEnter: (to, from, next) => {
+    //   // if (!auth.isLoggedIn()) {
+    //   //   next()
+    //   // } else {
+    //   //   next('/dashboard')
+    //   // }
+    // }
   },
   {
     path: '/about',
@@ -116,7 +116,20 @@ const routes = [
         next('/login')
       }
     }
-  }
+  },
+  {
+    path: '/sign-up',
+    name: 'signup',
+    component: () =>
+      import(/* webpackChunkName: "signup" */ '../views/auth/Sign-Up.vue'),
+    // beforeEnter: (to, from, next) => {
+    //   if (!auth.isLoggedIn()) {
+    //     next()
+    //   } else {
+    //     next('/dashboard')
+    //   }
+    // }
+  },
 ]
 
 const router = new VueRouter({

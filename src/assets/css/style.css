@@ -30,14 +30,52 @@ body {
     color: ivory;
   }
   
-  .b-card-login {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    width: 90%;
-    margin-top: 60px;
-    max-width: 500px !important;
-    background: rgb(252,74,26);
-background: linear-gradient(180deg, rgba(252,74,26,1) 25%, rgba(254,254,254,1) 25%, rgba(254,254,254,1) 98%, rgba(252,74,26,1) 98%);
-  }
+  
+.b-card-image-eco {
+  width: 50%;
+  float: left;
+  margin-right: 100%;
+  margin-bottom: 20px;
+  max-width: 200px;
+}
+
+.b-button-in-card-login{
+  width: 80px;
+  margin: 4px;
+  padding: 10px;
+  position: relative;
+}
+.b-button-in-card-info{
+  width: 80px;
+  padding: 6px;
+  margin:10px;
+  position: relative;
+}
+.b-button-in-card-sign-up{
+  width: 80px;
+   margin: 4px;
+   padding: 10px;
+  position: relative;
+}
+.b-card-image-welcome{
+  max-width: 300px;
+  position: relative;
+}
+
+.text-about-eco {
+  text-align: left;
+  max-width: 400px;
+  position: relative;
+}
+
+.b-card-home {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 80%;
+  margin-top: 60px;
+  max-height: 70%;
+  min-height: 40%;
+  max-width: 600px;
+}

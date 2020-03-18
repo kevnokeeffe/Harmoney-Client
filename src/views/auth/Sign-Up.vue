@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="container-signUp">
     <b-jumbotron
-      header="Sign-Up"
-      lead="Welcome to your Harmon€y register page."
+      class="b-jumbotron-signUp"
     >
+          <h1 class="h1-register">Sign-Up</h1>
       <div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
           <b-form-group
@@ -114,8 +114,8 @@
 
             <template>
               <p>
-                Please select the "Send Verification Button" we will send a code
-                to your mobile phone. Then enter the code you recive in the
+                Please select the "Send Verification Code" button we will send a
+                code to your mobile phone. Then enter the code you recive in the
                 input field below.
               </p>
               <b-form-input
@@ -140,7 +140,6 @@
               >
                 Cancel
               </b-button>
-              <!-- Emulate built in modal footer ok and cancel button actions -->
               <b-button
                 class="mt-4 mr-2"
                 squared
@@ -156,9 +155,9 @@
           <!-- <b-button type="submit" squared variant="success">Submit</b-button> -->
           <b-button type="reset" squared variant="danger">Reset</b-button>
         </b-form>
-        <b-card class="mt-3" header="Form Data Result">
+        <!-- <b-card class="mt-3" header="Form Data Result">
           <pre class="m-0">{{ form }}</pre>
-        </b-card>
+        </b-card> -->
       </div>
     </b-jumbotron>
     <div>
@@ -264,11 +263,11 @@ export default {
       },
       modalProps: {},
       form: {
-        fName: '',
-        lName: '',
-        phone: '',
-        email: '',
-        password: '',
+        fName: null,
+        lName: null,
+        phone: null,
+        email: null,
+        password: null,
         checked: null
       },
       vCode: null,
@@ -299,7 +298,8 @@ export default {
           lName: this.form.lName,
           email: this.form.email,
           password: this.form.password,
-          phone: this.form.phone
+          phone: this.form.phone,
+          verified: true
         }
         const registerPromise = auth.registerAuthyUser(user)
         await Promise.resolve(registerPromise).then(async response => {
@@ -323,10 +323,19 @@ export default {
       this.$bvModal.hide('modal-center')
     },
     showContinueModal() {
-      if (this.form.checked === 'true') {
-        this.$bvModal.show('modal-center')
+      if (
+        this.form.email != null &&
+        this.form.fName != null &&
+        this.form.lName != null &&
+        this.form.password != null
+      ) {
+        if (this.form.checked === 'true') {
+          this.$bvModal.show('modal-center')
+        } else {
+          this.showMsgBoxTNC()
+        }
       } else {
-        this.showMsgBoxTNC()
+        this.makeToastForm()
       }
     },
     onReset() {
@@ -439,3 +448,43 @@ export default {
   }
 }
 </script>
+
+<style>
+.container-signUp {
+   background: rgb(249,190,2);
+  background: linear-gradient(90deg, rgba(249,190,2,1) 0%, rgba(249,190,2,1) 22%, rgba(255,255,240,1) 22%);
+  padding-top: 4px;
+  padding-bottom:30%;
+  height:100%;
+left:0;
+right:0;
+}
+
+.b-jumbotron-signUp {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 90%;
+  margin-top: 60px;
+  max-width: 500px !important;
+  background: rgb(108, 100, 139);
+  background: linear-gradient(
+    180deg,
+    rgba(108, 100, 139, 1) 14%,
+    rgba(255, 255, 240, 1) 14%,
+    rgba(255, 255, 240, 1) 98%,
+    rgba(108, 100, 139, 1) 98%
+  );
+}
+
+.h1-register {
+  text-align: center;
+  color: ivory;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 2em;
+  margin-bottom: 50px;
+}
+
+</style>

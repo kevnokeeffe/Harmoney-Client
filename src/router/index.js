@@ -28,7 +28,7 @@ const routes = [
     path: '/login',
     name: 'login',
     component: () =>
-      import(/* webpackChunkName: "login" */ '../views/auth/Login.vue'),
+      import(/* webpackChunkName: "login" */ '../views/auth/AuthyLogin.vue'),
     beforeEnter: (to, from, next) => {
       if (!auth.isLoggedIn()) {
         next()

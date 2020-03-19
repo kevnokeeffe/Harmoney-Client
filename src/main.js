@@ -10,6 +10,9 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
 Vue.use(Vuelidate)
 // 
+// Progress Number Counter
+import Progress from 'easy-circular-progress';
+Vue.use(Progress)
 import { MediaPlugin } from 'bootstrap-vue'
 Vue.use(MediaPlugin)
 // This imports all the layout components such as <b-container>, <b-row>, <b-col>:
@@ -39,7 +42,15 @@ import VueTelInput from 'vue-tel-input'
 Vue.use(VueTelInput)
 import vueCountryRegionSelect from 'vue-country-region-select'
 Vue.use(vueCountryRegionSelect)
-
+// Number animation import.
+import AnimatedNumber from 'animated-number-vue'
+Vue.use(AnimatedNumber)
+import VueNumber from 'vue-number-animation'
+Vue.use(VueNumber)
+import 'vue-awesome/icons'
+import Icon from 'vue-awesome/components/Icon'
+// globally (in your main .js file)
+Vue.component('v-icon', Icon)
 Vue.config.productionTip = false
 new Vue({
   router,

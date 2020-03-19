@@ -34,7 +34,7 @@
             right
           >
             <b-dropdown-item to="/register">Old Register</b-dropdown-item>
-            <b-dropdown-item href="#">ES</b-dropdown-item>
+            <b-dropdown-item to="/harmoney-dashboard">New Dashboard</b-dropdown-item>
             <b-dropdown-item href="#">RU</b-dropdown-item>
             <b-dropdown-item href="#">FA</b-dropdown-item>
           </b-nav-item-dropdown>

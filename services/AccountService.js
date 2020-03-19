@@ -1,4 +1,4 @@
-// import store from '../src/store/index'
+
 import { http } from './HttpService'
 // import jwt from 'jsonwebtoken'
 
@@ -6,9 +6,10 @@ import { http } from './HttpService'
 export async function getAllCurrentAccounts() {
   return http()
     .get(`api/account/current-all`, {
-      method: 'GET'
+      method: 'GET',
     })
-    .then(res => {return res.data})
+    .then(res => {
+      return res.data})
     .catch(error => {
       return console.log(error)
     })

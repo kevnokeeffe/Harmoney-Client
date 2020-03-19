@@ -94,13 +94,13 @@ const routes = [
     name: 'register',
     component: () =>
       import(/* webpackChunkName: "register" */ '../views/auth/Register.vue'),
-    beforeEnter: (to, from, next) => {
-      if (!auth.isLoggedIn()) {
-        next()
-      } else {
-        next('/dashboard')
-      }
-    }
+    // beforeEnter: (to, from, next) => {
+    //   if (!auth.isLoggedIn()) {
+    //     next()
+    //   } else {
+    //     next('/dashboard')
+    //   }
+    // }
   },
   {
     path: '/dashboard',
@@ -118,17 +118,32 @@ const routes = [
     }
   },
   {
+    path: '/harmoney-dashboard',
+    name: 'harmoney-dashboard',
+    component: () =>
+      import(
+        /* webpackChunkName: "harmoney-dashboard" */ '../views/pages/Harmon€yDashboard.vue'
+      ),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
     path: '/sign-up',
     name: 'signup',
     component: () =>
       import(/* webpackChunkName: "signup" */ '../views/auth/Sign-Up.vue'),
-    // beforeEnter: (to, from, next) => {
-    //   if (!auth.isLoggedIn()) {
-    //     next()
-    //   } else {
-    //     next('/dashboard')
-    //   }
-    // }
+    beforeEnter: (to, from, next) => {
+      if (!auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/dashboard')
+      }
+    }
   },
 ]
 

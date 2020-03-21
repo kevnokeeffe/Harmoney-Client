@@ -33,7 +33,7 @@
         <b-col class="left-col-top" cols="2">
           <i class="left-col-p fas fa-balance-scale fa-sm mt-4"></i>
           <b-container class="left-container">
-            <i id="fas-scale" class="fas fa-money-bill fa-4x mt-5"></i>
+            <i id="fas-scale" class="fas fa-money-bill fa-4x mt-4"></i>
             <h5 class="h5-ca mt-4">Total Current Account Balance:</h5>
             <number
               class="currentACTotal"

@@ -33,7 +33,7 @@ const routes = [
       if (!auth.isLoggedIn()) {
         next()
       } else {
-        next('/dashboard')
+        next('/harmoney-dashboard')
       }
     }
   },
@@ -141,7 +141,7 @@ const routes = [
       if (!auth.isLoggedIn()) {
         next()
       } else {
-        next('/dashboard')
+        next('/harmoney-dashboard')
       }
     }
   },

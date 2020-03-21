@@ -40,7 +40,6 @@ export function login(user) {
 export function logout() {
   localStorage.clear();
   store.dispatch("authenticate");
-  //return http().get('api/user/logout')
 }
 
 function setToken(token) {

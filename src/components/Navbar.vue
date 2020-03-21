@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar class="b-navbar" toggleable="lg" type="dark">
-      <b-navbar-brand to="/" class="b-navbar-brand">HARMON€Y</b-navbar-brand>
+      <b-navbar-brand @click="home()" class="b-navbar-brand">HARMON€Y</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -11,19 +11,19 @@
           <b-nav-item
             v-if="$store.state.isLoggedIn"
             class="b-nav-item"
-            to="/dashboard"
+            to="/harmoney-dashboard"
             >Dashboard</b-nav-item
           >
           <b-nav-item
             v-if="!$store.state.isLoggedIn"
             class="b-nav-item"
-            to="/login"
+            @click="login()"
             >Login</b-nav-item
           >
           <b-nav-item
             v-if="!$store.state.isLoggedIn"
             class="b-nav-item"
-            to="/sign-up"
+            @click="signUp()"
             >Sign-Up</b-nav-item
           >
 
@@ -34,7 +34,7 @@
             right
           >
             <b-dropdown-item to="/register">Old Register</b-dropdown-item>
-            <b-dropdown-item to="/harmoney-dashboard">New Dashboard</b-dropdown-item>
+            <b-dropdown-item to="/dashboard">Old Dashboard</b-dropdown-item>
             <b-dropdown-item href="#">RU</b-dropdown-item>
             <b-dropdown-item href="#">FA</b-dropdown-item>
           </b-nav-item-dropdown>
@@ -48,7 +48,9 @@
             <template v-slot:button-content>
               <em>User</em>
             </template>
-            <b-dropdown-item to="/dashboard">Dashboard</b-dropdown-item>
+            <b-dropdown-item to="/harmoney-dashboard"
+              >Dashboard</b-dropdown-item
+            >
             <b-dropdown-item to="/add-account">Add Account</b-dropdown-item>
             <b-dropdown-item to="/user-profile">User Profile</b-dropdown-item>
             <b-dropdown-item to="/transactions">Transactions</b-dropdown-item>
@@ -66,7 +68,12 @@
             href="#"
             >Logout</b-nav-item
           >
-          <b-nav-item class="b-nav-name" disable active v-if="$store.state.isLoggedIn">
+          <b-nav-item
+            class="b-nav-name"
+            disable
+            active
+            v-if="$store.state.isLoggedIn"
+          >
             Welcome, {{ this.$store.state.fName }}
             {{ this.$store.state.lName }}</b-nav-item
           >
@@ -81,10 +88,40 @@ import * as auth from '../../services/AuthService'
 export default {
   name: 'Navbar',
   methods: {
+    home(){
+      if (auth.isLoggedIn()) {
+        const path = `/`
+        if (this.$route.path !== path) this.$router.push(path)
+      } else {
+        auth.logout()
+        const path = `/`
+        if (this.$route.path !== path) this.$router.push(path)
+      }
+    },
+    login() {
+      if (auth.isLoggedIn()) {
+        auth.logout()
+        const path = `/login`
+        if (this.$route.path !== path) this.$router.push(path)
+      } else {
+        const path = `/login`
+        if (this.$route.path !== path) this.$router.push(path)
+      }
+    },
     logout: function() {
       auth.logout()
       const path = `/`
       if (this.$route.path !== path) this.$router.push(path)
+    },
+    signUp(){
+      if (auth.isLoggedIn()) {
+        auth.logout()
+        const path = `/sign-up`
+        if (this.$route.path !== path) this.$router.push(path)
+      } else {
+        const path = `/sign-up`
+        if (this.$route.path !== path) this.$router.push(path)
+      }
     }
   }
 }
@@ -101,8 +138,12 @@ export default {
 }
 
 .b-navbar {
- background: rgb(107,186,167);
-background: linear-gradient(180deg, rgba(107,186,167,1) 97%, rgba(107,122,143,1) 97%);
+  background: rgb(107, 186, 167);
+  background: linear-gradient(
+    180deg,
+    rgba(107, 186, 167, 1) 97%,
+    rgba(107, 122, 143, 1) 97%
+  );
 }
 .b-nav-name {
   font-family: 'Open Sans', sans-serif;

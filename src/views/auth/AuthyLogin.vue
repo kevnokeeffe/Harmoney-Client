@@ -107,7 +107,7 @@ export default {
             const loginPromise = auth.authyLogin(user)
             await Promise.resolve(loginPromise)
             this.hideModal()
-            await this.$router.push({ path: '/dashboard' })
+            await this.$router.push({ path: '/harmoney-dashboard' })
           } else if (response.data.message === false) {
             this.codeInValid()
           }

@@ -41,17 +41,31 @@
           variant="info"
           >Continue</b-button
         >
-<b-modal id="modal-center" centered hide-footer title="2FA">
-            <p class="my-4">Vertically centered modal!</p>
+<b-modal id="modal-center" centered hide-footer headerBgVariant= 'dark'
+        headerTextVariant= 'light' title="Two Factor Authentication">
+        <b-row>
+          <b-col cols="1"></b-col>
+          <b-col cols="11">
+            <p class="my-4">Please enter the validation code we have sent to your registered mobile number in the text field below.</p>
+            </b-col>
+            </b-row>
+            <b-row>
+          <b-col cols="1"></b-col>
+          <b-col cols="10">
             <b-form-input
               id="vCode-input"
               v-model="vCode"
               required
               placeholder="Enter validation code"
             ></b-form-input>
+          </b-col>
+          <b-col cols="1"></b-col></b-row>
+          <b-row class="buttons-row-modal">
+          <b-col cols="1"></b-col>
+          <b-col cols="11">
             <div>
               <b-button
-                class="mt-4 ml-4 mr-2"
+                class="mt-4 mr-2"
                 squared
                 variant="danger"
                 @click="hideModal()"
@@ -67,7 +81,9 @@
               >
                 Submit
               </b-button>
+              
             </div>
+          </b-col></b-row>
           </b-modal>
         
       </b-form>
@@ -124,7 +140,6 @@ export default {
         const uCheck = {
           email: this.form.email
         }
-        console.log(uCheck)
         const emailPromise = auth.checkForUserEmail(uCheck)
         Promise.resolve(emailPromise).then(response => {
           if (response.data.message === false) {
@@ -208,7 +223,7 @@ export default {
     90deg,
     rgba(249, 190, 2, 1) 0%,
     rgba(249, 190, 2, 1) 22%,
-    rgba(255, 255, 240, 1) 22%
+    rgb(250, 245, 228) 22%
   );
   padding-top: 4px;
   padding-bottom: 30%;
@@ -216,14 +231,27 @@ export default {
   left: 0;
   right: 0;
 }
+.buttons-row-modal{
+  margin-bottom: 20px;
+}
 
 .h1-login {
   text-align: center;
-  color: ivory;
+  color:rgb(255, 255, 221);
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   font-size: 2em;
   padding-bottom: 2em;
+}
+
+#vCode-input{
+  width:50%;
+}
+
+@media (max-width: 600px){
+#vCode-input{
+  width:70%;
+}
 }
 
 .b-jumbotron-login {
@@ -243,4 +271,6 @@ export default {
     rgba(252, 74, 26, 1) 98%
   );
 }
+
+
 </style>

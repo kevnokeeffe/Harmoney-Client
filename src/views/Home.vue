@@ -10,16 +10,6 @@ export default {
   components: {
   },
   beforeCreate: async function() {
-    // fetch(this.$store.state.apiUrl + '/api/test/user', {
-    //   method: 'GET'
-    // })
-    //   .then(res => res.json())
-    //   .then(res => console.log(res))
-    //   await fetch('http://localhost:4000/api/test/bank', {
-    //   method: 'GET'
-    // })
-    //   .then(res => res.json())
-    //   .then(res => console.log(res))
   },
 }
 </script>

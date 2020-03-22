@@ -19,7 +19,7 @@
             class="accountsTotal mt-5"
             ref="number1"
             :from="0"
-            :to="currentAccountTotal"
+            :to="accountTotal"
             :format="theFormat"
             :duration="5"
             :delay="2"
@@ -72,7 +72,7 @@
                           ><b-row
                             ><b-button
                               v-b-popover.hover.top="
-                                'View the details for the account'
+                                'View account details.'
                               "
                               title="Account Details"
                               @click="detailsModal(currentAccount)"
@@ -105,7 +105,7 @@
               <b-row class="row-gap-top"></b-row>
               <b-row class="col-row-top">
                 <b-col class="col-row-top" cols="2">
-                  <i class="piggy fas fa-piggy-bank fa-2x"></i>
+                  <i class="piggy fas fa-money-bill fa-2x mt-1"></i>
                 </b-col>
                 <b-col cols="10">
                   <h4 class="ac-details-header mb-2">{{ account.fiName }}</h4>
@@ -157,7 +157,7 @@
                     variant="info"
                     size="md"
                     class="float-left"
-                    @click="closeModel()"
+                    @click="statement(account)"
                   >
                     Statement
                   </b-button>
@@ -168,7 +168,7 @@
                     variant="warning"
                     size="md"
                     class="float-left ml-4"
-                    @click="closeModel()"
+                    @click="transfer(account)"
                   >
                     Transfer
                   </b-button>
@@ -189,18 +189,22 @@
         </b-col>
         <b-col class="divider-col" cols="12"></b-col>
         <b-col class="left-col-savings" cols="2"
-          ><i class="fas fa-piggy-bank fa-4x mt-4"></i>
+          >
+          <i class="left-col-p fas fa-balance-scale fa-sm mt-4"></i>
+            <b-container class="left-container">
+          <i id="piggy" class="fas fa-piggy-bank fa-4x mt-4"></i>
           <h5 class="h5-ca mt-4">Total Savings Account Balance:</h5>
           <number
             class="currentACTotal"
             ref="number1"
             :from="0"
-            :to="currentAccountTotal"
+            :to="savingsAccountTotal"
             :format="theFormatAC"
             :duration="5"
             :delay="2"
             easing="Power1.easeOut"
           />
+            </b-container>
         </b-col>
 
         <b-col class="right-col-savings" cols="10"
@@ -228,10 +232,10 @@
                           ><b-row
                             ><b-button
                               v-b-popover.hover.top="
-                                'View the details for the account'
+                                'View account details.'
                               "
                               title="Account Details"
-                              @click="detailsModal(savingsAccount)"
+                              @click="detailsModalSave(savingsAccount)"
                               class="mb-2"
                               size="sm"
                               id="details-button-c"
@@ -247,10 +251,106 @@
                 </b-container>
               </b-card>
             </div>
-          </div></b-col
+          </div>
+          <b-modal
+            id="modal-center-save"
+            hide-footer
+            hide-header
+            centered
+            squared
+            button-size="sm"
+          >
+            <b-container fluid>
+              <b-row class="row-gap-top"></b-row>
+              <b-row class="col-row-topS">
+                <b-col class="col-row-topS" cols="2">
+                  <i class="piggy fas fa-piggy-bank fa-2x"></i>
+                </b-col>
+                <b-col cols="10">
+                  <h4 class="ac-details-header mb-2">{{ account.fiName }}</h4>
+                </b-col>
+              </b-row>
+              <b-row class="mt-2">
+                <b-col class="col-modal-detailsS" cols="2"></b-col>
+                <b-col cols="">
+                  <p class="text-ac-details">
+                    Account Type: {{ account.accountType }}
+                  </p>
+                </b-col>
+              </b-row>
+              <b-row>
+                <b-col class="col-modal-detailsS" cols="2"></b-col>
+                <b-col cols="">
+                  <p class="text-ac-details">Balance: €{{ account.balance }}</p>
+                </b-col></b-row
+              >
+              <b-row>
+                <b-col class="col-modal-detailsS" cols="2"></b-col>
+                <b-col cols="">
+                  <p class="text-ac-details">IBAN: {{ account.iban }}</p>
+                </b-col></b-row
+              >
+              <b-row>
+                <b-col class="col-modal-detailsS" cols="2"></b-col>
+                <b-col cols="">
+                  <p class="text-ac-details">
+                    Aavailable Overdraft: €{{ account.overDraft }}
+                  </p>
+                </b-col></b-row
+              >
+              <b-row>
+                <b-col class="col-modal-detailsS" cols="2"></b-col>
+                <b-col cols="">
+                  <p class="text-ac-details">
+                    Updated Last: {{ account.updatedAt }}
+                  </p>
+                </b-col></b-row
+              >
+              <b-row>
+                <b-col class="col-modal-detailsS" cols="2"></b-col>
+                <b-col cols="">
+                  <b-button
+                    v-b-popover.hover.top="'View your account statement'"
+                    title="Statement"
+                    squared
+                    variant="info"
+                    size="md"
+                    class="float-left"
+                    @click="statement(account)"
+                  >
+                    Statement
+                  </b-button>
+                  <b-button
+                    v-b-popover.hover.top="'Transfer funds to another account'"
+                    title="Transfer"
+                    squared
+                    variant="warning"
+                    size="md"
+                    class="float-left ml-4"
+                    @click="transfer(account)"
+                  >
+                    Transfer
+                  </b-button>
+
+                  <b-button
+                    squared
+                    variant="success"
+                    size="md"
+                    class="float-right"
+                    @click="closeModelSave()"
+                  >
+                    OK
+                  </b-button>
+                </b-col></b-row
+              >
+            </b-container>
+          </b-modal>
+          </b-col
         >
+        <b-col class="bottom-col" cols="12"></b-col>
+        <b-col class="bottom-col-last" cols="12"></b-col>
       </b-row>
-      <b-col class="bottom-col" cols="12"></b-col>
+      
     </b-container>
   </div>
 </template>
@@ -286,12 +386,11 @@ export default {
     }
   },
 
-  created() {
+  created()  {
     this.getAllAccounts()
     this.getAllSavingsAccounts()
   },
   mounted() {
-    this.addAll()
   },
   watch: {
     // call again the method if the route changes
@@ -301,6 +400,15 @@ export default {
   methods: {
     closeModel() {
       this.$bvModal.hide('modal-center')
+    },
+    closeModelSave() {
+      this.$bvModal.hide('modal-center-save')
+    },
+    transfer(account){
+console.log(account)
+    },
+    statement(account){
+console.log(account)
     },
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
@@ -314,6 +422,19 @@ export default {
       this.account.overDraft = currentAccount.overDraft
       this.account.updatedAt = currentAccount.updatedAt
       this.account.userId = currentAccount.userId
+    },
+    detailsModalSave(savingsAccount){
+      this.$bvModal.show('modal-center-save')
+      this.account.balance = savingsAccount.balance
+      this.account.accountType = savingsAccount.accountType
+      this.account.bankId = savingsAccount.bankId
+      this.account.createdAt = savingsAccount.createdAt
+      this.account.currency = savingsAccount.currency
+      this.account.fiName = savingsAccount.fiName
+      this.account.iban = savingsAccount.iban
+      this.account.overDraft = savingsAccount.overDraft
+      this.account.updatedAt = savingsAccount.updatedAt
+      this.account.userId = savingsAccount.userId
     },
     getAllAccounts() {
       const acPromise = accountService.getAllCurrentAccounts()
@@ -337,11 +458,6 @@ export default {
           return console.log(error)
         })
     },
-    addAll() {
-      let valueA = this.savingsAccountTotal
-      let valueB = this.currentAccountTotal
-      this.accountTotal = valueA + valueB
-    },
     addUpCurrentAccounts(req) {
       let x
       let value = null
@@ -349,6 +465,7 @@ export default {
         value = value + req.currentAccounts[x].balance
       }
       this.currentAccountTotal = value
+      this.accountTotal = this.accountTotal+value
     },
     addUpSavingsAccounts(req) {
       let y
@@ -357,6 +474,7 @@ export default {
         value2 = value2 + req.savingsAccounts[y].balance
       }
       this.savingsAccountTotal = value2
+      this.accountTotal = this.accountTotal+value2
     },
     logout: function() {
       auth.logout()
@@ -480,9 +598,15 @@ export default {
   margin-right: 10px;
 }
 .col-modal-details {
-  background: #eef9bf;
+  background: #18b0b0;
+}
+.col-modal-detailsS{
+  background: #de7119;
 }
 .col-row-top {
+  background-color: #dee3e2;
+}
+.col-row-topS{
   background-color: #dee3e2;
 }
 .row-gap-top {
@@ -502,21 +626,26 @@ export default {
   background-color: #ef4b4b;
 }
 .divider-col {
-  background-color: #e3f6f5;
-  padding: 5px;
+  background-color: #6b7a86;
+  padding: 1px;
 }
 .divider-col-top {
   background-color: #e3f6f5;
-  padding: 5px;
+  
 }
 .bottom-col {
-  background-color: #e3f6f5;
+  background-color: #6b7a86;
+  padding:1px;
 }
 
 #fa-balance-sm {
   display: none;
 }
-
+.bottom-col-last{
+  background: rgb(227,246,245);
+background: linear-gradient(180deg, rgba(227,246,245,1) 0%, rgba(255,255,255,1) 50%);
+  padding:30px;
+}
 #fa-balance-lg {
   display:inline-block;
   margin-right:10px;
@@ -524,7 +653,6 @@ export default {
 
 .div-center-top{
   width:70%;
-
 }
 
 @media (max-width: 870px) {
@@ -571,6 +699,26 @@ export default {
     );
   }
 
+  .b-card-account-savings {
+  width: 130px;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  height: 200px;
+    display: flex;
+    flex-direction: column;
+    display: inline-block;
+    align-content: center;
+    text-align: center;
+  background: rgb(247, 95, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(247, 95, 0, 1) 0%,
+    rgba(247, 95, 0, 1) 10%,
+    rgba(249, 249, 249, 1) 10%
+  );
+}
+
   .h5-ca {
     font-family: 'Roboto', sans-serif;
     font-family: 'Open Sans', sans-serif;
@@ -596,6 +744,9 @@ export default {
   }
   #fas-scale {
     display: none;
+  }
+  #piggy{
+    display:none;
   }
   #fa-bank {
     display: none;

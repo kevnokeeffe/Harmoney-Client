@@ -1,9 +1,7 @@
 <template>
   <div class="container-signUp">
-    <b-jumbotron
-      class="b-jumbotron-signUp"
-    >
-          <h1 class="h1-register">Sign-Up</h1>
+    <b-jumbotron class="b-jumbotron-signUp">
+      <h1 class="h1-register">Sign-Up</h1>
       <div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
           <b-form-group
@@ -12,6 +10,7 @@
             label-for="input-fName"
           >
             <b-form-input
+              v-b-popover.hover.top="'Enter first name.'"
               id="input-fName"
               v-model="form.fName"
               required
@@ -25,6 +24,7 @@
             label-for="input-lName"
           >
             <b-form-input
+              v-b-popover.hover.top="'Enter last name.'"
               id="input-lName"
               v-model="form.lName"
               required
@@ -39,6 +39,7 @@
             description="We'll never share your email with anyone else."
           >
             <b-form-input
+              v-b-popover.hover.top="'Enter e-mail here.'"
               id="input-email"
               v-model="form.email"
               type="email"
@@ -52,6 +53,7 @@
             description="We'll never share your phone number with anyone else."
           >
             <vue-tel-input
+              v-b-popover.hover.top="'Enter phone number here.'"
               v-bind="bindProps"
               v-model="form.phone"
             ></vue-tel-input>
@@ -66,6 +68,7 @@
             label-for="input-password"
           >
             <b-form-input
+              v-b-popover.hover.top="'Enter password here.'"
               type="password"
               id="text-password"
               aria-describedby="password-help-block"
@@ -74,14 +77,15 @@
               placeholder="Enter password"
             ></b-form-input>
             <b-form-text id="password-help-block">
-              Your password must be 6-20 characters long, contain letters and
-              numbers, and must not contain spaces, special characters, or
+              Your password must be 6-20 characters long, contain letters,
+              special characters and numbers, but should not contain spaces or
               emoji.
             </b-form-text>
           </b-form-group>
 
           <b-form-group id="input-group-checkboxes">
             <b-button
+              v-b-popover.hover.top="'Read the terms and conditions.'"
               class="mt-2 mb-2"
               squared
               variant="warning"
@@ -90,6 +94,9 @@
               >Terms & Conditions</b-button
             >
             <b-form-checkbox
+              v-b-popover.hover.top="
+                'Click here to accept the terms and conditions.'
+              "
               class="mt-2 mb-2"
               v-model="form.checked"
               value="true"
@@ -98,6 +105,7 @@
           </b-form-group>
 
           <b-button
+            v-b-popover.hover.top="'Continue the sign-up process.'"
             type="button"
             class="mr-2"
             @click="showContinueModal()"
@@ -106,49 +114,73 @@
             >Continue</b-button
           >
 
-          <b-modal id="modal-center" centered hide-footer>
+          <b-modal
+            id="modal-center"
+            headerBgVariant="dark"
+            headerTextVariant="light"
+            centered
+            hide-footer
+          >
             <template v-slot:modal-header>
-              <!-- Emulate built in modal header close button action -->
               <h5>Mobile Validation</h5>
             </template>
 
             <template>
-              <p>
-                Please select the "Send Verification Code" button we will send a
-                code to your mobile phone. Then enter the code you recive in the
-                input field below.
-              </p>
-              <b-form-input
-                id="vCode-input"
-                v-model="vCode"
-                required
-                placeholder="Enter validation code"
-              ></b-form-input>
-              <b-button
-                class="mt-4 mr-4"
-                squared
-                variant="warning"
-                @click="verifyPing()"
-                >Send Verification Code</b-button
-              >
+                <b-row>
+                  <b-col cols="1"></b-col>
+                  <b-col cols="10">
+                    <p>
+                      Please select the "Send" button we will send a code to
+                      your mobile phone. Then enter the code you recive in the
+                      input field below.
+                    </p>
+                  </b-col>
+                  <b-col cols="1"></b-col>
+                </b-row>
+                <b-row>
+                  <b-col cols="1"></b-col>
+                  <b-col cols="2"
+                    ><b-button
+                      v-b-popover.hover.top="
+                        'Send verification code to your mobile.'
+                      "
+                      squared
+                      variant="warning"
+                      @click="verifyPing()"
+                      >Send</b-button
+                    >
+                  </b-col>
+                  <b-col cols="8">
+                    <b-form-input
+                    v-b-popover.hover.top="
+                        'Please enter your 10 digit verification code here..'
+                      "
+                      v-model="vCode"
+                      required
+                      trim
+                      placeholder="Enter validation code"
+                    ></b-form-input>
+                  </b-col>
+                  <b-col cols="1"></b-col
+                ></b-row>
 
-              <b-button
-                class="mt-4 ml-4 mr-2"
-                squared
-                variant="danger"
-                @click="hideModal()"
-              >
-                Cancel
-              </b-button>
-              <b-button
-                class="mt-4 mr-2"
-                squared
-                type="submit"
-                variant="primary"
-                @click="onSubmit()"
-              >
-                Submit
-              </b-button>
+                <b-button
+                  class="float-right ml-2  mt-4"
+                  squared
+                  type="submit"
+                  variant="primary"
+                  @click="onSubmit()"
+                >
+                  Submit
+                </b-button>
+                <b-button
+                  class="float-right mt-4"
+                  squared
+                  variant="danger"
+                  @click="hideModal()"
+                >
+                  Cancel
+                </b-button>
             </template>
           </b-modal>
 
@@ -268,7 +300,8 @@ export default {
         phone: null,
         email: null,
         password: null,
-        checked: null
+        checked: null,
+        verified: true
       },
       vCode: null,
       show: true
@@ -286,7 +319,6 @@ export default {
           if (response.data.message === true) {
             this.codeValid()
             valid = true
-            //return
           } else if (response.data.message === false) {
             valid = false
           }
@@ -299,17 +331,16 @@ export default {
           email: this.form.email,
           password: this.form.password,
           phone: this.form.phone,
-          verified: true
+          verified: this.form.verified
         }
         const registerPromise = auth.registerAuthyUser(user)
         await Promise.resolve(registerPromise).then(async response => {
-          console.log(response)
           if (response.data.message === true) {
             this.makeToastSuccess()
             this.hideModal()
             const loginPromise = auth.authyLogin(user)
             await Promise.resolve(loginPromise)
-            await this.$router.push({ path: '/dashboard' })
+            await this.$router.push({ path: '/harmoney-dashboard' })
           } else if (response.data.message === false) {
             this.makeToastEmailError()
             this.hideModal()
@@ -408,15 +439,36 @@ export default {
         center: true
       })
     },
+    makeToastMessageError() {
+      this.$bvToast.toast('Sorry but your email is already exists on the database!', {
+        title: '2FA!',
+        variant: 'danger',
+        solid: true,
+        center: true
+      })
+    },
     verifyPing() {
       if (this.form.phone != '' && this.form.phone.length >= 10) {
         const verify = {
+          phone: this.form.phone,
+          email: this.form.email
+        }
+        const verifyAuth = {
           phone: this.form.phone
         }
-        const verifyPromise = auth.validateAuthyUser(verify)
-        Promise.resolve(verifyPromise).then(async response => {
-          if (response.data.message === true) {
-            this.makeSuccessCode()
+        const verifyEmail = auth.checkSignUpEmail(verify)
+        Promise.resolve(verifyEmail).then(async resp1 => {
+          if (resp1.data.message === true) {
+            const verifyPromise = await auth.validateAuthyUser(verifyAuth)
+            await Promise.resolve(verifyPromise).then(response => {
+              if (response.data.message === true) {
+                this.makeSuccessCode()
+              } else if (response.data.message == false) {
+                this.makeToastMessageError()
+              }
+            })
+          } else if (resp1.data.message === false) {
+            this.makeToastMessageError()
           }
         })
       } else {
@@ -451,13 +503,18 @@ export default {
 
 <style>
 .container-signUp {
-   background: rgb(249,190,2);
-  background: linear-gradient(90deg, rgba(249,190,2,1) 0%, rgba(249,190,2,1) 22%, rgba(255,255,240,1) 22%);
+  background: rgb(249, 190, 2);
+  background: linear-gradient(
+    90deg,
+    rgba(249, 190, 2, 1) 0%,
+    rgba(249, 190, 2, 1) 22%,
+    rgb(250, 245, 228) 22%
+  );
   padding-top: 4px;
-  padding-bottom:30%;
-  height:100%;
-left:0;
-right:0;
+  padding-bottom: 30%;
+  height: 100%;
+  left: 0;
+  right: 0;
 }
 
 .b-jumbotron-signUp {
@@ -472,8 +529,8 @@ right:0;
   background: linear-gradient(
     180deg,
     rgba(108, 100, 139, 1) 14%,
-    rgba(255, 255, 240, 1) 14%,
-    rgba(255, 255, 240, 1) 98%,
+    rgba(254, 254, 254, 1) 14%,
+    rgba(254, 254, 254, 1) 98%,
     rgba(108, 100, 139, 1) 98%
   );
 }
@@ -486,5 +543,4 @@ right:0;
   font-size: 2em;
   margin-bottom: 50px;
 }
-
 </style>

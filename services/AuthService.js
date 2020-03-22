@@ -112,12 +112,16 @@ export function validateAuthyUser(verify) {
 }
 
 export function checkValidateAuthyUser(code) {
-  return http().post("api/auth/authy-validate-code", code);
+  return http().post("api/auth/authy-validate-code-signup", code);
 }
 
 // Checking to see if the login validation code is correct
 export function checkValidateAuthyUserLogin(code) {
-  return http().post("api/auth/authy-validate-code", code);
+  return http().post("api/auth/authy-validate-code-login", code);
+}
+
+export function checkSignUpEmail(info) {
+  return http().post("api/auth/authy-check-signup-email", info);
 }
 
 export function checkForUserEmail(uEmail) {

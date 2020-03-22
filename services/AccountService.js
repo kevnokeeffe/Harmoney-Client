@@ -16,15 +16,15 @@ export async function getAllCurrentAccounts() {
 }
 
 export async function getAllSavingsAccounts() {
-  try {
-    const res = await http().get(`api/account/savings-all`, {
+  return http()
+    .get(`api/account/savings-all`, {
       method: 'GET',
     })
-    return res.data
-  }
-  catch (error) {
-    return console.log(error)
-  }
+    .then(res => {
+      return res.data})
+    .catch(error => {
+      return console.log(error)
+    })
 }
 
 export function getIndividualCurrentAccount(id) {

@@ -2,29 +2,24 @@
   <div class="div-harmoney-dashboard">
     <b-container fluid class="b-container-dashboard">
       <b-row class="b-row-dashboard">
-
-
         <b-col class="left-top-col" cols="2">
           <i id="fa-bank" class="fas fa-university fa-5x mt-3"></i>
           <i id="fa-bank-sm" class="fas fa-university fa-3x mt-3"></i>
         </b-col>
         <b-col class="center-col" cols="10">
           <div class="div-center-top">
-            <i
-            id="fa-balance-lg"
-            class="fas fa-balance-scale fa-4x mt-4"
-          ></i>
-          <i id="fa-balance-sm" class=" fas fa-balance-scale fa-2x mt-4"></i>
-          <number
-            class="accountsTotal mt-5"
-            ref="number1"
-            :from="0"
-            :to="accountTotal"
-            :format="theFormat"
-            :duration="5"
-            :delay="2"
-            easing="Power1.easeOut"
-          />
+            <i id="fa-balance-lg" class="fas fa-balance-scale fa-4x mt-4"></i>
+            <i id="fa-balance-sm" class=" fas fa-balance-scale fa-2x mt-4"></i>
+            <number
+              class="accountsTotal mt-5"
+              ref="number1"
+              :from="0"
+              :to="accountTotal"
+              :format="theFormat"
+              :duration="5"
+              :delay="2"
+              easing="Power1.easeOut"
+            />
           </div>
         </b-col>
 
@@ -71,9 +66,7 @@
                         ><b-col class="mt-3"
                           ><b-row
                             ><b-button
-                              v-b-popover.hover.top="
-                                'View account details.'
-                              "
+                              v-b-popover.hover.top="'View account details.'"
                               title="Account Details"
                               @click="detailsModal(currentAccount)"
                               class="mb-2"
@@ -188,23 +181,22 @@
           </b-modal>
         </b-col>
         <b-col class="divider-col" cols="12"></b-col>
-        <b-col class="left-col-savings" cols="2"
-          >
+        <b-col class="left-col-savings" cols="2">
           <i class="left-col-p fas fa-balance-scale fa-sm mt-4"></i>
-            <b-container class="left-container">
-          <i id="piggy" class="fas fa-piggy-bank fa-4x mt-4"></i>
-          <h5 class="h5-ca mt-4">Total Savings Account Balance:</h5>
-          <number
-            class="currentACTotal"
-            ref="number1"
-            :from="0"
-            :to="savingsAccountTotal"
-            :format="theFormatAC"
-            :duration="5"
-            :delay="2"
-            easing="Power1.easeOut"
-          />
-            </b-container>
+          <b-container class="left-container">
+            <i id="piggy" class="fas fa-piggy-bank fa-4x mt-4"></i>
+            <h5 class="h5-ca mt-4">Total Savings Account Balance:</h5>
+            <number
+              class="currentACTotal"
+              ref="number1"
+              :from="0"
+              :to="savingsAccountTotal"
+              :format="theFormatAC"
+              :duration="5"
+              :delay="2"
+              easing="Power1.easeOut"
+            />
+          </b-container>
         </b-col>
 
         <b-col class="right-col-savings" cols="10"
@@ -231,9 +223,7 @@
                         ><b-col class="mt-3"
                           ><b-row
                             ><b-button
-                              v-b-popover.hover.top="
-                                'View account details.'
-                              "
+                              v-b-popover.hover.top="'View account details.'"
                               title="Account Details"
                               @click="detailsModalSave(savingsAccount)"
                               class="mb-2"
@@ -345,12 +335,10 @@
               >
             </b-container>
           </b-modal>
-          </b-col
-        >
+        </b-col>
         <b-col class="bottom-col" cols="12"></b-col>
         <b-col class="bottom-col-last" cols="12"></b-col>
       </b-row>
-      
     </b-container>
   </div>
 </template>
@@ -386,29 +374,46 @@ export default {
     }
   },
 
-  created()  {
-    this.getAllAccounts()
-    this.getAllSavingsAccounts()
+  created() {
+    // this.getPost()
+    // this.getAllAccounts()
+    this.getCurrentAccounts()
+    //this.getAllSavingsAccounts()
   },
-  mounted() {
-  },
+  mounted() {},
   watch: {
     // call again the method if the route changes
     $route: 'getAllAccounts',
-    $route2: 'getAllSavingsAccounts'
+    $route2: 'getAllSavingsAccounts',
+    $route3: 'getCurrentAccounts'
   },
   methods: {
+    getPost() {
+      const postPromise = accountService.getPostCurrentAccounts()
+      Promise.resolve(postPromise)
+        .then(res => {
+          if (res === false) {
+            console.log('fail')
+          } else {
+            console.log(res)
+            this.currentAccount = res.currentAccount
+          }
+        })
+        .catch(error => {
+          return console.log(error)
+        })
+    },
     closeModel() {
       this.$bvModal.hide('modal-center')
     },
     closeModelSave() {
       this.$bvModal.hide('modal-center-save')
     },
-    transfer(account){
-console.log(account)
+    transfer(account) {
+      console.log(account)
     },
-    statement(account){
-console.log(account)
+    statement(account) {
+      console.log(account)
     },
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
@@ -423,7 +428,7 @@ console.log(account)
       this.account.updatedAt = currentAccount.updatedAt
       this.account.userId = currentAccount.userId
     },
-    detailsModalSave(savingsAccount){
+    detailsModalSave(savingsAccount) {
       this.$bvModal.show('modal-center-save')
       this.account.balance = savingsAccount.balance
       this.account.accountType = savingsAccount.accountType
@@ -436,12 +441,24 @@ console.log(account)
       this.account.updatedAt = savingsAccount.updatedAt
       this.account.userId = savingsAccount.userId
     },
+    getCurrentAccounts() {
+      const postAccount = accountService.getPostCurrentAccounts()
+      const aibAccount = accountService.getAIBCurrentAccounts()
+      const creditUnionAccount = accountService.getAllCUcurrentAccounts()
+      const witAccount = accountService.getAllWITcurrentAccounts()
+
+      Promise.all([postAccount,aibAccount,creditUnionAccount,witAccount]).then((values) =>{
+        console.log(values)
+      })
+    },
     getAllAccounts() {
       const acPromise = accountService.getAllCurrentAccounts()
       Promise.resolve(acPromise)
         .then(res => {
+          if(res.message===true){
           this.currentAccount = res.currentAccounts
           this.addUpCurrentAccounts(res)
+          }
         })
         .catch(error => {
           return console.log(error)
@@ -465,7 +482,7 @@ console.log(account)
         value = value + req.currentAccounts[x].balance
       }
       this.currentAccountTotal = value
-      this.accountTotal = this.accountTotal+value
+      this.accountTotal = this.accountTotal + value
     },
     addUpSavingsAccounts(req) {
       let y
@@ -474,7 +491,7 @@ console.log(account)
         value2 = value2 + req.savingsAccounts[y].balance
       }
       this.savingsAccountTotal = value2
-      this.accountTotal = this.accountTotal+value2
+      this.accountTotal = this.accountTotal + value2
     },
     logout: function() {
       auth.logout()
@@ -600,13 +617,13 @@ console.log(account)
 .col-modal-details {
   background: #18b0b0;
 }
-.col-modal-detailsS{
+.col-modal-detailsS {
   background: #de7119;
 }
 .col-row-top {
   background-color: #dee3e2;
 }
-.col-row-topS{
+.col-row-topS {
   background-color: #dee3e2;
 }
 .row-gap-top {
@@ -631,28 +648,31 @@ console.log(account)
 }
 .divider-col-top {
   background-color: #e3f6f5;
-  
 }
 .bottom-col {
   background-color: #6b7a86;
-  padding:1px;
+  padding: 1px;
 }
 
 #fa-balance-sm {
   display: none;
 }
-.bottom-col-last{
-  background: rgb(227,246,245);
-background: linear-gradient(180deg, rgba(227,246,245,1) 0%, rgba(255,255,255,1) 50%);
-  padding:30px;
+.bottom-col-last {
+  background: rgb(227, 246, 245);
+  background: linear-gradient(
+    180deg,
+    rgba(227, 246, 245, 1) 0%,
+    rgba(255, 255, 255, 1) 50%
+  );
+  padding: 30px;
 }
 #fa-balance-lg {
-  display:inline-block;
-  margin-right:10px;
+  display: inline-block;
+  margin-right: 10px;
 }
 
-.div-center-top{
-  width:70%;
+.div-center-top {
+  width: 70%;
 }
 
 @media (max-width: 870px) {
@@ -669,15 +689,14 @@ background: linear-gradient(180deg, rgba(227,246,245,1) 0%, rgba(255,255,255,1) 
   }
   #fa-balance-sm {
     display: inline-block;
-   margin-right:4px;
-
+    margin-right: 4px;
   }
   #fa-balance-lg {
     display: none;
   }
-.div-center-top{
-  width:80%;
-}
+  .div-center-top {
+    width: 80%;
+  }
   .b-card-account {
     display: flex;
     flex-direction: column;
@@ -700,24 +719,24 @@ background: linear-gradient(180deg, rgba(227,246,245,1) 0%, rgba(255,255,255,1) 
   }
 
   .b-card-account-savings {
-  width: 130px;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  height: 200px;
+    width: 130px;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    height: 200px;
     display: flex;
     flex-direction: column;
     display: inline-block;
     align-content: center;
     text-align: center;
-  background: rgb(247, 95, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(247, 95, 0, 1) 0%,
-    rgba(247, 95, 0, 1) 10%,
-    rgba(249, 249, 249, 1) 10%
-  );
-}
+    background: rgb(247, 95, 0);
+    background: linear-gradient(
+      90deg,
+      rgba(247, 95, 0, 1) 0%,
+      rgba(247, 95, 0, 1) 10%,
+      rgba(249, 249, 249, 1) 10%
+    );
+  }
 
   .h5-ca {
     font-family: 'Roboto', sans-serif;
@@ -745,8 +764,8 @@ background: linear-gradient(180deg, rgba(227,246,245,1) 0%, rgba(255,255,255,1) 
   #fas-scale {
     display: none;
   }
-  #piggy{
-    display:none;
+  #piggy {
+    display: none;
   }
   #fa-bank {
     display: none;

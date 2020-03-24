@@ -140,7 +140,7 @@ export default {
     return {
       form: {
         email: '',
-        name: '',
+        password: '',
         fi: null,
         checked: null
       },

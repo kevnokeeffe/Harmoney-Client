@@ -169,7 +169,7 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
               }else{
-                this.$router.push({ path: '/dashboard' })
+                this.$router.push({ path: '/harmoney-dashboard' })
               }
           })
         } else if (this.form.fi === 'Allied Irish Bank') {
@@ -178,7 +178,7 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
               }else{
-                this.$router.push({ path: '/dashboard' })
+                this.$router.push({ path: '/harmoney-dashboard' })
               }
           })
         } else if (this.form.fi === 'Credit Union') {
@@ -187,7 +187,7 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
               }else{
-                this.$router.push({ path: '/dashboard' })
+                this.$router.push({ path: '/harmoney-dashboard' })
               }
           })
         } else if (this.form.fi === 'Post Office') {
@@ -196,7 +196,7 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
               }else{
-                this.$router.push({ path: '/dashboard' })
+                this.$router.push({ path: '/harmoney-dashboard' })
               }
           })
         }

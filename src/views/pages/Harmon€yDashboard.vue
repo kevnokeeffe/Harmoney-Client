@@ -375,17 +375,15 @@ export default {
   },
 
   created() {
-    // this.getPost()
-    // this.getAllAccounts()
     this.getCurrentAccounts()
     //this.getAllSavingsAccounts()
   },
-  mounted() {},
+  mounted() {
+    //this.getCurrentAccounts()
+  },
   watch: {
     // call again the method if the route changes
-    $route: 'getAllAccounts',
-    $route2: 'getAllSavingsAccounts',
-    $route3: 'getCurrentAccounts'
+    //$route: 'getCurrentAccounts'
   },
   methods: {
     getPost() {
@@ -448,7 +446,16 @@ export default {
       const witAccount = accountService.getAllWITcurrentAccounts()
 
       Promise.all([postAccount,aibAccount,creditUnionAccount,witAccount]).then((values) =>{
-        console.log(values)
+        let i = 0;
+        for(i = 0; i < values.length; i++){
+        if(values[i]!= false){
+        let  Account = values[i].currentAccounts[0]
+        this.currentAccount[i] = Account 
+        }
+        }
+        this.currentAccount = this.currentAccount.flat()
+        console.log(this.currentAccount.flat())
+        this.addUpCurrentAccounts(values)
       })
     },
     getAllAccounts() {
@@ -475,14 +482,17 @@ export default {
           return console.log(error)
         })
     },
+    // Working...
     addUpCurrentAccounts(req) {
       let x
       let value = null
-      for (x = 0; x < req.currentAccounts.length; x++) {
-        value = value + req.currentAccounts[x].balance
+      for (x = 0; x < req.length; x++) {
+        if (req[x]!=false){
+        value =  value + req[x].currentAccounts[0].balance
+        }
       }
       this.currentAccountTotal = value
-      this.accountTotal = this.accountTotal + value
+      this.accountTotal =  value
     },
     addUpSavingsAccounts(req) {
       let y

@@ -1,6 +1,7 @@
 <template>
   <div class="container-home">
     <h1 class="home-h1">HARMON€Y</h1>
+    <h3 class="home-h3">Your personal accounts management system</h3>
   </div>
 </template>
 
@@ -39,6 +40,13 @@ export default {
   font-size: 8em;
   color: ivory;
 }
+
+.home-h3{
+  font-family: 'Varela Round', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  align-self: center;
+  color: ivory;
+}
 }
 
 @media (max-width: 940px) and (min-width: 500px) {
@@ -50,6 +58,13 @@ export default {
   font-size: 5em;
   color: ivory;
 }
+
+.home-h3{
+  font-family: 'Varela Round', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  align-self: center;
+  color: ivory;
+}
 }
 
 @media (max-width: 500px){
@@ -59,6 +74,13 @@ export default {
   align-self: center;
   margin-top: 50%;
   font-size: 3em;
+  color: ivory;
+}
+
+.home-h3{
+  font-family: 'Varela Round', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  align-self: center;
   color: ivory;
 }
 }

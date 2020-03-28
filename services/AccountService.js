@@ -96,6 +96,80 @@ export async function getAllWITcurrentAccounts() {
     })
 }
 
+// SAVINGS ACCOUNT CALLS
+
+// WIT method call
+export async function getAllWITsavingsAccounts() {
+  let message = false
+  return http()
+    .get(`api/account/saving-all-wit`, {
+      method: 'GET'
+    })
+    .then(res => {
+      if (res.data.message === false) {
+        return message
+      } 
+        return res.data
+    })
+    .catch(error => {
+      return console.log(error)
+    })
+}
+
+// AIB method call
+export async function getAllAIBsavingsAccounts() {
+  let message = false
+  return http()
+    .get(`api/account/saving-all-aib`, {
+      method: 'GET'
+    })
+    .then(res => {
+      if (res.data.message === false) {
+        return message
+      } 
+        return res.data
+    })
+    .catch(error => {
+      return console.log(error)
+    })
+}
+
+// Credit Union method call
+export async function getAllCUsavingsAccounts() {
+  let message = false
+  return http()
+    .get(`api/account/saving-all-cu`, {
+      method: 'GET'
+    })
+    .then(res => {
+      if (res.data.message === false) {
+        return message
+      } 
+        return res.data
+    })
+    .catch(error => {
+      return console.log(error)
+    })
+}
+
+// AIB method call
+export async function getAllPostSavingsAccounts() {
+  let message = false
+  return http()
+    .get(`api/account/saving-all-post`, {
+      method: 'GET'
+    })
+    .then(res => {
+      if (res.data.message === false) {
+        return message
+      } 
+        return res.data
+    })
+    .catch(error => {
+      return console.log(error)
+    })
+}
+
 export function getIndividualCurrentAccount(id) {
   return http().get(`api/account/current-all/${id}`)
 }

@@ -352,7 +352,7 @@ export default {
     return {
       accounts: null,
       currentAccount: [],
-      savingsAccount: null,
+      savingsAccount: [],
       currentAccountId: null,
       savingsAccountId: null,
       accountTotal: 0,
@@ -373,17 +373,16 @@ export default {
       }
     }
   },
-
   created() {
     this.getCurrentAccounts()
-    //this.getAllSavingsAccounts()
+    this.getSavingsAccounts()
   },
   mounted() {
-    //this.getCurrentAccounts()
   },
   watch: {
     // call again the method if the route changes
-    //$route: 'getCurrentAccounts'
+    $route: 'getCurrentAccounts',
+    $routeSav: 'getSavingsAccounts'
   },
   methods: {
     getPost() {
@@ -393,7 +392,6 @@ export default {
           if (res === false) {
             console.log('fail')
           } else {
-            console.log(res)
             this.currentAccount = res.currentAccount
           }
         })
@@ -454,34 +452,28 @@ export default {
         }
         }
         this.currentAccount = this.currentAccount.flat()
-        console.log(this.currentAccount.flat())
         this.addUpCurrentAccounts(values)
       })
     },
-    getAllAccounts() {
-      const acPromise = accountService.getAllCurrentAccounts()
-      Promise.resolve(acPromise)
-        .then(res => {
-          if(res.message===true){
-          this.currentAccount = res.currentAccounts
-          this.addUpCurrentAccounts(res)
-          }
-        })
-        .catch(error => {
-          return console.log(error)
-        })
+    getSavingsAccounts() {
+      const postAccount = accountService.getAllPostSavingsAccounts()
+      const aibAccount = accountService.getAllAIBsavingsAccounts()
+      const creditUnionAccount = accountService.getAllCUsavingsAccounts()
+      const witAccount = accountService.getAllWITsavingsAccounts()
+
+      Promise.all([postAccount,aibAccount,creditUnionAccount,witAccount]).then((values) =>{
+        let i = 0;
+        for(i = 0; i < values.length; i++){
+        if(values[i]!= false){
+        let  Account = values[i].savingsAccounts[0]
+        this.savingsAccount[i] = Account 
+        }
+        }
+        this.savingsAccount = this.savingsAccount.flat()
+        this.addUpSavingsAccounts(values)
+      })
     },
-    getAllSavingsAccounts() {
-      const asPromise = accountService.getAllSavingsAccounts()
-      Promise.resolve(asPromise)
-        .then(res => {
-          this.savingsAccount = res.savingsAccounts
-          this.addUpSavingsAccounts(res)
-        })
-        .catch(error => {
-          return console.log(error)
-        })
-    },
+
     // Working...
     addUpCurrentAccounts(req) {
       let x
@@ -492,16 +484,18 @@ export default {
         }
       }
       this.currentAccountTotal = value
-      this.accountTotal =  value
+      this.accountTotal =  this.accountTotal + value
     },
     addUpSavingsAccounts(req) {
-      let y
-      let value2 = null
-      for (y = 0; y < req.savingsAccounts.length; y++) {
-        value2 = value2 + req.savingsAccounts[y].balance
+      let x
+      let value = null
+      for (x = 0; x < req.length; x++) {
+        if (req[x]!=false){
+        value =  value + req[x].savingsAccounts[0].balance
+        }
       }
-      this.savingsAccountTotal = value2
-      this.accountTotal = this.accountTotal + value2
+      this.savingsAccountTotal = value
+      this.accountTotal =  this.accountTotal + value
     },
     logout: function() {
       auth.logout()

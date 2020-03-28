@@ -4,7 +4,11 @@ import jwt from "jsonwebtoken";
 
 export function isLoggedIn() {
   const token = localStorage.getItem("token");
-  return token != null;
+  if(token != null){
+  return true;
+  } else if (token === null || token === undefined){
+    return false
+  }
 }
 
 export function authyLogin(user) {

@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    isLoggedIn: false,
+    isLoggedIn: auth.isLoggedIn(),
     apiUrl: `http://localhost:${process.env.VUE_APP_PORT}`,
     fName: null,
     email: null,

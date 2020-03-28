@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar class="b-navbar" toggleable="lg" type="dark">
-      <b-navbar-brand @click="home()" class="b-navbar-brand">HARMON€Y</b-navbar-brand>
+      <b-navbar-brand href="/" class="b-navbar-brand">HARMON€Y</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -68,14 +68,13 @@
             href="#"
             >Logout</b-nav-item
           >
-          <b-nav-item
-            class="b-nav-name"
+          <b-navbar-brand
+            class="b-nav-name ml-2"
             disable
-            active
             v-if="$store.state.isLoggedIn"
           >
-            Welcome, {{ this.$store.state.fName }}
-            {{ this.$store.state.lName }}</b-nav-item
+            Hi, {{ this.fName }}
+            </b-navbar-brand
           >
         </b-navbar-nav>
       </b-collapse>
@@ -86,7 +85,16 @@
 <script>
 import * as auth from '../../services/AuthService'
 export default {
+  data() {
+    return {
+      fName : auth.getName()
+    }
+  },
   name: 'Navbar',
+  created(){
+    //console.log(this.fName)
+
+  },
   methods: {
     home(){
       if (auth.isLoggedIn()) {
@@ -148,6 +156,7 @@ export default {
 .b-nav-name {
   font-family: 'Open Sans', sans-serif;
 }
+
 #dropdown-menu {
   position: relative;
   display: inline-block;

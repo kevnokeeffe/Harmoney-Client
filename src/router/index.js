@@ -10,13 +10,6 @@ const routes = [
     name: 'home',
     component: () => 
     import(/* webpackChunkName: "home" */ '../views/Home.vue'),
-    // beforeEnter: (to, from, next) => {
-    //   // if (!auth.isLoggedIn()) {
-    //   //   next()
-    //   // } else {
-    //   //   next('/dashboard')
-    //   // }
-    // }
   },
   {
     path: '/about',

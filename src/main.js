@@ -6,9 +6,9 @@ import store from './store'
 import './assets/css/style.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
+import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate)
+Vue.use(Vuelidate, BootstrapVueIcons)
 // Progress Number Counter
 import Progress from 'easy-circular-progress';
 Vue.use(Progress)
@@ -48,6 +48,15 @@ import VueNumber from 'vue-number-animation'
 Vue.use(VueNumber)
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
+
+Vue.use(IconsPlugin)
+
+
+
+//Input field component to display a formatted currency value 
+import VueNumeric from 'vue-numeric-currency'
+Vue.use(VueNumeric)
+
 
 Vue.config.productionTip = false
 new Vue({

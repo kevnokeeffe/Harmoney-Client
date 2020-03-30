@@ -10,9 +10,9 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item
             v-if="$store.state.isLoggedIn"
-            class="b-nav-item"
+            class="b-nav-item h5"
             to="/harmoney-dashboard"
-            >Dashboard</b-nav-item
+            ><b-icon icon="bar-chart"></b-icon>Dashboard</b-nav-item
           >
           <b-nav-item
             v-if="!$store.state.isLoggedIn"
@@ -29,44 +29,32 @@
 
           <b-nav-item-dropdown
             v-if="$store.state.isLoggedIn"
-            class="b-nav-item-dropdown"
-            text="Options"
-            right
-          >
-            <b-dropdown-item to="/register">Old Register</b-dropdown-item>
-            <b-dropdown-item to="/dashboard">Old Dashboard</b-dropdown-item>
-            <b-dropdown-item href="#">RU</b-dropdown-item>
-            <b-dropdown-item href="#">FA</b-dropdown-item>
-          </b-nav-item-dropdown>
-
-          <b-nav-item-dropdown
-            v-if="$store.state.isLoggedIn"
-            class="b-nav-item-dropdown"
+            class="b-nav-item-dropdown h5"
             right
           >
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <em>User</em>
+              <b-icon icon="gear"></b-icon>Settings
             </template>
             <b-dropdown-item to="/harmoney-dashboard"
-              >Dashboard</b-dropdown-item
+              ><b-icon class="mr-2" icon="bar-chart"></b-icon>Dashboard</b-dropdown-item
             >
-            <b-dropdown-item to="/add-account">Add Account</b-dropdown-item>
-            <b-dropdown-item to="/user-profile">User Profile</b-dropdown-item>
-            <b-dropdown-item to="/transactions">Transactions</b-dropdown-item>
-            <b-dropdown-item to="/notifications">Notifications</b-dropdown-item>
+            <b-dropdown-item to="/add-account"><b-icon class="mr-2" icon="plus"></b-icon>Add Account</b-dropdown-item>
+            <b-dropdown-item to="/user-profile"><b-icon class="mr-2" icon="person-fill"></b-icon>User Profile</b-dropdown-item>
+            <b-dropdown-item to="/transactions"><b-icon class="mr-2" icon="reply"></b-icon>Transactions</b-dropdown-item>
+            <b-dropdown-item to="/notifications"><b-icon class="mr-2" icon="envelope"></b-icon>Notifications</b-dropdown-item>
             <b-dropdown-item
               v-if="$store.state.isLoggedIn"
               v-on:click.prevent="logout()"
-              >Logout</b-dropdown-item
+              ><b-icon class="mr-2" icon="power"></b-icon>Logout</b-dropdown-item
             >
           </b-nav-item-dropdown>
           <b-nav-item
             v-if="$store.state.isLoggedIn"
-            class="b-nav-item"
+            class="b-nav-item h5"
             v-on:click.prevent="logout()"
             href="#"
-            >Logout</b-nav-item
+            ><b-icon icon="power"></b-icon>Logout</b-nav-item
           >
           <b-navbar-brand
             class="b-nav-name ml-2"
@@ -87,13 +75,12 @@ import * as auth from '../../services/AuthService'
 export default {
   data() {
     return {
-      fName : auth.getName()
+      fName : null
     }
   },
   name: 'Navbar',
   created(){
-    //console.log(this.fName)
-
+    this.fName = auth.getName()
   },
   methods: {
     home(){

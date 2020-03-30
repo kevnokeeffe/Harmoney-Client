@@ -336,8 +336,87 @@
             </b-container>
           </b-modal>
         </b-col>
-        <b-col class="bottom-col" cols="12"></b-col>
-        <b-col class="bottom-col-last" cols="12"></b-col>
+        <b-col class="bottom-col" cols="12">
+          <b-modal id="modal-transfer" hide-footer hide-header squared centered>
+            <b-container fluid>
+              <b-row>
+                <b-col cols="6">
+                  <b-row>
+                    <b-button squared @click="internal(account)"
+                      >Internal</b-button
+                    >
+                  </b-row>
+                </b-col>
+                <b-col cols="6">
+                  <b-row>
+                    <b-button squared @click="external(account)"
+                      >External</b-button
+                    >
+                  </b-row>
+                </b-col>
+              </b-row>
+              <b-row>
+                    <b-button squared @click="backToDetails()" >Back</b-button>
+                  </b-row>
+                  <b-row>
+                    <b-button squared variant="danger" @click=" cancelModels()" >Cancel</b-button>
+                  </b-row>
+                  <b-row>
+                    <b-button squared variant="warning" @click=" sortAccounts(accounts)" >test</b-button>
+                  </b-row>
+            </b-container>
+          </b-modal>
+        </b-col>
+        <b-col class="bottom-col-last" cols="12">
+          <b-modal id="modal-internal" hide-footer hide-header squared centered>
+            <b-container fluid>
+              <b-row>
+                <b-col cols="2">
+                  <b-row>
+                
+                  </b-row>
+                </b-col>
+                <b-col cols="10">
+                  <b-row>
+                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                  </b-row>
+                  <b-row>
+                    <b-button squared @click="backToTransfer()" >Back</b-button>
+                  </b-row>
+                  <b-row>
+                    <b-button squared variant="danger" @click=" cancelModels()" >Cancel</b-button>
+                  </b-row>
+                </b-col>
+              </b-row>
+            </b-container>
+          </b-modal>
+        </b-col>
+        <b-col class="bottom-col-last" cols="12">
+          <b-modal id="modal-external" hide-footer hide-header squared centered>
+            <b-container fluid>
+              <b-row>
+                <b-col cols="2">
+                  
+                </b-col>
+                <b-col cols="10">
+                  <b-row>
+                    <b-form-input v-model="enterIban" required placeholder="Enter IBAN"></b-form-input>
+                  </b-row>
+                  <b-row>
+                    <b-form-input v-model="transferNumber" min="0" max = account.balance  required number placeholder="Enter Amount €.0"></b-form-input>
+                    <!-- <vue-numeric class="vue-numeric" autoselect placeholder=" €nter amount" currency="€" decimal-separator="." v-bind:minus="false" thousand-separator="" v-model="transferNumber" v-bind:precision="2"></vue-numeric> -->
+                  </b-row>
+                  <b-row>
+                    <b-button squared @click="backToTransfer()" >Back</b-button>
+                  </b-row>
+                  <b-row>
+                    <b-button squared variant="danger" @click=" cancelModels()" >Cancel</b-button>
+                  </b-row>
+                </b-col>
+              </b-row>
+            </b-container>
+          </b-modal>
+        </b-col>
       </b-row>
     </b-container>
   </div>
@@ -350,7 +429,9 @@ export default {
   name: 'dashboard',
   data() {
     return {
-      accounts: null,
+      selected: null,
+      options:[],
+      accounts: [],
       currentAccount: [],
       savingsAccount: [],
       currentAccountId: null,
@@ -358,6 +439,9 @@ export default {
       accountTotal: 0,
       savingsAccountTotal: 0,
       currentAccountTotal: 0,
+      transferNumber:0,
+      enterIban:null,
+      accountHoldNumber:null,
       account: {
         balance: 0,
         accountType: null,
@@ -370,7 +454,16 @@ export default {
         overDraft: null,
         updatedAt: null,
         userId: null
-      }
+      },
+      price: 123.45,
+        money: {
+          decimal: ',',
+          thousands: '.',
+          prefix: 'R$ ',
+          suffix: ' #',
+          precision: 2,
+          masked: false
+        }
     }
   },
   created() {
@@ -378,26 +471,16 @@ export default {
     this.getSavingsAccounts()
   },
   mounted() {
+     
   },
   watch: {
     // call again the method if the route changes
     $route: 'getCurrentAccounts',
-    $routeSav: 'getSavingsAccounts'
+    $routeSav: 'getSavingsAccounts',
   },
   methods: {
-    getPost() {
-      const postPromise = accountService.getPostCurrentAccounts()
-      Promise.resolve(postPromise)
-        .then(res => {
-          if (res === false) {
-            console.log('fail')
-          } else {
-            this.currentAccount = res.currentAccount
-          }
-        })
-        .catch(error => {
-          return console.log(error)
-        })
+    combineAccounts(){
+      this.accounts = this.currentAccount.concat(this.savingsAccount)
     },
     closeModel() {
       this.$bvModal.hide('modal-center')
@@ -405,11 +488,53 @@ export default {
     closeModelSave() {
       this.$bvModal.hide('modal-center-save')
     },
-    transfer(account) {
-      console.log(account)
+    sortAccounts(accounts){
+      let i = 0;
+      for (i = 0; i<accounts.length;++i){
+        console.log(accounts[i].fiName)
+        // let fiName = account[i].fiName
+        // let accountType = account[i].AccountType
+        // let iban = account[i].iban
+        this.options[i]=[
+          accounts[i].fiName,
+          accounts[i].accountType,
+          accounts[i].iban
+        ]
+      }
+      console.log(this.options)
     },
-    statement(account) {
-      console.log(account)
+    cancelModels(){
+      this.$bvModal.hide('modal-center')
+      this.$bvModal.hide('modal-center-save')
+      this.$bvModal.hide('modal-transfer')
+      this.$bvModal.hide('modal-internal')
+      this.$bvModal.hide('modal-external')
+    },
+    transfer() {
+      this.combineAccounts()
+      this.$bvModal.hide('modal-center')
+      this.$bvModal.show('modal-transfer')
+    },
+    backToTransfer(){
+      this.$bvModal.hide('modal-internal')
+      this.$bvModal.hide('modal-external')
+      this.$bvModal.show('modal-transfer')
+      // this.transfer(account)
+    },
+    backToDetails(){
+      this.$bvModal.hide('modal-transfer')
+      this.$bvModal.show('modal-center')
+    },
+
+    internal() {
+      this.$bvModal.hide('modal-transfer')
+      this.$bvModal.show('modal-internal')
+    },
+    external() {
+      this.$bvModal.hide('modal-transfer')
+      this.$bvModal.show('modal-external')
+    },
+    statement() {
     },
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
@@ -443,13 +568,18 @@ export default {
       const creditUnionAccount = accountService.getAllCUcurrentAccounts()
       const witAccount = accountService.getAllWITcurrentAccounts()
 
-      Promise.all([postAccount,aibAccount,creditUnionAccount,witAccount]).then((values) =>{
-        let i = 0;
-        for(i = 0; i < values.length; i++){
-        if(values[i]!= false){
-        let  Account = values[i].currentAccounts[0]
-        this.currentAccount[i] = Account 
-        }
+      Promise.all([
+        postAccount,
+        aibAccount,
+        creditUnionAccount,
+        witAccount
+      ]).then(values => {
+        let i = 0
+        for (i = 0; i < values.length; i++) {
+          if (values[i] != false) {
+            let Account = values[i].currentAccounts[0]
+            this.currentAccount[i] = Account
+          }
         }
         this.currentAccount = this.currentAccount.flat()
         this.addUpCurrentAccounts(values)
@@ -461,13 +591,18 @@ export default {
       const creditUnionAccount = accountService.getAllCUsavingsAccounts()
       const witAccount = accountService.getAllWITsavingsAccounts()
 
-      Promise.all([postAccount,aibAccount,creditUnionAccount,witAccount]).then((values) =>{
-        let i = 0;
-        for(i = 0; i < values.length; i++){
-        if(values[i]!= false){
-        let  Account = values[i].savingsAccounts[0]
-        this.savingsAccount[i] = Account 
-        }
+      Promise.all([
+        postAccount,
+        aibAccount,
+        creditUnionAccount,
+        witAccount
+      ]).then(values => {
+        let i = 0
+        for (i = 0; i < values.length; i++) {
+          if (values[i] != false) {
+            let Account = values[i].savingsAccounts[0]
+            this.savingsAccount[i] = Account
+          }
         }
         this.savingsAccount = this.savingsAccount.flat()
         this.addUpSavingsAccounts(values)
@@ -479,23 +614,23 @@ export default {
       let x
       let value = null
       for (x = 0; x < req.length; x++) {
-        if (req[x]!=false){
-        value =  value + req[x].currentAccounts[0].balance
+        if (req[x] != false) {
+          value = value + req[x].currentAccounts[0].balance
         }
       }
       this.currentAccountTotal = value
-      this.accountTotal =  this.accountTotal + value
+      this.accountTotal = this.accountTotal + value
     },
     addUpSavingsAccounts(req) {
       let x
       let value = null
       for (x = 0; x < req.length; x++) {
-        if (req[x]!=false){
-        value =  value + req[x].savingsAccounts[0].balance
+        if (req[x] != false) {
+          value = value + req[x].savingsAccounts[0].balance
         }
       }
       this.savingsAccountTotal = value
-      this.accountTotal =  this.accountTotal + value
+      this.accountTotal = this.accountTotal + value
     },
     logout: function() {
       auth.logout()
@@ -522,7 +657,16 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
 }
-
+/* .vue-numeric{
+  box-sizing: border-box;
+  border-radius: 5px;
+  border-color:#f1f1f1 ;
+  border: #f1f1f1;
+  
+}
+.vue-numeric:focus{
+  border: 3px solid #f1f1f1 ;
+} */
 .accounts {
   padding: 5px;
   display: flex;

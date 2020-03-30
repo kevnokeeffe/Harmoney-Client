@@ -42,6 +42,7 @@
     "vue-awesome": "^4.0.2",
     "vue-country-region-select": "^2.0.13",
     "vue-flat-surface-shader": "^1.0.5",
+    "vue-numeric-currency": "^2.4.3",
     "vue-tel-input": "^4.3.0",
     "vue-template-compiler": "^2.6.10",
     "vue-webpack": "^1.10.2",

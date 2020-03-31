@@ -67,7 +67,7 @@
                           ><b-row
                             ><b-button
                               v-b-popover.hover.top="'View account details.'"
-                              title="Account Details"
+                    
                               @click="detailsModal(currentAccount)"
                               class="mb-2"
                               size="sm"
@@ -145,7 +145,7 @@
                 <b-col cols="">
                   <b-button
                     v-b-popover.hover.top="'View your account statement'"
-                    title="Statement"
+              
                     squared
                     variant="info"
                     size="md"
@@ -156,7 +156,7 @@
                   </b-button>
                   <b-button
                     v-b-popover.hover.top="'Transfer funds to another account'"
-                    title="Transfer"
+                  
                     squared
                     variant="warning"
                     size="md"
@@ -224,7 +224,6 @@
                           ><b-row
                             ><b-button
                               v-b-popover.hover.top="'View account details.'"
-                              title="Account Details"
                               @click="detailsModalSave(savingsAccount)"
                               class="mb-2"
                               size="sm"
@@ -300,8 +299,7 @@
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
                   <b-button
-                    v-b-popover.hover.top="'View your account statement'"
-                    title="Statement"
+                  v-b-popover.hover.top="'View your account statement'"
                     squared
                     variant="info"
                     size="md"
@@ -312,7 +310,6 @@
                   </b-button>
                   <b-button
                     v-b-popover.hover.top="'Transfer funds to another account'"
-                    title="Transfer"
                     squared
                     variant="warning"
                     size="md"
@@ -339,78 +336,182 @@
         <b-col class="bottom-col" cols="12">
           <b-modal id="modal-transfer" hide-footer hide-header squared centered>
             <b-container fluid>
-              <b-row>
+              <b-row class="mb-4 ml-2 mt-2">
+                <h4><i class="fas fa-hat-wizard"></i> Transfer Wizzard</h4>
+              </b-row>
+              <b-row class="ml-2 mr-2 mb-2">
+                <p>
+                  Welcome to the transfer wizzard. Please select one of the
+                  following options. Internal transfer is used to transfer
+                  between your accounts registered on your Harmon€y account.
+                  External transfers are used to transfer funds from your
+                  account to someone elses account.
+                </p>
+              </b-row>
+              <b-row class="mb-4">
                 <b-col cols="6">
-                  <b-row>
-                    <b-button squared @click="internal(account)"
-                      >Internal</b-button
+                  <b-row class="float-right mr-4">
+                    <b-button  v-b-popover.hover.top="'Transfer funds inside Harmon€y'" squared variant="info" @click="internal(account)">
+                      <i class="fas fa-sign-in-alt"></i> Internal
+                      Transfer</b-button
                     >
                   </b-row>
                 </b-col>
                 <b-col cols="6">
-                  <b-row>
-                    <b-button squared @click="external(account)"
-                      >External</b-button
+                  <b-row class="ml-4">
+                    <b-button  v-b-popover.hover.top="'Transfer funds anywhere'" squared variant="info" @click="external(account)"
+                      ><i class="fas fa-sign-out-alt"></i> External
+                      Transfer</b-button
                     >
                   </b-row>
                 </b-col>
               </b-row>
-              <b-row>
-                    <b-button squared @click="backToDetails()" >Back</b-button>
-                  </b-row>
-                  <b-row>
-                    <b-button squared variant="danger" @click=" cancelModels()" >Cancel</b-button>
-                  </b-row>
-                  <b-row>
-                    <b-button squared variant="warning" @click=" sortAccounts(accounts)" >test</b-button>
-                  </b-row>
+              <b-row class="mt-2"></b-row>
+              <b-row class="ml-2 mt-2">
+                <b-button squared variant="danger" @click="cancelModels()"
+                  >Cancel</b-button
+                >
+                <b-button class="ml-4" squared @click="backToDetails()"
+                  >Back</b-button
+                >
+              </b-row>
             </b-container>
           </b-modal>
         </b-col>
         <b-col class="bottom-col-last" cols="12">
           <b-modal id="modal-internal" hide-footer hide-header squared centered>
             <b-container fluid>
-              <b-row>
-                <b-col cols="2">
-                  <b-row>
-                
-                  </b-row>
-                </b-col>
-                <b-col cols="10">
-                  <b-row>
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
-                  </b-row>
-                  <b-row>
-                    <b-button squared @click="backToTransfer()" >Back</b-button>
-                  </b-row>
-                  <b-row>
-                    <b-button squared variant="danger" @click=" cancelModels()" >Cancel</b-button>
-                  </b-row>
-                </b-col>
-              </b-row>
+              <b-col cols="12">
+                <b-row class="ml-2 mr-2 mt-2 mb-4">
+                  <h4><i class="fas fa-sign-in-alt"></i> Internal Transfer</h4>
+                </b-row>
+                <b-row class="ml-2 mr-2 mt-2">
+                  <h6>Please select an account to transfer to:</h6>
+                </b-row>
+                <b-row class="ml-2 mr-2">
+                  <b-form-select
+                    required
+                    v-model="selectedAccount"
+                    :options="options"
+                  ></b-form-select>
+                </b-row>
+                <b-row class="ml-2 mr-2 mt-4">
+                  <h6>Please enter the amount to transfer:</h6>
+                </b-row>
+                <b-row class="ml-2 mr-2">
+                  <b-form-input
+                    v-model="transferNumber"
+                    min="0"
+                    max="account.balance"
+                    required
+                    number
+                    placeholder="Enter Amount €.0"
+                  ></b-form-input>
+                </b-row>
+                <b-row class="ml-2 mt-1">
+                  <h6>
+                    Maximum for this account is €{{ this.account.balance }}
+                  </h6>
+                </b-row>
+                <b-row class="mt-2 ml-2">
+                  <b-form-checkbox
+                  v-b-popover.hover.top="'Switch this to accept'"
+                    id="checkbox-internal-transfer"
+                    v-model="status"
+                    name="Internal Transfer"
+                    value="true"
+                    unchecked-value="false"
+                    switch
+                  >
+                    I concent to the transfer.
+                  </b-form-checkbox>
+                </b-row>
+                <b-row class="mt-4">
+                  <b-col cols="6">
+                    <b-button squared variant="danger" @click="cancelModels()"
+                      >Cancel</b-button
+                    >
+                    <b-button class="ml-2" squared @click="backToTransfer()"
+                      >Back</b-button
+                    >
+                  </b-col>
+                  <b-col cols="6">
+                    <b-button
+                      class="float-right"
+                      squared
+                      variant="success"
+                      @click="sendInternal()"
+                      >Send</b-button
+                    >
+                  </b-col>
+                </b-row>
+              </b-col>
             </b-container>
           </b-modal>
         </b-col>
         <b-col class="bottom-col-last" cols="12">
           <b-modal id="modal-external" hide-footer hide-header squared centered>
             <b-container fluid>
+              <b-row class="ml-2 mr-2 mt-2 mb-4">
+                <h4><i class="fas fa-sign-out-alt"></i> External Transfer</h4>
+              </b-row>
               <b-row>
-                <b-col cols="2">
-                  
-                </b-col>
-                <b-col cols="10">
-                  <b-row>
-                    <b-form-input v-model="enterIban" required placeholder="Enter IBAN"></b-form-input>
+                <b-col cols="12">
+                  <b-row class="ml-2 mr-2 mt-2">
+                    <h6>Please enter accounts IBAN:</h6>
                   </b-row>
-                  <b-row>
-                    <b-form-input v-model="transferNumber" min="0" max = account.balance  required number placeholder="Enter Amount €.0"></b-form-input>
-                    <!-- <vue-numeric class="vue-numeric" autoselect placeholder=" €nter amount" currency="€" decimal-separator="." v-bind:minus="false" thousand-separator="" v-model="transferNumber" v-bind:precision="2"></vue-numeric> -->
+                  <b-row class="ml-2 mr-4">
+                    <b-form-input
+                      v-model="enterIban"
+                      required
+                      placeholder="Enter IBAN"
+                    ></b-form-input>
                   </b-row>
-                  <b-row>
-                    <b-button squared @click="backToTransfer()" >Back</b-button>
+                  <b-row class="ml-2 mr-2 mt-2">
+                    <h6>Please enter the amount to transfer</h6>
                   </b-row>
-                  <b-row>
-                    <b-button squared variant="danger" @click=" cancelModels()" >Cancel</b-button>
+                  <b-row class="ml-2 mr-4">
+                    <b-form-input
+                      v-model="transferNumber"
+                      min="0"
+                      max="account.balance"
+                      required
+                      number
+                      placeholder="Enter Amount €.0"
+                    ></b-form-input>
+                  </b-row>
+                  <b-row class="ml-2 mt-1">
+                    <h6>
+                      Maximum for this account is €{{ this.account.balance }}
+                    </h6>
+                  </b-row>
+                  <b-row class="mt-2 ml-2">
+                    <b-form-checkbox
+                      id="checkbox-external-transfer"
+                      v-model="statusEx"
+                      name="External Transfer"
+                      value="true"
+                      unchecked-value="false"
+                      switch
+                      v-b-popover.hover.top="'Switch this to accept'"
+                    >
+                      I concent to the transfer.
+                    </b-form-checkbox>
+                  </b-row>
+                  <b-row class="mr-2 mt-4">
+                    <b-col cols="6">
+                      <b-button squared variant="danger" @click="cancelModels()"
+                        >Cancel</b-button
+                      >
+                      <b-button class="ml-2" squared @click="backToTransfer()"
+                        >Back</b-button
+                      >
+                    </b-col>
+                    <b-col cols="6">
+                      <b-button class="float-right" @click="sendExternal()" squared variant="success"
+                        >Send</b-button
+                      >
+                    </b-col>
                   </b-row>
                 </b-col>
               </b-row>
@@ -429,8 +530,12 @@ export default {
   name: 'dashboard',
   data() {
     return {
+      selectedAccount: null,
       selected: null,
-      options:[],
+      status: 'false',
+      statusEx: 'false',
+      value: "Please select account",
+      options: [],
       accounts: [],
       currentAccount: [],
       savingsAccount: [],
@@ -439,9 +544,9 @@ export default {
       accountTotal: 0,
       savingsAccountTotal: 0,
       currentAccountTotal: 0,
-      transferNumber:0,
-      enterIban:null,
-      accountHoldNumber:null,
+      transferNumber: 0,
+      enterIban: null,
+      accountHoldNumber: null,
       account: {
         balance: 0,
         accountType: null,
@@ -454,32 +559,102 @@ export default {
         overDraft: null,
         updatedAt: null,
         userId: null
-      },
-      price: 123.45,
-        money: {
-          decimal: ',',
-          thousands: '.',
-          prefix: 'R$ ',
-          suffix: ' #',
-          precision: 2,
-          masked: false
-        }
+      }
     }
   },
   created() {
     this.getCurrentAccounts()
     this.getSavingsAccounts()
   },
-  mounted() {
-     
-  },
+  mounted() {},
   watch: {
     // call again the method if the route changes
     $route: 'getCurrentAccounts',
-    $routeSav: 'getSavingsAccounts',
+    $routeSav: 'getSavingsAccounts'
   },
   methods: {
-    combineAccounts(){
+    sendExternal() {
+      if (this.statusEx === 'true') {
+        if (this.transferNumber <= this.account.balance && this.transferNumber > 0 && this.transferNumber !== 0 ) {
+          if(this.enterIban != null ){
+          this.makeTransferSuccessful()
+          }else{
+            this.mustEnterIBAN()
+          }
+        } else if (this.transferNumber > this.account.balance) {
+          this.makeToastTransferTooHigh()
+        } else if (this.transferNumber <= 0){
+          this.makeTransferTooLow()
+        }
+      } else if (this.status === 'false') {
+        this.makeToastCheckbox()
+      }
+    },
+    mustEnterIBAN(){
+      this.$bvToast.toast('You must enter an IBAN!', {
+        title: 'Apologies!',
+        variant: 'warning',
+        solid: true,
+        center: true
+      })},
+    makeToastTransferTooHigh() {
+      this.$bvToast.toast('You cant transfer more than is in your account!', {
+        title: 'Apologies!',
+        variant: 'warning',
+        solid: true,
+        center: true
+      })
+    },
+    makeToastCheckbox() {
+      this.$bvToast.toast('You must consent to the transfer!', {
+        title: 'Apologies!',
+        variant: 'danger',
+        solid: true,
+        center: true
+      })
+    },
+    makeTransferSuccessful() {
+      this.$bvToast.toast('Your transfer has been sucessfull!', {
+        title: 'Congratulations!',
+        variant: 'success',
+        solid: true,
+        center: true
+      })
+    },
+    makeTransferTooLow() {
+      this.$bvToast.toast('Your transfer amount has to be above 0!', {
+        title: 'Apologies!',
+        variant: 'warning',
+        solid: true,
+        center: true
+      })
+    },
+    makeToastSelectAccountToTransfer(){
+      this.$bvToast.toast('Must select an account to transfer to!', {
+        title: 'Apologies!',
+        variant: 'warning',
+        solid: true,
+        center: true
+      })
+    },
+    sendInternal() {
+      if (this.status === 'true') {
+        if (this.transferNumber <= this.account.balance && this.transferNumber > 0 && this.transferNumber !== 0 ) {
+          if(this.selectedAccount!=null){
+          this.makeTransferSuccessful()
+          }else{
+            this.makeToastSelectAccountToTransfer()
+          }
+        } else if (this.transferNumber > this.account.balance) {
+          this.makeToastTransferTooHigh()
+        } else if (this.transferNumber <= 0){
+          this.makeTransferTooLow()
+        }
+      } else if (this.status === 'false') {
+        this.makeToastCheckbox()
+      }
+    },
+    combineAccounts() {
       this.accounts = this.currentAccount.concat(this.savingsAccount)
     },
     closeModel() {
@@ -488,22 +663,21 @@ export default {
     closeModelSave() {
       this.$bvModal.hide('modal-center-save')
     },
-    sortAccounts(accounts){
-      let i = 0;
-      for (i = 0; i<accounts.length;++i){
-        console.log(accounts[i].fiName)
-        // let fiName = account[i].fiName
-        // let accountType = account[i].AccountType
-        // let iban = account[i].iban
-        this.options[i]=[
-          accounts[i].fiName,
-          accounts[i].accountType,
-          accounts[i].iban
-        ]
+    sortAccounts(accounts) {
+      let i = 0
+      this.options = []
+      for (i = 0; i < accounts.length; ++i) {
+        if (accounts[i].iban != this.account.iban) {
+          this.options[i] = [
+            accounts[i].fiName,
+            ' Type: ' + accounts[i].accountType,
+            ' IBAN: ' + accounts[i].iban
+          ]
+        }
       }
-      console.log(this.options)
+      this.options.unshift({value:null, text:'Please select account', disabled: true})
     },
-    cancelModels(){
+    cancelModels() {
       this.$bvModal.hide('modal-center')
       this.$bvModal.hide('modal-center-save')
       this.$bvModal.hide('modal-transfer')
@@ -511,31 +685,48 @@ export default {
       this.$bvModal.hide('modal-external')
     },
     transfer() {
+      this.enterIban = null
+      this.selectedAccount = null
+      this.transferNumber = null
       this.combineAccounts()
+      this.sortAccounts(this.accounts)
       this.$bvModal.hide('modal-center')
       this.$bvModal.show('modal-transfer')
     },
-    backToTransfer(){
+    backToTransfer() {
+      this.enterIban = null
+      this.selectedAccount = null
+      this.transferNumber = null
       this.$bvModal.hide('modal-internal')
       this.$bvModal.hide('modal-external')
       this.$bvModal.show('modal-transfer')
       // this.transfer(account)
     },
-    backToDetails(){
+    backToDetails() {
+      this.enterIban = null
+      this.selectedAccount = null
+      this.transferNumber = null
       this.$bvModal.hide('modal-transfer')
       this.$bvModal.show('modal-center')
     },
 
     internal() {
+      this.status = 'false'
+      this.enterIban = null
+      this.selectedAccount = null
+      this.transferNumber = null
       this.$bvModal.hide('modal-transfer')
       this.$bvModal.show('modal-internal')
     },
     external() {
+      this.statusEx = 'false'
+      this.enterIban = null
+      this.selectedAccount = null
+      this.transferNumber = null
       this.$bvModal.hide('modal-transfer')
       this.$bvModal.show('modal-external')
     },
-    statement() {
-    },
+    statement() {},
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
       this.account.balance = currentAccount.balance

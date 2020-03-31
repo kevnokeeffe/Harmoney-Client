@@ -12,7 +12,7 @@
             v-if="$store.state.isLoggedIn"
             class="b-nav-item h5"
             to="/harmoney-dashboard"
-            ><b-icon icon="bar-chart"></b-icon>Dashboard</b-nav-item
+            ><i class="fas fa-chart-bar"></i> Dashboard</b-nav-item
           >
           <b-nav-item
             v-if="!$store.state.isLoggedIn"
@@ -34,19 +34,19 @@
           >
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <b-icon icon="gear"></b-icon>Settings
+              <i class="fas fa-cogs"></i> Settings
             </template>
             <b-dropdown-item to="/harmoney-dashboard"
-              ><b-icon class="mr-2" icon="bar-chart"></b-icon>Dashboard</b-dropdown-item
+              ><i class="fas fa-chart-bar"></i>  Dashboard</b-dropdown-item
             >
-            <b-dropdown-item to="/add-account"><b-icon class="mr-2" icon="plus"></b-icon>Add Account</b-dropdown-item>
-            <b-dropdown-item to="/user-profile"><b-icon class="mr-2" icon="person-fill"></b-icon>User Profile</b-dropdown-item>
-            <b-dropdown-item to="/transactions"><b-icon class="mr-2" icon="reply"></b-icon>Transactions</b-dropdown-item>
-            <b-dropdown-item to="/notifications"><b-icon class="mr-2" icon="envelope"></b-icon>Notifications</b-dropdown-item>
+            <b-dropdown-item to="/add-account"><i class="fas fa-plus-circle"></i>  Add Account</b-dropdown-item>
+            <b-dropdown-item to="/user-profile"><i class="fas fa-user"></i>  User Profile</b-dropdown-item>
+            <b-dropdown-item to="/transactions"><i class="fas fa-exchange-alt"></i>  Transactions</b-dropdown-item>
+            <b-dropdown-item to="/notifications"><i class="fas fa-sticky-note"></i>  Notifications</b-dropdown-item>
             <b-dropdown-item
               v-if="$store.state.isLoggedIn"
               v-on:click.prevent="logout()"
-              ><b-icon class="mr-2" icon="power"></b-icon>Logout</b-dropdown-item
+              ><i class="fas fa-power-off"></i> Logout</b-dropdown-item
             >
           </b-nav-item-dropdown>
           <b-nav-item
@@ -54,7 +54,7 @@
             class="b-nav-item h5"
             v-on:click.prevent="logout()"
             href="#"
-            ><b-icon icon="power"></b-icon>Logout</b-nav-item
+            >Logout <i class="fas fa-power-off"></i></b-nav-item
           >
           <b-navbar-brand
             class="b-nav-name ml-2"
@@ -80,9 +80,16 @@ export default {
   },
   name: 'Navbar',
   created(){
-    this.fName = auth.getName()
+    this.getUserName()
+  },
+  watch: {
+    // call again the method if the route changes
+    $route: 'getUserName',
   },
   methods: {
+    getUserName(){
+    this.fName = auth.getName()
+    },
     home(){
       if (auth.isLoggedIn()) {
         const path = `/`

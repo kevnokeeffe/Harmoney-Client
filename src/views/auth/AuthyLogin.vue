@@ -1,7 +1,7 @@
 <template>
   <div class="container-authyLogin">
     <b-jumbotron class="b-jumbotron-login">
-      <h1 class="h1-login">Login</h1>
+      <h1 class="h1-login"><i class="fas fa-sign-in-alt"></i> Login</h1>
       <b-form v-if="show">
         <b-form-group
           id="input-group-email"

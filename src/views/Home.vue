@@ -1,7 +1,7 @@
 <template>
   <div class="container-home">
     <h1 class="home-h1">HARMON€Y</h1>
-    <h3 class="home-h3">Your personal accounts management system</h3>
+    <h3 class="home-h3">Your personal financial accounts management system</h3>
   </div>
 </template>
 

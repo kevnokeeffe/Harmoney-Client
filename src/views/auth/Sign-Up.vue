@@ -1,7 +1,7 @@
 <template>
   <div class="container-signUp">
     <b-jumbotron class="b-jumbotron-signUp">
-      <h1 class="h1-register">Sign-Up</h1>
+      <h1 class="h1-register"><i class="fas fa-user-plus"></i> Sign-Up</h1>
       <div>
         <b-form @submit="onSubmit" @reset="onReset" v-if="show">
           <b-form-group

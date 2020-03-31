@@ -18,13 +18,13 @@
             v-if="!$store.state.isLoggedIn"
             class="b-nav-item"
             @click="login()"
-            >Login</b-nav-item
+            ><i class="fas fa-sign-in-alt"></i> Login</b-nav-item
           >
           <b-nav-item
             v-if="!$store.state.isLoggedIn"
             class="b-nav-item"
             @click="signUp()"
-            >Sign-Up</b-nav-item
+            ><i class="fas fa-user-plus"></i> Sign-Up</b-nav-item
           >
 
           <b-nav-item-dropdown

@@ -10,7 +10,7 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item
             v-if="$store.state.isLoggedIn"
-            class="b-nav-item h5"
+            class="b-nav-item"
             to="/harmoney-dashboard"
             ><i class="fas fa-chart-bar"></i> Dashboard</b-nav-item
           >
@@ -29,7 +29,7 @@
 
           <b-nav-item-dropdown
             v-if="$store.state.isLoggedIn"
-            class="b-nav-item-dropdown h5"
+            class="b-nav-item-dropdown"
             right
           >
             <!-- Using 'button-content' slot -->
@@ -51,10 +51,10 @@
           </b-nav-item-dropdown>
           <b-nav-item
             v-if="$store.state.isLoggedIn"
-            class="b-nav-item h5"
+            class="b-nav-item"
             v-on:click.prevent="logout()"
             href="#"
-            >Logout <i class="fas fa-power-off"></i></b-nav-item
+            ><i class="fas fa-power-off"></i> Logout </b-nav-item
           >
           <b-navbar-brand
             class="b-nav-name ml-2"

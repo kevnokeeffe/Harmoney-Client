@@ -67,7 +67,6 @@
                           ><b-row
                             ><b-button
                               v-b-popover.hover.top="'View account details.'"
-                    
                               @click="detailsModal(currentAccount)"
                               class="mb-2"
                               size="sm"
@@ -145,7 +144,6 @@
                 <b-col cols="">
                   <b-button
                     v-b-popover.hover.top="'View your account statement'"
-              
                     squared
                     variant="info"
                     size="md"
@@ -156,7 +154,6 @@
                   </b-button>
                   <b-button
                     v-b-popover.hover.top="'Transfer funds to another account'"
-                  
                     squared
                     variant="warning"
                     size="md"
@@ -299,7 +296,7 @@
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
                   <b-button
-                  v-b-popover.hover.top="'View your account statement'"
+                    v-b-popover.hover.top="'View your account statement'"
                     squared
                     variant="info"
                     size="md"
@@ -351,7 +348,12 @@
               <b-row class="mb-4">
                 <b-col cols="6">
                   <b-row class="float-right mr-4">
-                    <b-button  v-b-popover.hover.top="'Transfer funds inside Harmon€y'" squared variant="info" @click="internal(account)">
+                    <b-button
+                      v-b-popover.hover.top="'Transfer funds inside Harmon€y'"
+                      squared
+                      variant="info"
+                      @click="internal(account)"
+                    >
                       <i class="fas fa-sign-in-alt"></i> Internal
                       Transfer</b-button
                     >
@@ -359,7 +361,11 @@
                 </b-col>
                 <b-col cols="6">
                   <b-row class="ml-4">
-                    <b-button  v-b-popover.hover.top="'Transfer funds anywhere'" squared variant="info" @click="external(account)"
+                    <b-button
+                      v-b-popover.hover.top="'Transfer funds anywhere'"
+                      squared
+                      variant="info"
+                      @click="external(account)"
                       ><i class="fas fa-sign-out-alt"></i> External
                       Transfer</b-button
                     >
@@ -415,7 +421,7 @@
                 </b-row>
                 <b-row class="mt-2 ml-2">
                   <b-form-checkbox
-                  v-b-popover.hover.top="'Switch this to accept'"
+                    v-b-popover.hover.top="'Switch this to accept'"
                     id="checkbox-internal-transfer"
                     v-model="status"
                     name="Internal Transfer"
@@ -508,7 +514,11 @@
                       >
                     </b-col>
                     <b-col cols="6">
-                      <b-button class="float-right" @click="sendExternal()" squared variant="success"
+                      <b-button
+                        class="float-right"
+                        @click="sendExternal()"
+                        squared
+                        variant="success"
                         >Send</b-button
                       >
                     </b-col>
@@ -526,6 +536,7 @@
 <script>
 import * as accountService from '../../../services/AccountService'
 import * as auth from '../../../services/AuthService'
+import * as transactionService from '../../../services/TransactionService'
 export default {
   name: 'dashboard',
   data() {
@@ -534,11 +545,12 @@ export default {
       selected: null,
       status: 'false',
       statusEx: 'false',
-      value: "Please select account",
+      value: 'Please select account',
       options: [],
       accounts: [],
       currentAccount: [],
       savingsAccount: [],
+      transaction: null,
       currentAccountId: null,
       savingsAccountId: null,
       accountTotal: 0,
@@ -548,6 +560,7 @@ export default {
       enterIban: null,
       accountHoldNumber: null,
       account: {
+        id: null,
         balance: 0,
         accountType: null,
         bankId: null,
@@ -575,28 +588,33 @@ export default {
   methods: {
     sendExternal() {
       if (this.statusEx === 'true') {
-        if (this.transferNumber <= this.account.balance && this.transferNumber > 0 && this.transferNumber !== 0 ) {
-          if(this.enterIban != null ){
-          this.makeTransferSuccessful()
-          }else{
+        if (
+          this.transferNumber <= this.account.balance &&
+          this.transferNumber > 0 &&
+          this.transferNumber !== 0
+        ) {
+          if (this.enterIban != null) {
+            this.makeTransferSuccessful()
+          } else {
             this.mustEnterIBAN()
           }
         } else if (this.transferNumber > this.account.balance) {
           this.makeToastTransferTooHigh()
-        } else if (this.transferNumber <= 0){
+        } else if (this.transferNumber <= 0) {
           this.makeTransferTooLow()
         }
       } else if (this.status === 'false') {
         this.makeToastCheckbox()
       }
     },
-    mustEnterIBAN(){
+    mustEnterIBAN() {
       this.$bvToast.toast('You must enter an IBAN!', {
         title: 'Apologies!',
         variant: 'warning',
         solid: true,
         center: true
-      })},
+      })
+    },
     makeToastTransferTooHigh() {
       this.$bvToast.toast('You cant transfer more than is in your account!', {
         title: 'Apologies!',
@@ -629,7 +647,7 @@ export default {
         center: true
       })
     },
-    makeToastSelectAccountToTransfer(){
+    makeToastSelectAccountToTransfer() {
       this.$bvToast.toast('Must select an account to transfer to!', {
         title: 'Apologies!',
         variant: 'warning',
@@ -637,17 +655,45 @@ export default {
         center: true
       })
     },
+    makeToastTransferError() {
+      this.$bvToast.toast(
+        'There seems to be an issue with your transaction! Transaction dropped!',
+        {
+          title: 'Apologies!',
+          variant: 'danger',
+          solid: true,
+          center: true
+        }
+      )
+    },
     sendInternal() {
       if (this.status === 'true') {
-        if (this.transferNumber <= this.account.balance && this.transferNumber > 0 && this.transferNumber !== 0 ) {
-          if(this.selectedAccount!=null){
-          this.makeTransferSuccessful()
-          }else{
+        if (
+          this.transferNumber <= this.account.balance &&
+          this.transferNumber > 0 &&
+          this.transferNumber !== 0
+        ) {
+          if (this.selectedAccount != null) {
+            let trasAcc = this.selectedAccount
+            let iban = trasAcc[2].split(' ').pop()
+            this.transaction = [iban, this.account.id, this.transferNumber]
+            const transactionPromise = transactionService.postTransactionInternal(
+              this.transaction
+            )
+            Promise.resolve(transactionPromise).then(response => {
+              if (response === true) {
+                this.makeTransferSuccessful()
+                this.$bvModal.hide('modal-internal')
+              } else {
+                this.makeToastTransferError()
+              }
+            })
+          } else {
             this.makeToastSelectAccountToTransfer()
           }
         } else if (this.transferNumber > this.account.balance) {
           this.makeToastTransferTooHigh()
-        } else if (this.transferNumber <= 0){
+        } else if (this.transferNumber <= 0) {
           this.makeTransferTooLow()
         }
       } else if (this.status === 'false') {
@@ -675,7 +721,11 @@ export default {
           ]
         }
       }
-      this.options.unshift({value:null, text:'Please select account', disabled: true})
+      this.options.unshift({
+        value: null,
+        text: 'Please select account',
+        disabled: true
+      })
     },
     cancelModels() {
       this.$bvModal.hide('modal-center')
@@ -729,6 +779,7 @@ export default {
     statement() {},
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
+      this.account.id = currentAccount._id
       this.account.balance = currentAccount.balance
       this.account.accountType = currentAccount.accountType
       this.account.bankId = currentAccount.bankId
@@ -742,6 +793,7 @@ export default {
     },
     detailsModalSave(savingsAccount) {
       this.$bvModal.show('modal-center-save')
+      this.account.id = savingsAccount._id
       this.account.balance = savingsAccount.balance
       this.account.accountType = savingsAccount.accountType
       this.account.bankId = savingsAccount.bankId

@@ -82,34 +82,7 @@ const routes = [
       }
     }
   },
-  {
-    path: '/register',
-    name: 'register',
-    component: () =>
-      import(/* webpackChunkName: "register" */ '../views/auth/Register.vue'),
-    // beforeEnter: (to, from, next) => {
-    //   if (!auth.isLoggedIn()) {
-    //     next()
-    //   } else {
-    //     next('/dashboard')
-    //   }
-    // }
-  },
-  {
-    path: '/dashboard',
-    name: 'dashboard',
-    component: () =>
-      import(
-        /* webpackChunkName: "dashboard" */ '../views/pages/Dashboard.vue'
-      ),
-    beforeEnter: (to, from, next) => {
-      if (auth.isLoggedIn()) {
-        next()
-      } else {
-        next('/login')
-      }
-    }
-  },
+  
   {
     path: '/harmoney-dashboard',
     name: 'harmoney-dashboard',

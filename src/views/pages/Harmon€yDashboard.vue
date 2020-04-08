@@ -594,7 +594,19 @@ export default {
           this.transferNumber !== 0
         ) {
           if (this.enterIban != null) {
-            this.makeTransferSuccessful()
+            let iban = this.enterIban
+            this.transaction = [iban, this.account.id, this.transferNumber]
+            const transactionPromise = transactionService.postTransactionInternal(
+              this.transaction
+            )
+            Promise.resolve(transactionPromise).then(response => {
+              if (response === true) {
+                this.makeTransferSuccessful()
+                this.$bvModal.hide('modal-internal')
+              } else {
+                this.makeToastTransferError()
+              }
+            })
           } else {
             this.mustEnterIBAN()
           }
@@ -810,7 +822,6 @@ export default {
       const aibAccount = accountService.getAIBCurrentAccounts()
       const creditUnionAccount = accountService.getAllCUcurrentAccounts()
       const witAccount = accountService.getAllWITcurrentAccounts()
-
       Promise.all([
         postAccount,
         aibAccount,

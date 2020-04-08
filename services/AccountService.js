@@ -38,7 +38,12 @@ export async function getPostCurrentAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -46,16 +51,23 @@ export async function getPostCurrentAccounts() {
 }
 
 export async function getAIBCurrentAccounts() {
+  
   let message = false
   return http()
     .get(`api/account/current-all-aib`, {
       method: 'GET'
     })
     .then(res => {
+    
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -72,7 +84,12 @@ export async function getAllCUcurrentAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -89,7 +106,12 @@ export async function getAllWITcurrentAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -109,7 +131,12 @@ export async function getAllWITsavingsAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -127,7 +154,12 @@ export async function getAllAIBsavingsAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -145,7 +177,12 @@ export async function getAllCUsavingsAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)
@@ -163,7 +200,12 @@ export async function getAllPostSavingsAccounts() {
       if (res.data.message === false) {
         return message
       } 
+      if (res.data.message === true){
         return res.data
+      }
+      else{
+        return message
+      }
     })
     .catch(error => {
       return console.log(error)

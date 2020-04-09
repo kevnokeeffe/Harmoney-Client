@@ -581,8 +581,8 @@ export default {
   },
   watch: {
     // call again the method if the route changes
-    $route: 'getCurrentAccounts',
-    $routeSav: 'getSavingsAccounts'
+    $getCurrentAccounts: 'getCurrentAccounts',
+    $getSavingsAccounts: 'getSavingsAccounts',
   },
   methods: {
     sendExternal() {
@@ -602,6 +602,8 @@ export default {
               if (response === true) {
                 this.makeTransferSuccessful()
                 this.$bvModal.hide('modal-internal')
+                this.getCurrentAccounts()
+                this.getSavingsAccounts()
               } else {
                 this.makeToastTransferError()
               }
@@ -694,6 +696,8 @@ export default {
             Promise.resolve(transactionPromise).then(response => {
               if (response === true) {
                 this.makeTransferSuccessful()
+                this.getCurrentAccounts()
+                this.getSavingsAccounts()
                 this.$bvModal.hide('modal-internal')
               } else {
                 this.makeToastTransferError()

@@ -14,7 +14,7 @@ export function loginWIT(connect) {
       if (err) {
         return mes
       }
-      return
+      return null
     })
 }
 
@@ -32,7 +32,7 @@ export function loginAIB(connect) {
         if (err) {
           return mes
         }
-        return
+        return null
       })
 }
 
@@ -50,7 +50,7 @@ export function loginCU(connect) {
         if (err) {
           return mes
         }
-        return
+        return null
       })
 }
 
@@ -68,6 +68,6 @@ export function loginPO(connect) {
         if (err) {
           return mes
         }
-        return
+        return null
       })
 }

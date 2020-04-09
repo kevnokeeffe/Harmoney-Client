@@ -1,0 +1,15 @@
+image: node:latest
+
+stages:
+    - deploy
+
+deploy_production:
+    stage: deploy
+    environment: Production
+    only:
+      - master
+    script:
+      - npm install -g firebase-tools
+      - npm install
+      - npm build
+      - firebase deploy --token "$FIREBASE_TOKEN"

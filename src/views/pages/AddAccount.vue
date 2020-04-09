@@ -234,7 +234,7 @@ export default {
           this.boxTwo = value
         })
         .catch(err => {
-          console.log(err)
+          return err
         })
     },
     showMsgBoxInvalid: function() {
@@ -253,7 +253,7 @@ export default {
           this.boxTwo = value
         })
         .catch(err => {
-          console.log(err)
+          return err
         })
     }
   }

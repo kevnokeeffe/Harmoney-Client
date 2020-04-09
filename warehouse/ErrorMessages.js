@@ -14,6 +14,6 @@ export function showMsgBoxError(){
         this.boxTwo = value
       })
       .catch(err => {
-        console.log(err)
+        return err
       })
   }

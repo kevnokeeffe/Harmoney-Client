@@ -579,7 +579,6 @@ export default {
     this.getCurrentAccounts()
     this.getSavingsAccounts()
   },
-  mounted() {},
   watch: {
     // call again the method if the route changes
     $route: 'getCurrentAccounts',
@@ -828,6 +827,7 @@ export default {
         creditUnionAccount,
         witAccount
       ]).then(values => {
+        console.log(values)
         let i = 0
         for (i = 0; i < values.length; i++) {
           if (values[i] != false) {
@@ -851,6 +851,7 @@ export default {
         creditUnionAccount,
         witAccount
       ]).then(values => {
+        console.log(values)
         let i = 0
         for (i = 0; i < values.length; i++) {
           if (values[i] != false) {
@@ -866,7 +867,7 @@ export default {
     // Working...
     addUpCurrentAccounts(req) {
       let x
-      let value = null
+      let value = 0
       for (x = 0; x < req.length; x++) {
         if (req[x] != false) {
           value = value + req[x].currentAccounts[0].balance
@@ -877,7 +878,7 @@ export default {
     },
     addUpSavingsAccounts(req) {
       let x
-      let value = null
+      let value = 0
       for (x = 0; x < req.length; x++) {
         if (req[x] != false) {
           value = value + req[x].savingsAccounts[0].balance

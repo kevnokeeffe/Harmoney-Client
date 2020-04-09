@@ -10,7 +10,7 @@ export async function postTransactionInternal(transaction) {
         return res.data.message
       })
       .catch(error => {
-        return console.log(error)
+        return error
       })
   }
 
@@ -24,6 +24,6 @@ export async function postTransactionInternal(transaction) {
         return res.data.message
       })
       .catch(error => {
-        return console.log(error)
+        return error
       })
   }

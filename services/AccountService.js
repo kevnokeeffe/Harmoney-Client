@@ -11,7 +11,7 @@ export async function getAllCurrentAccounts() {
       return res.data
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -24,7 +24,7 @@ export async function getAllSavingsAccounts() {
       return res.data
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -46,12 +46,11 @@ export async function getPostCurrentAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
 export async function getAIBCurrentAccounts() {
-  
   let message = false
   return http()
     .get(`api/account/current-all-aib`, {
@@ -70,7 +69,7 @@ export async function getAIBCurrentAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -85,6 +84,7 @@ export async function getAllCUcurrentAccounts() {
         return message
       } 
       if (res.data.message === true){
+        console.log(res.data)
         return res.data
       }
       else{
@@ -92,7 +92,7 @@ export async function getAllCUcurrentAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -114,7 +114,7 @@ export async function getAllWITcurrentAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -139,7 +139,7 @@ export async function getAllWITsavingsAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -162,7 +162,7 @@ export async function getAllAIBsavingsAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -185,7 +185,7 @@ export async function getAllCUsavingsAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 
@@ -208,7 +208,7 @@ export async function getAllPostSavingsAccounts() {
       }
     })
     .catch(error => {
-      return console.log(error)
+      return error
     })
 }
 

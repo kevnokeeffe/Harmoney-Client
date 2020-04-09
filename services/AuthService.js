@@ -20,9 +20,9 @@ export function authyLogin(user) {
       }
     }).catch(err => {
       if (err) {
-        return 
+        return null
       }
-      return
+      return null
     })
 }
 
@@ -35,9 +35,9 @@ export function login(user) {
       }
     }).catch(err => {
       if (err) {
-        return 
+        return null
       }
-      return
+      return null
     })
 }
 

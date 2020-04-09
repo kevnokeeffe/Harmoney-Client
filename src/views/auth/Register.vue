@@ -288,7 +288,8 @@ export default {
       email,
       isUnique(value) {
         if (value === '') return true
-        var email_regex = process.env.VUE_APP_REG_X
+        // eslint-disable-next-line no-useless-escape
+        var email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         return new Promise(resolve => {
           setTimeout(() => {
             resolve(email_regex.test(value))
@@ -344,31 +345,6 @@ export default {
         show.type = 'password'
       }
     },
-  //   checkEmail: function(){
-  //     let email = this.form.email.trim();
-  //     if(email != ''){
- 
-  //      axios.get('api/auth/user', {
-  //        params: {
-  //          email: email
-  //        }
-  //      })
-  //      .then(function (response) {
-  //        app.isAvailable = response.data;
-  //        if(response.data == 0){
-  //          app.responseMessage = "E-mail is Available.";
-  //        }else{
-  //          app.responseMessage = "E-mail is not Available.";
-  //        }
-  //      })
-  //      .catch(function (error) {
-  //        console.log(error);
-  //      });
-
-  //    }else{
-  //      this.responseMessage = "";
-  //    }
-  //  }
   }
 }
 </script>

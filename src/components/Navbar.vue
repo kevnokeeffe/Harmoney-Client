@@ -43,38 +43,26 @@
               <i class="fas fa-cogs"></i> Options
             </template>
             <b-dropdown-item
-              style=" background: rgb(255,255,255);
-background: linear-gradient(270deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 95%, rgba(254,169,104,1) 95%, rgba(254,169,104,1) 98%, rgba(254,221,124,1) 98%, rgba(254,221,124,1) 100%); "
               to="/harmoney-dashboard"
               ><i class="fas fa-chart-bar"></i> Dashboard</b-dropdown-item
             >
             <b-dropdown-item
-              style=" background: rgb(255,255,255);
-background: linear-gradient(270deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 95%, rgba(254,169,104,1) 95%, rgba(254,169,104,1) 98%, rgba(254,221,124,1) 98%, rgba(254,221,124,1) 100%); "
               to="/add-account"
               ><i class="fas fa-plus-circle"></i> Add Account</b-dropdown-item
             >
             <b-dropdown-item
-              style=" background: rgb(255,255,255);
-background: linear-gradient(270deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 95%, rgba(254,169,104,1) 95%, rgba(254,169,104,1) 98%, rgba(254,221,124,1) 98%, rgba(254,221,124,1) 100%); "
               to="/user-profile"
               ><i class="fas fa-user"></i> User Profile</b-dropdown-item
             >
             <b-dropdown-item
-              style=" background: rgb(255,255,255);
-background: linear-gradient(270deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 95%, rgba(254,169,104,1) 95%, rgba(254,169,104,1) 98%, rgba(254,221,124,1) 98%, rgba(254,221,124,1) 100%); "
               to="/transactions"
               ><i class="fas fa-exchange-alt"></i> Transactions</b-dropdown-item
             >
             <b-dropdown-item
-              style=" background: rgb(255,255,255);
-background: linear-gradient(270deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 95%, rgba(254,169,104,1) 95%, rgba(254,169,104,1) 98%, rgba(254,221,124,1) 98%, rgba(254,221,124,1) 100%); "
               to="/about"
               ><i class="fas fa-info-circle"></i> About Us</b-dropdown-item
             >
             <b-dropdown-item
-              style=" background: rgb(255,255,255);
-background: linear-gradient(270deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 95%, rgba(254,169,104,1) 95%, rgba(254,169,104,1) 98%, rgba(254,221,124,1) 98%, rgba(254,221,124,1) 100%); "
               v-if="$store.state.isLoggedIn"
               v-on:click.prevent="logout()"
               ><i class="fas fa-power-off"></i> Logout</b-dropdown-item

@@ -371,12 +371,12 @@ export default {
     },
     onReset() {
       // Reset our form values
-      this.form.email = 'kevokeeffe@gmail.com'
-      this.form.fName = 'Kevin'
-      this.form.lName = "O'Keeffe"
-      this.form.password = '123456'
-      this.form.phone = '+353 85 206 9520'
-      this.form.checked = 'true'
+      this.form.email = ''
+      this.form.fName = ''
+      this.form.lName = ""
+      this.form.password = ''
+      this.form.phone = ''
+      this.form.checked = ''
       this.show = false
       this.$nextTick(() => {
         this.show = true

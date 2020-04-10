@@ -831,7 +831,6 @@ export default {
         creditUnionAccount,
         witAccount
       ]).then(values => {
-        console.log(values)
         let i = 0
         for (i = 0; i < values.length; i++) {
           if (values[i] != false) {
@@ -855,7 +854,6 @@ export default {
         creditUnionAccount,
         witAccount
       ]).then(values => {
-        console.log(values)
         let i = 0
         for (i = 0; i < values.length; i++) {
           if (values[i] != false) {
@@ -916,16 +914,6 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
 }
-/* .vue-numeric{
-  box-sizing: border-box;
-  border-radius: 5px;
-  border-color:#f1f1f1 ;
-  border: #f1f1f1;
-  
-}
-.vue-numeric:focus{
-  border: 3px solid #f1f1f1 ;
-} */
 .accounts {
   padding: 5px;
   display: flex;

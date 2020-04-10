@@ -50,6 +50,10 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
 
 Vue.use(IconsPlugin)
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
+import VueParticlesBg from "particles-bg-vue";
+Vue.use(VueParticlesBg);
 
 
 

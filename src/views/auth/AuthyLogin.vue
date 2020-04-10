@@ -228,6 +228,7 @@ export default {
   padding-top: 4px;
   padding-bottom: 30%;
   height: 100%;
+  position:relative;
   left: 0;
   right: 0;
 }

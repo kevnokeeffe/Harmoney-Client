@@ -26,6 +26,12 @@
             @click="signUp()"
             ><i class="fas fa-user-plus"></i> Sign-Up</b-nav-item
           >
+          <b-nav-item
+            v-if="!$store.state.isLoggedIn"
+            class="b-nav-item"
+            @click="about()"
+            >About Us <i class="fas fa-question"></i></b-nav-item
+          >
 
           <b-nav-item-dropdown
             v-if="$store.state.isLoggedIn"
@@ -34,7 +40,7 @@
           >
             <!-- Using 'button-content' slot -->
             <template v-slot:button-content>
-              <i class="fas fa-cogs"></i> Settings
+              <i class="fas fa-cogs"></i> Options
             </template>
             <b-dropdown-item to="/harmoney-dashboard"
               ><i class="fas fa-chart-bar"></i>  Dashboard</b-dropdown-item
@@ -42,7 +48,7 @@
             <b-dropdown-item to="/add-account"><i class="fas fa-plus-circle"></i>  Add Account</b-dropdown-item>
             <b-dropdown-item to="/user-profile"><i class="fas fa-user"></i>  User Profile</b-dropdown-item>
             <b-dropdown-item to="/transactions"><i class="fas fa-exchange-alt"></i>  Transactions</b-dropdown-item>
-            <b-dropdown-item to="/notifications"><i class="fas fa-sticky-note"></i>  Notifications</b-dropdown-item>
+            <b-dropdown-item to="/about"><i class="fas fa-info"></i>  About Us</b-dropdown-item>
             <b-dropdown-item
               v-if="$store.state.isLoggedIn"
               v-on:click.prevent="logout()"
@@ -109,6 +115,10 @@ export default {
         const path = `/login`
         if (this.$route.path !== path) this.$router.push(path)
       }
+    },
+    about(){
+      const path = `/about`
+      this.$router.push(path)
     },
     logout: function() {
       auth.logout()

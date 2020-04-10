@@ -7,7 +7,7 @@
      </div>
         <vue-particles
         class="vue-particles"
-        color="#2d4d58"
+        color="#4b6a74"
         :particleOpacity="0.7"
         :particlesNumber="80"
         shapeType="circle"

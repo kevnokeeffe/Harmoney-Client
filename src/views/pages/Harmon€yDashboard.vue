@@ -1103,6 +1103,8 @@ height:100px;
     rgba(249, 249, 249, 1) 10%,
     rgba(249, 249, 249, 1) 100%
   );
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
 }
 .add-current:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -1119,6 +1121,8 @@ height:100px;
     rgba(247, 95, 0, 1) 10%,
     rgba(249, 249, 249, 1) 10%
   );
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
 }
 .add-savings:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);

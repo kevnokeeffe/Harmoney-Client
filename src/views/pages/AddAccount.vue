@@ -136,7 +136,7 @@
   </div>
   <vue-particles
         class="vue-particles-add"
-        color="#2d4d58"
+        color="#839c99"
         :particleOpacity="0.7"
         :particlesNumber="80"
         shapeType="circle"
@@ -323,9 +323,10 @@ export default {
   min-height: 40%;
   max-width: 400px;
   overflow: auto;
-       background: rgb(221,222,207);
-background: linear-gradient(0deg, rgba(221,222,207,1) 65%, rgba(221,222,207,1) 82%, rgba(254,169,104,1) 82%, rgba(254,169,104,1) 96%, rgba(254,221,124,1) 96%, rgba(254,221,124,1) 100%); 
-}
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  
+        background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 82%, rgba(254,169,104,1) 82%, rgba(254,169,104,1) 96%, rgba(254,221,124,1) 96%, rgba(254,221,124,1) 100%); }
 
 .form-select-options {
   max-width: 200px;

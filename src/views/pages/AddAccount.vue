@@ -1,15 +1,16 @@
 <template>
-  <div>
+<div class="top-one-add">
+  <div class="overlay-add">
     <b-jumbotron
       class="b-jumbotron-add-account"
-      lead="Add Financal Institution"
     >
+    <h4 class="mb-4"><i class="fas fa-university"></i> Add Financial Institution</h4>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
         <b-form-group
           id="input-group-1"
           label="Email address:"
           label-for="input-1"
-          description="We'll never share your email with anyone else."
+          description="We do not store any of your account information."
         >
           <b-form-input
             id="input-1"
@@ -24,11 +25,13 @@
           id="input-group-2"
           label="Your Password:"
           label-for="input-2"
+          
         >
           <b-form-input
             id="input-2"
             v-model="form.password"
             required
+            type="password"
             placeholder="Enter password"
           ></b-form-input>
         </b-form-group>
@@ -51,7 +54,7 @@
             >Accept Terms & Conditions</b-form-checkbox
           >
           <div>
-            <b-button v-b-modal.modal-scrollable>Terms & Conditions</b-button>
+            <b-button class="mt-2" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
             <b-modal
               id="modal-scrollable"
               scrollable
@@ -126,11 +129,31 @@
           </div>
         </b-form-group>
 
-        <b-button type="submit" variant="primary">Submit</b-button>
-        <b-button type="reset" variant="danger">Reset</b-button>
+        <b-button class="mr-2" squared type="submit" variant="info">Submit</b-button>
+        <b-button class="ml-2" squared type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-jumbotron>
   </div>
+  <vue-particles
+        class="vue-particles-add"
+        color="#2d4d58"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#3b988e"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push">
+      </vue-particles>
+      </div>
+      
 </template>
 
 <script>
@@ -145,7 +168,7 @@ export default {
         checked: null
       },
       fis: [
-        { text: 'Select One', value: null },
+        { text: 'Please select one', value: null,disabled: true },
         'Bank of WIT',
         'Allied Irish Bank',
         'Credit Union',
@@ -268,7 +291,27 @@ export default {
   right: 0;
   overflow: auto;
 }
-
+.top-one-add {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  }
+  .vue-particles-add{
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+} 
+.overlay-add{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  
+}
 .b-jumbotron-add-account {
   display: block;
   margin-left: auto;
@@ -276,10 +319,12 @@ export default {
   position: relative;
   width: 80%;
   margin-top: 60px;
-  max-height: 70%;
+  max-height: 100%;
   min-height: 40%;
   max-width: 400px;
   overflow: auto;
+       background: rgb(221,222,207);
+background: linear-gradient(0deg, rgba(221,222,207,1) 65%, rgba(221,222,207,1) 82%, rgba(254,169,104,1) 82%, rgba(254,169,104,1) 96%, rgba(254,221,124,1) 96%, rgba(254,221,124,1) 100%); 
 }
 
 .form-select-options {

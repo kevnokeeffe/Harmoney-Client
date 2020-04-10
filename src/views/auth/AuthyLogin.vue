@@ -44,14 +44,14 @@
 <b-modal id="modal-center" centered hide-footer headerBgVariant= 'dark'
         headerTextVariant= 'light' title="Two Factor Authentication">
         <b-row>
-          <b-col cols="1"></b-col>
-          <b-col cols="11">
+          <b-col cols="2"></b-col>
+          <b-col cols="10">
             <p class="my-4">Please enter the validation code we have sent to your registered mobile number in the text field below.</p>
             </b-col>
             </b-row>
             <b-row>
-          <b-col cols="1"></b-col>
-          <b-col cols="10">
+          <b-col cols="2"></b-col>
+          <b-col cols="9">
             <b-form-input
               id="vCode-input"
               v-model="vCode"
@@ -61,8 +61,8 @@
           </b-col>
           <b-col cols="1"></b-col></b-row>
           <b-row class="buttons-row-modal">
-          <b-col cols="1"></b-col>
-          <b-col cols="11">
+          <b-col cols="2"></b-col>
+          <b-col cols="10">
             <div>
               <b-button
                 class="mt-4 mr-2"

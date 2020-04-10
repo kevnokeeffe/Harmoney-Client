@@ -26,7 +26,7 @@
         <b-col class="line-border" cols="12"></b-col>
         <b-col class="divider-col-top" cols="12"></b-col>
         <b-col class="left-col-top" cols="2">
-          <i class="left-col-p fas fa-balance-scale fa-sm mt-4"></i>
+          <i class="left-col-p fas fa-balance-scale fa-sm mt-2 mb-2"></i>
           <b-container class="left-container">
             <i id="fas-scale" class="fas fa-money-bill fa-4x mt-4"></i>
             <h5 class="h5-ca mt-4">Total Current Account Balance:</h5>
@@ -40,9 +40,19 @@
               :delay="2"
               easing="Power1.easeOut"
             />
+          
           </b-container>
+          
         </b-col>
         <b-col class="right-col" cols="10">
+           <div
+            class="no-accounts mb-2 mt-2"
+            v-if="currentAccount && currentAccount.length < 1"
+          >
+          <b-card v-b-popover.hover.bottom="'Click here to add an account'" @click="addAccount()" class="add-current">
+            <h5 class="add-h5"><i class="fas fa-plus-circle"></i> Add Account</h5>
+          </b-card>
+          </div>
           <div
             class="accounts mb-2 mt-2"
             v-if="currentAccount && currentAccount.length > 0"
@@ -52,35 +62,29 @@
               v-for="currentAccount in currentAccount"
               :key="currentAccount.currentAccount"
             >
-              <b-card class="b-card-account">
+              <b-card v-b-popover.hover.bottom="`View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`" @click="detailsModal(currentAccount)" class="b-card-account">
                 <b-container fluid class="b-card-div">
                   <div>
                     <h6 class="b-card-header">{{ currentAccount.fiName }}</h6>
                   </div>
                   <b-row class="b-card-row">
                     <b-col>
-                      <b-row class="mb-1"
+                      <b-row class="b-card-balance mb-1 ml-2"
                         >Balance: €{{ currentAccount.balance }}</b-row
                       >
                       <b-row
-                        ><b-col class="mt-3"
-                          ><b-row
-                            ><b-button
-                              v-b-popover.hover.top="'View account details.'"
-                              @click="detailsModal(currentAccount)"
-                              class="mb-2"
-                              size="sm"
-                              squared
-                              id="details-button-c"
-                              variant="info"
-                              >Details</b-button
-                            >
-                          </b-row></b-col
+                        ><b-col class="ml-4 mt-3"
+                          ></b-col
                         ></b-row
                       >
                     </b-col>
                   </b-row>
                 </b-container>
+              </b-card>
+              <b-card v-b-popover.hover.bottom="`View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`" no-body class="b-card-account-small"
+              @click="detailsModal(currentAccount)">
+                    <h1 class="h1-fiName">{{ currentAccount.fiName }}</h1>
+                    <h1 class="h1-balance">€{{ currentAccount.balance }}</h1>      
               </b-card>
             </div>
           </div>
@@ -141,7 +145,7 @@
               >
               <b-row>
                 <b-col class="col-modal-details" cols="2"></b-col>
-                <b-col cols="">
+                <b-col cols="3">
                   <b-button
                     v-b-popover.hover.top="'View your account statement'"
                     squared
@@ -152,6 +156,8 @@
                   >
                     Statement
                   </b-button>
+                </b-col>
+                <b-col cols="4">
                   <b-button
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
@@ -162,7 +168,8 @@
                   >
                     Transfer
                   </b-button>
-
+                </b-col>
+                <b-col cols="3">
                   <b-button
                     squared
                     variant="success"
@@ -179,7 +186,7 @@
         </b-col>
         <b-col class="divider-col" cols="12"></b-col>
         <b-col class="left-col-savings" cols="2">
-          <i class="left-col-p fas fa-balance-scale fa-sm mt-4"></i>
+          <i class="left-col-p fas fa-balance-scale fa-sm mt-2 mb-2"></i>
           <b-container class="left-container">
             <i id="piggy" class="fas fa-piggy-bank fa-4x mt-4"></i>
             <h5 class="h5-ca mt-4">Total Savings Account Balance:</h5>
@@ -196,8 +203,16 @@
           </b-container>
         </b-col>
 
-        <b-col class="right-col-savings" cols="10"
-          ><div
+        <b-col class="right-col-savings" cols="10">
+          <div
+            class="no-accounts mb-2 mt-2"
+            v-if="savingsAccount && savingsAccount.length < 1"
+          >
+          <b-card v-b-popover.hover.top="'Click here to add an account'" @click="addAccount()" class="add-savings">
+            <h5 class="add-h5"><i class="fas fa-plus-circle"></i> Add Account</h5>
+          </b-card>
+          </div>
+          <div
             class="accounts mb-2 mt-2"
             v-if="savingsAccount && savingsAccount.length > 0"
           >
@@ -206,35 +221,29 @@
               v-for="savingsAccount in savingsAccount"
               :key="savingsAccount.savingsAccount"
             >
-              <b-card class="b-card-account-savings">
+              <b-card v-b-popover.hover.top="`View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`" @click="detailsModalSave(savingsAccount)" class="b-card-account-savings">
                 <b-container fluid class="b-card-div">
                   <div>
                     <h6 class="b-card-header">{{ savingsAccount.fiName }}</h6>
                   </div>
                   <b-row class="b-card-row">
                     <b-col>
-                      <b-row class="mb-1"
+                      <b-row class=" b-card-balance mb-1 ml-2"
                         >Balance: €{{ savingsAccount.balance }}</b-row
                       >
                       <b-row
-                        ><b-col class="mt-3"
-                          ><b-row
-                            ><b-button
-                              v-b-popover.hover.top="'View account details.'"
-                              @click="detailsModalSave(savingsAccount)"
-                              class="mb-2"
-                              size="sm"
-                              id="details-button-c"
-                              squared
-                              variant="info"
-                              >Details</b-button
-                            >
-                          </b-row></b-col
+                        ><b-col class="mt-3 ml-4"
+                          ></b-col
                         ></b-row
                       >
                     </b-col>
                   </b-row>
                 </b-container>
+              </b-card>
+
+              <b-card v-b-popover.hover.top="`View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`" no-body @click="detailsModalSave(savingsAccount)" class="b-card-account-savings-small">
+<h1 class="h1-fiName">{{ savingsAccount.fiName }}</h1>
+           <h1 class="h1-balance"> €{{ savingsAccount.balance }}</h1>
               </b-card>
             </div>
           </div>
@@ -294,7 +303,7 @@
               >
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
-                <b-col cols="">
+                <b-col cols="3">
                   <b-button
                     v-b-popover.hover.top="'View your account statement'"
                     squared
@@ -305,6 +314,8 @@
                   >
                     Statement
                   </b-button>
+                </b-col>
+                <b-col cols="4">
                   <b-button
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
@@ -315,8 +326,8 @@
                   >
                     Transfer
                   </b-button>
-
-                  <b-button
+                </b-col>
+                <b-col cols="3">   <b-button
                     squared
                     variant="success"
                     size="md"
@@ -324,8 +335,8 @@
                     @click="closeModelSave()"
                   >
                     OK
-                  </b-button>
-                </b-col></b-row
+                  </b-button></b-col>
+                </b-row
               >
             </b-container>
           </b-modal>
@@ -339,28 +350,28 @@
               <b-row class="ml-2 mr-2 mb-2">
                 <p>
                   Welcome to the transfer wizzard. Please select one of the
-                  following options. Internal transfer is used to transfer
-                  between your accounts registered on your Harmon€y account.
-                  External transfers are used to transfer funds from your
-                  account to someone elses account.
+                  options below. "Internal transfer", to transfer money
+                  between your accounts registered on Harmon€y.
+                  "External transfers" to transfer funds from your
+                  account anywhere.
                 </p>
               </b-row>
               <b-row class="mb-4">
+              
                 <b-col cols="6">
-                  <b-row class="float-right mr-4">
+                  
                     <b-button
-                      v-b-popover.hover.top="'Transfer funds inside Harmon€y'"
+                      v-b-popover.hover.top="'Transfer between accounts registered on Harmon€y'"
                       squared
                       variant="info"
                       @click="internal(account)"
                     >
-                      <i class="fas fa-sign-in-alt"></i> Internal
-                      Transfer</b-button
+                      <i class="fas fa-sign-in-alt"></i> Internal Transfer</b-button
                     >
-                  </b-row>
+                
                 </b-col>
                 <b-col cols="6">
-                  <b-row class="ml-4">
+                
                     <b-button
                       v-b-popover.hover.top="'Transfer funds anywhere'"
                       squared
@@ -369,8 +380,9 @@
                       ><i class="fas fa-sign-out-alt"></i> External
                       Transfer</b-button
                     >
-                  </b-row>
+                 
                 </b-col>
+               
               </b-row>
               <b-row class="mt-2"></b-row>
               <b-row class="ml-2 mt-2">
@@ -433,15 +445,17 @@
                   </b-form-checkbox>
                 </b-row>
                 <b-row class="mt-4">
-                  <b-col cols="6">
+                  <b-col cols="3">
                     <b-button squared variant="danger" @click="cancelModels()"
                       >Cancel</b-button
                     >
+                  </b-col>
+                    <b-col cols="3">
                     <b-button class="ml-2" squared @click="backToTransfer()"
                       >Back</b-button
                     >
                   </b-col>
-                  <b-col cols="6">
+                  <b-col  cols="6">
                     <b-button
                       class="float-right"
                       squared
@@ -505,16 +519,19 @@
                     </b-form-checkbox>
                   </b-row>
                   <b-row class="mr-2 mt-4">
-                    <b-col cols="6">
+                    <b-col cols="3">
                       <b-button squared variant="danger" @click="cancelModels()"
                         >Cancel</b-button
                       >
+                    </b-col>
+                      <b-col cols="3">
                       <b-button class="ml-2" squared @click="backToTransfer()"
                         >Back</b-button
                       >
                     </b-col>
                     <b-col cols="6">
                       <b-button
+                      
                         class="float-right"
                         @click="sendExternal()"
                         squared
@@ -530,6 +547,27 @@
         </b-col>
       </b-row>
     </b-container>
+    <div class="particles-div-har">
+      <b-row>
+<vue-particles
+        color="#2d4d58"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#3b988e"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push">
+      </vue-particles>
+</b-row>
+    </div>
   </div>
 </template>
 
@@ -602,8 +640,8 @@ export default {
               if (response === true) {
                 this.makeTransferSuccessful()
                 this.$bvModal.hide('modal-internal')
-                this.getCurrentAccounts()
-                this.getSavingsAccounts()
+                const path = `/harmoney-dashboard`
+                this.$router.push(path)
               } else {
                 this.makeToastTransferError()
               }
@@ -696,8 +734,8 @@ export default {
             Promise.resolve(transactionPromise).then(response => {
               if (response === true) {
                 this.makeTransferSuccessful()
-                this.getCurrentAccounts()
-                this.getSavingsAccounts()
+                const path = `/harmoney-dashboard`
+                this.$router.push(path)
                 this.$bvModal.hide('modal-internal')
               } else {
                 this.makeToastTransferError()
@@ -899,12 +937,21 @@ export default {
     },
     theFormatAC(number) {
       return `€${number.toFixed(2)}`
-    }
+    },
+    addAccount(){
+      const path = `/add-account`
+        if (this.$route.path !== path) this.$router.push(path)
+    },
   }
 }
 </script>
 
 <style>
+.particles-div-har{
+background-color:#f7f7f7;
+max-height: 100%;
+}
+
 .line-border {
   background-color: #6b7a86;
   padding-top: 2px;
@@ -914,46 +961,15 @@ export default {
   margin-left: 10px;
   margin-right: 10px;
 }
-.accounts {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  margin: 4px;
+.vue-particles-har{
+  max-height: 100%;
 }
 
 #fa-balance-lg {
   align-self: center;
 }
-.b-card-account {
-  width: 180px;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  background: rgb(67, 171, 146);
-  background: linear-gradient(
-    90deg,
-    rgba(67, 171, 146, 1) 0%,
-    rgba(67, 171, 146, 1) 10%,
-    rgba(249, 249, 249, 1) 10%,
-    rgba(249, 249, 249, 1) 100%
-  );
-}
 
-.b-card-account-savings {
-  width: 180px;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  background: rgb(247, 95, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(247, 95, 0, 1) 0%,
-    rgba(247, 95, 0, 1) 10%,
-    rgba(249, 249, 249, 1) 10%
-  );
-}
+
 
 .b-card-div {
   padding-top: 5px;
@@ -980,6 +996,13 @@ export default {
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 20px;
+  text-shadow: .15px .15px .15px black;
+}
+.b-card-balance{
+  text-shadow: .15px .15px .15px black;
+   font-family: 'Roboto', sans-serif;
+  
+  font-size: 20px;
 }
 .left-col-top {
   background-color: #ccda46;
@@ -1032,7 +1055,7 @@ export default {
   display: none;
 }
 .right-col-savings {
-  background-color: #afe4e1;
+  background-color:#f1f1f0;
 }
 .left-col-savings {
   background-color: #ef4b4b;
@@ -1048,43 +1071,179 @@ export default {
   background-color: #6b7a86;
   padding: 1px;
 }
-
+.little-ca-row{
+    display:none;
+  }
 #fa-balance-sm {
   display: none;
 }
-.bottom-col-last {
-  background: rgb(227, 246, 245);
-  background: linear-gradient(
-    180deg,
-    rgba(227, 246, 245, 1) 0%,
-    rgba(255, 255, 255, 1) 50%
-  );
-  padding: 30px;
-}
+
 #fa-balance-lg {
   display: inline-block;
   margin-right: 10px;
 }
-
+.no-accounts{
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin: 10px;
+}
+.add-current{
+width: 180px;
+height:100px;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  background: rgb(67, 171, 146);
+  background: linear-gradient(
+    90deg,
+    rgba(67, 171, 146, 1) 0%,
+    rgba(67, 171, 146, 1) 10%,
+    rgba(249, 249, 249, 1) 10%,
+    rgba(249, 249, 249, 1) 100%
+  );
+}
+.add-current:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.add-savings{
+ width: 180px;
+height:100px;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  background: rgb(247, 95, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(247, 95, 0, 1) 0%,
+    rgba(247, 95, 0, 1) 10%,
+    rgba(249, 249, 249, 1) 10%
+  );
+}
+.add-savings:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 .div-center-top {
   width: 70%;
 }
+@media (min-width: 870px) {
 
+.accounts {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin: 4px;
+}
+
+  .b-card-account {
+  width: 280px;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  
+  background: rgb(67, 171, 146);
+  background: linear-gradient(
+    90deg,
+    rgba(67, 171, 146, 1) 0%,
+    rgba(67, 171, 146, 1) 10%,
+    rgba(249, 249, 249, 1) 10%,
+    rgba(249, 249, 249, 1) 100%
+  );
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.b-card-account:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.b-card-account-savings:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.b-card-account-savings {
+  width: 280px;
+  font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 14px;
+  background: rgb(247, 95, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(247, 95, 0, 1) 0%,
+    rgba(247, 95, 0, 1) 10%,
+    rgba(249, 249, 249, 1) 10%
+  );
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+ .b-card-account-small{
+   display:none;
+ }
+ .b-card-account-savings-small{
+   display:none;
+ }
+}
 @media (max-width: 870px) {
+  .b-card-account-small{
+    width: 100px;
+    height:100px;
+    background: rgb(67, 171, 146);
+  background: linear-gradient(
+    90deg,
+    rgba(67, 171, 146, 1) 0%,
+    rgba(67, 171, 146, 1) 10%,
+    rgba(249, 249, 249, 1) 10%,
+    rgba(249, 249, 249, 1) 100%
+  );
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  }
+  .b-card-account-savings-small{
+    width: 100px;
+    height:100px;
+    background: rgb(247, 95, 0);
+  background: linear-gradient(
+    90deg,
+    rgba(247, 95, 0, 1) 0%,
+    rgba(247, 95, 0, 1) 10%,
+    rgba(249, 249, 249, 1) 10%
+  );
+  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  }
+  .h1-fiName{
+    font-size: 13px;
+    margin-top: 16px;
+    text-shadow: .21px .21px .21px black;
+     font-family: 'Roboto', sans-serif;
+  
+  }
+  .h1-balance{
+    font-size: 20px;
+    text-shadow: .151px .151px .151px black;
+     font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .b-card-account-small:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.b-card-account-savings-small:hover{
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
   .accounts {
-    padding: 5px;
     display: flex;
     flex-direction: column;
     flex-flow: row wrap;
-    justify-content: space-evenly;
-    margin: 4px;
+    justify-content: space-evenly; 
   }
   #h5-total-balance {
     display: none;
   }
   #fa-balance-sm {
     display: inline-block;
-    margin-right: 4px;
+    margin-right: 5px;
   }
   #fa-balance-lg {
     display: none;
@@ -1092,47 +1251,15 @@ export default {
   .div-center-top {
     width: 80%;
   }
+  .big-ca-row{
+    display:none;
+  }
   .b-card-account {
-    display: flex;
-    flex-direction: column;
-    width: 130px;
-    height: 200px;
-    display: inline-block;
-    align-content: center;
-    text-align: center;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    background: rgb(67, 171, 146);
-    background: linear-gradient(
-      90deg,
-      rgba(67, 171, 146, 1) 0%,
-      rgba(67, 171, 146, 1) 10%,
-      rgba(249, 249, 249, 1) 10%,
-      rgba(249, 249, 249, 1) 100%
-    );
+   display:none;
   }
-
   .b-card-account-savings {
-    width: 130px;
-    font-family: 'Roboto', sans-serif;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 14px;
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    display: inline-block;
-    align-content: center;
-    text-align: center;
-    background: rgb(247, 95, 0);
-    background: linear-gradient(
-      90deg,
-      rgba(247, 95, 0, 1) 0%,
-      rgba(247, 95, 0, 1) 10%,
-      rgba(249, 249, 249, 1) 10%
-    );
+   display:none;
   }
-
   .h5-ca {
     font-family: 'Roboto', sans-serif;
     font-family: 'Open Sans', sans-serif;
@@ -1178,6 +1305,6 @@ export default {
   padding-bottom: 20px;
 }
 .right-col {
-  background-color: #c4e2e1;
+  background-color: rgb(250, 245, 228);
 }
 </style>

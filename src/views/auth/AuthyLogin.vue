@@ -22,6 +22,9 @@
           id="input-password-group"
           label="Your Password:"
           label-for="input-password"
+          :invalid-feedback="invalidFeedback"
+              :valid-feedback="validFeedback"
+              :state="state"
         >
           <b-form-input
             id="input-password"
@@ -30,6 +33,7 @@
             type="password"
             aria-describedby="password-help-block"
             placeholder="Enter password"
+            :state="state"
           ></b-form-input>
         </b-form-group>
 
@@ -45,9 +49,10 @@
         headerTextVariant= 'light' title="Two Factor Authentication">
         <b-row>
           <b-col cols="2"></b-col>
-          <b-col cols="10">
-            <p class="my-4">Please enter the validation code we have sent to your registered mobile number in the text field below.</p>
+          <b-col cols="8">
+            <p class="mt-2">Please enter the validation code we have sent to your registered mobile number in the text field below.</p>
             </b-col>
+            <b-col cols="2"></b-col>
             </b-row>
             <b-row>
           <b-col cols="2"></b-col>
@@ -97,11 +102,32 @@
 <script>
 import * as auth from '../../../services/AuthService'
 export default {
+  computed: {
+    state() {
+      
+      let str = this.form.password
+      let space = str.search(" ")
+        return this.form.password.length >= 6 && space === -1 ? true : false
+      },
+      invalidFeedback() {
+        let str = this.form.password
+        let space = str.search(" ")
+        if (this.form.password.length > 6 && space !== -1) {
+          return ''
+        } else if (this.form.password.length > 0 && space !== -1) {
+          return 'Enter at least 6 characters and no spaces'
+        } else {
+          return 'Please enter your password'
+        }
+      },
+      validFeedback() {
+        return this.stateP === true ? 'Thank you' : ''
+      },},
   data() {
     return {
       form: {
         email: null,
-        password: null
+        password: ""
       },
       show: true,
       vCode: null
@@ -149,6 +175,8 @@ export default {
             this.$bvModal.show('modal-center')
           } else if (response.data.message === null) {
             this.seriousError()
+          } else if (response.data.message === "password"){
+            this.passwordError()
           }
         })
       } else {
@@ -169,6 +197,17 @@ export default {
     makeToastEmailInv() {
       this.$bvToast.toast(
         "I'm so sorry, but the email you have provided is not on our database!",
+        {
+          title: 'Apologies!',
+          variant: 'danger',
+          solid: true,
+          center: true
+        }
+      )
+    },
+    passwordError() {
+      this.$bvToast.toast(
+        "I'm so sorry, but you have entered the wrong password!",
         {
           title: 'Apologies!',
           variant: 'danger',

@@ -547,27 +547,6 @@
         </b-col>
       </b-row>
     </b-container>
-    <div class="particles-div-har">
-      <b-row>
-<vue-particles
-        color="#2d4d58"
-        :particleOpacity="0.7"
-        :particlesNumber="80"
-        shapeType="circle"
-        :particleSize="4"
-        linesColor="#3b988e"
-        :linesWidth="1"
-        :lineLinked="true"
-        :lineOpacity="0.4"
-        :linesDistance="150"
-        :moveSpeed="3"
-        :hoverEffect="true"
-        hoverMode="grab"
-        :clickEffect="true"
-        clickMode="push">
-      </vue-particles>
-</b-row>
-    </div>
   </div>
 </template>
 

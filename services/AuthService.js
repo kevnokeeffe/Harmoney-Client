@@ -111,6 +111,10 @@ export function registerAuthyUser(user) {
   return http().post("api/auth/authy-register", user);
 }
 
+export function checkUserEmail(email) {
+  return http().get("/check-user-email",email);
+}
+
 export function validateAuthyUser(verify) {
   return http().post("api/auth/authy-validate", verify);
 }

@@ -1,9 +1,11 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-useless-escape */
 <template>
   <div class="container-signUp">
     <b-jumbotron class="b-jumbotron-signUp">
       <h1 class="h1-register"><i class="fas fa-user-plus"></i> Sign-Up</h1>
       <div>
-        <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form >
           <b-form-group
             id="input-group-fName"
             label="First Name"
@@ -33,18 +35,25 @@
           </b-form-group>
 
           <b-form-group
-            id="input-group-email"
+            class="b-form-group-email"
+            id="b-form-group-email"
             label="Email address:"
-            label-for="input-email"
+            label-for="email"
             description="We'll never share your email with anyone else."
+            :invalid-feedback="invalidFeedback"
+              :valid-feedback="validFeedback"
+              :state="state"
           >
             <b-form-input
-              v-b-popover.hover.top="'Enter e-mail here.'"
-              id="input-email"
-              v-model="form.email"
+            class="form__input"
+              name="email"
+              id="email"
               type="email"
               required
+              v-model.trim="form.email"
               placeholder="Enter email"
+              :state="state" 
+              trim
             ></b-form-input>
           </b-form-group>
 
@@ -66,6 +75,9 @@
             id="input-group-password"
             label="Your Password:"
             label-for="input-password"
+            :invalid-feedback="invalidFeedbackP"
+              :valid-feedback="validFeedbackP"
+              :state="stateP"
           >
             <b-form-input
               v-b-popover.hover.top="'Enter password here.'"
@@ -74,12 +86,12 @@
               aria-describedby="password-help-block"
               v-model="form.password"
               required
+              :state="stateP"
               placeholder="Enter password"
             ></b-form-input>
             <b-form-text id="password-help-block">
               Your password must be 6-20 characters long, contain letters,
-              special characters and numbers, but should not contain spaces or
-              emoji.
+              special characters and numbers, but should not contain spaces.
             </b-form-text>
           </b-form-group>
 
@@ -126,61 +138,53 @@
             </template>
 
             <template>
-                <b-row>
-                  <b-col cols="1"></b-col>
-                  <b-col cols="10">
-                    <p>
-                      Please select the "Send" button we will send a code to
-                      your mobile phone. Then enter the code you recive in the
-                      input field below.
-                    </p>
-                  </b-col>
-                  <b-col cols="1"></b-col>
-                </b-row>
-                <b-row>
-                  <b-col cols="1"></b-col>
-                  <b-col cols="2"
-                    ><b-button
-                      v-b-popover.hover.top="
-                        'Send verification code to your mobile.'
-                      "
-                      squared
-                      variant="warning"
-                      @click="verifyPing()"
-                      >Send</b-button
-                    >
-                  </b-col>
-                  <b-col cols="8">
-                    <b-form-input
+              <b-row>
+                <b-col cols="1"></b-col>
+                <b-col cols="10">
+                  <p>
+                    Please select the "Send" button we will send a code to your
+                    mobile phone. Then enter the code you recive in the input
+                    field below.
+                  </p>
+                </b-col>
+                <b-col cols="1"></b-col>
+              </b-row>
+              <b-row>
+                <b-col cols="1"></b-col>
+                <b-col cols="2"
+                  >
+                </b-col>
+                <b-col cols="8">
+                  <b-form-input
                     v-b-popover.hover.top="
-                        'Please enter your 10 digit verification code here..'
-                      "
-                      v-model="vCode"
-                      required
-                      trim
-                      placeholder="Enter validation code"
-                    ></b-form-input>
-                  </b-col>
-                  <b-col cols="1"></b-col
-                ></b-row>
+                      'Please enter your 10 digit verification code here..'
+                    "
+                    v-model="vCode"
+                    required
+                    trim
+                    placeholder="Enter validation code"
+                  ></b-form-input>
+                </b-col>
+                <b-col cols="1"></b-col
+              ></b-row>
 
-                <b-button
-                  class="float-right ml-2  mt-4"
-                  squared
-                  type="submit"
-                  variant="primary"
-                  @click="onSubmit()"
-                >
-                  Submit
-                </b-button>
-                <b-button
-                  class="float-right mt-4"
-                  squared
-                  variant="danger"
-                  @click="hideModal()"
-                >
-                  Cancel
-                </b-button>
+              <b-button
+                class="float-right ml-2  mt-4"
+                squared
+                type="submit"
+                variant="primary"
+                @click="onSubmit()"
+              >
+                Submit
+              </b-button>
+              <b-button
+                class="float-right mt-4"
+                squared
+                variant="danger"
+                @click="hideModal()"
+              >
+                Cancel
+              </b-button>
             </template>
           </b-modal>
 
@@ -262,11 +266,71 @@
 <script>
 import { VueTelInput } from 'vue-tel-input'
 import * as auth from '../../../services/AuthService'
+import { required, minLength, email } from 'vuelidate/lib/validators'
 export default {
+  computed: {
+    stateP() {
+      
+      let str = this.form.password
+      let space = str.search(" ")
+        return this.form.password.length >= 6 && space === -1 ? true : false
+      },
+      invalidFeedbackP() {
+        let str = this.form.password
+        let space = str.search(" ")
+        if (this.form.password.length > 6 && space !== -1) {
+          return ''
+        } else if (this.form.password.length > 0 && space !== -1) {
+          return 'Enter at least 6 characters and no spaces'
+        } else {
+          return 'Please enter something'
+        }
+      },
+      validFeedbackP() {
+        return this.stateP === true ? 'Thank you' : ''
+      },
+      state() {
+        const paragraph = this.form.email;
+        // eslint-disable-next-line no-useless-escape
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const found = paragraph.match(regex);
+        return found !== null ? true : false
+      },
+      invalidFeedback() {
+         const paragraph = this.form.email;
+        // eslint-disable-next-line no-useless-escape
+        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        const found = paragraph.match(regex);
+        if (found === null) {
+          return ''
+        } else if (found === null) {
+          return 'Please enter a valid email'
+        }
+        else {
+          return 'Please enter a valid email'
+        }
+      },
+      validFeedback() {
+        return this.state === true ? 'Thank you' : ''
+      }
+    },
   data() {
     return {
       components: {
         VueTelInput
+      },
+      validations: {
+        form: {
+          email: {
+            email,
+            required,
+            minLength: minLength(6)
+          },
+          password:{
+            required,
+            minlength: minLength(6)
+          }
+        }
       },
       bindProps: {
         mode: 'international',
@@ -294,17 +358,18 @@ export default {
         }
       },
       modalProps: {},
+      submitted: false,
       form: {
-        fName: null,
-        lName: null,
-        phone: null,
-        email: null,
-        password: null,
+        fName: '',
+        lName: '',
+        phone: '',
+        email: '',
+        password: '',
         checked: null,
         verified: true
       },
       vCode: null,
-      show: true
+      show: true,
     }
   },
   methods: {
@@ -353,14 +418,19 @@ export default {
     hideModal() {
       this.$bvModal.hide('modal-center')
     },
-    showContinueModal() {
+    showContinueModal() { 
       if (
         this.form.email != null &&
         this.form.fName != null &&
         this.form.lName != null &&
-        this.form.password != null
+        this.form.password != null &&
+        this.form.email != "" &&
+        this.form.fName != "" &&
+        this.form.lName != "" &&
+        this.form.password != ""
       ) {
         if (this.form.checked === 'true') {
+          this.verifyPing()
           this.$bvModal.show('modal-center')
         } else {
           this.showMsgBoxTNC()
@@ -371,12 +441,12 @@ export default {
     },
     onReset() {
       // Reset our form values
-      this.form.email = ''
-      this.form.fName = ''
-      this.form.lName = ""
-      this.form.password = ''
-      this.form.phone = ''
-      this.form.checked = ''
+      this.form.email = null
+      this.form.fName = null
+      this.form.lName = null
+      this.form.password = null
+      this.form.phone = null
+      this.form.checked = null
       this.show = false
       this.$nextTick(() => {
         this.show = true
@@ -440,12 +510,15 @@ export default {
       })
     },
     makeToastMessageError() {
-      this.$bvToast.toast('Sorry but your email is already exists on the database!', {
-        title: '2FA!',
-        variant: 'danger',
-        solid: true,
-        center: true
-      })
+      this.$bvToast.toast(
+        'Sorry but your email is already exists on the database!',
+        {
+          title: '2FA!',
+          variant: 'danger',
+          solid: true,
+          center: true
+        }
+      )
     },
     verifyPing() {
       if (this.form.phone != '' && this.form.phone.length >= 10) {

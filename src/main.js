@@ -2,64 +2,42 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import axios from 'axios'
 import './assets/css/style.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import { BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
-import Vuelidate from 'vuelidate'
-Vue.use(Vuelidate, BootstrapVueIcons)
-// Progress Number Counter
 import Progress from 'easy-circular-progress';
-Vue.use(Progress)
-import { MediaPlugin } from 'bootstrap-vue'
-Vue.use(MediaPlugin)
-// This imports all the layout components such as <b-container>, <b-row>, <b-col>:
-import { LayoutPlugin } from 'bootstrap-vue'
-Vue.use(LayoutPlugin)
-// This imports <b-modal> as well as the v-b-modal directive as a plugin:
-import { ModalPlugin } from 'bootstrap-vue'
-Vue.use(ModalPlugin)
-// This imports <b-card> along with all the <b-card-*> sub-components as a plugin:
-import { CardPlugin } from 'bootstrap-vue'
-Vue.use(CardPlugin)
-// This imports directive v-b-scrollspy as a plugin:
-import { VBScrollspyPlugin } from 'bootstrap-vue'
-Vue.use(VBScrollspyPlugin)
-// This imports the dropdown and table plugins
-import { DropdownPlugin, TablePlugin } from 'bootstrap-vue'
-Vue.use(DropdownPlugin)
-Vue.use(TablePlugin)
-// Install BootstrapVue
-Vue.use(BootstrapVue)
-// Optionally install the BootstrapVue icon components plugin
-Vue.use(IconsPlugin)
-import FlatSurfaceShader from 'vue-flat-surface-shader'
-Vue.use(FlatSurfaceShader)
-// International Telephone Input with Vue.
+import { MediaPlugin,LayoutPlugin,ModalPlugin,CardPlugin,VBScrollspyPlugin,DropdownPlugin, TablePlugin,BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 import VueTelInput from 'vue-tel-input'
-Vue.use(VueTelInput)
 import vueCountryRegionSelect from 'vue-country-region-select'
-Vue.use(vueCountryRegionSelect)
-// Number animation import.
 import AnimatedNumber from 'animated-number-vue'
-Vue.use(AnimatedNumber)
 import VueNumber from 'vue-number-animation'
-Vue.use(VueNumber)
 import '@fortawesome/fontawesome-free/css/all.css'
 import '@fortawesome/fontawesome-free/js/all.js'
-
-Vue.use(IconsPlugin)
 import VueParticles from 'vue-particles'
-Vue.use(VueParticles)
 import VueParticlesBg from "particles-bg-vue";
-Vue.use(VueParticlesBg);
-
-
-
-//Input field component to display a formatted currency value 
 import VueNumeric from 'vue-numeric-currency'
+import {Vuelidate} from 'vuelidate'
+
+Vue.use(BootstrapVueIcons)
+Vue.use(Progress)
+Vue.use(MediaPlugin)
+Vue.use(LayoutPlugin)
+Vue.use(ModalPlugin)
+Vue.use(CardPlugin)
+Vue.use(VBScrollspyPlugin)
+Vue.use(DropdownPlugin)
+Vue.use(TablePlugin)
+Vue.use(BootstrapVue)
+Vue.use(IconsPlugin)
+Vue.use(VueTelInput)
+Vue.use(vueCountryRegionSelect)
+Vue.use(AnimatedNumber)
+Vue.use(VueNumber)
+Vue.use(IconsPlugin)
+Vue.use(VueParticles)
+Vue.use(VueParticlesBg);
 Vue.use(VueNumeric)
+Vue.use(Vuelidate)
 
 
 Vue.config.productionTip = false

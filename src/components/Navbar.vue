@@ -51,6 +51,10 @@
               ><i class="fas fa-plus-circle"></i> Add Account</b-dropdown-item
             >
             <b-dropdown-item
+              to="/remove-account"
+              ><i class="fas fa-minus-circle"></i> Remove Account</b-dropdown-item
+            >
+            <b-dropdown-item
               to="/user-profile"
               ><i class="fas fa-user"></i> User Profile</b-dropdown-item
             >

@@ -102,6 +102,21 @@ const routes = [
     }
   },
   {
+    path: '/remove-account',
+    name: 'remove-account',
+    component: () =>
+      import(
+        /* webpackChunkName: "remove-account" */ '../views/pages/RemoveAccounts.vue'
+      ),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
+  {
     path: '/sign-up',
     name: 'signup',
     component: () =>

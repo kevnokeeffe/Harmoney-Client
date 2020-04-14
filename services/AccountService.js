@@ -219,3 +219,16 @@ export function getIndividualCurrentAccount(id) {
 export function getIndividualSavingsAccount(id) {
   return http().get(`api/account/current-all/${id}`)
 }
+
+export function deleteWIT(id) {
+  return http().get(`api/account/current-all/${id}`)
+}
+export function deleteAIB(id) {
+  return http().get(`api/account/current-all/${id}`)
+}
+export function deleteCU(id) {
+  return http().get(`api/account/current-all/${id}`)
+}
+export function deletePO(id) {
+  return http().get(`api/account/current-all/${id}`)
+}

@@ -17,7 +17,11 @@ import VueParticles from 'vue-particles'
 import VueParticlesBg from "particles-bg-vue";
 import VueNumeric from 'vue-numeric-currency'
 import {Vuelidate} from 'vuelidate'
+import NProgress from 'vue-nprogress'
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
+Vue.use(Loading);
 Vue.use(BootstrapVueIcons)
 Vue.use(Progress)
 Vue.use(MediaPlugin)
@@ -38,7 +42,14 @@ Vue.use(VueParticles)
 Vue.use(VueParticlesBg);
 Vue.use(VueNumeric)
 Vue.use(Vuelidate)
+Vue.use(NProgress)
 
+// eslint-disable-next-line no-unused-vars
+const options = {
+  latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,
+  router: true, // Show progressbar when navigating routes, default: true
+  http: false // Show progressbar when doing Vue.http, default: true
+};
 
 Vue.config.productionTip = false
 new Vue({

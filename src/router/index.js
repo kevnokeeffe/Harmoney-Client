@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import * as auth from '../../services/AuthService'
@@ -10,6 +11,7 @@ const routes = [
     name: 'home',
     component: () => 
     import(/* webpackChunkName: "home" */ '../views/Home.vue'),
+    
   },
   {
     path: '/about',
@@ -26,6 +28,7 @@ const routes = [
       if (!auth.isLoggedIn()) {
         next()
       } else {
+        //NProgress.start()
         next('/harmoney-dashboard')
       }
     }
@@ -116,5 +119,6 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+
 
 export default router

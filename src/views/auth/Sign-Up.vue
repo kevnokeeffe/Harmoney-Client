@@ -1,11 +1,12 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-useless-escape */
+/* eslint-disable no-useless-escape */ /* eslint-disable no-useless-escape */
 <template>
   <div class="container-signUp">
+   
+
     <b-jumbotron class="b-jumbotron-signUp">
       <h1 class="h1-register"><i class="fas fa-user-plus"></i> Sign-Up</h1>
       <div>
-        <b-form >
+        <b-form>
           <b-form-group
             id="input-group-fName"
             label="First Name"
@@ -16,6 +17,7 @@
               id="input-fName"
               v-model="form.fName"
               required
+              :state="fNameState"
               placeholder="Enter first name"
             ></b-form-input>
           </b-form-group>
@@ -28,6 +30,7 @@
             <b-form-input
               v-b-popover.hover.top="'Enter last name.'"
               id="input-lName"
+              :state="lNameState"
               v-model="form.lName"
               required
               placeholder="Enter last name"
@@ -41,18 +44,18 @@
             label-for="email"
             description="We'll never share your email with anyone else."
             :invalid-feedback="invalidFeedback"
-              :valid-feedback="validFeedback"
-              :state="state"
+            :valid-feedback="validFeedback"
+            :state="state"
           >
             <b-form-input
-            class="form__input"
+              class="form__input"
               name="email"
               id="email"
               type="email"
               required
               v-model.trim="form.email"
               placeholder="Enter email"
-              :state="state" 
+              :state="state"
               trim
             ></b-form-input>
           </b-form-group>
@@ -76,8 +79,8 @@
             label="Your Password:"
             label-for="input-password"
             :invalid-feedback="invalidFeedbackP"
-              :valid-feedback="validFeedbackP"
-              :state="stateP"
+            :valid-feedback="validFeedbackP"
+            :state="stateP"
           >
             <b-form-input
               v-b-popover.hover.top="'Enter password here.'"
@@ -117,15 +120,20 @@
           </b-form-group>
 
           <b-button
-            v-b-popover.hover.top="'Continue the sign-up process.'"
+            v-b-popover.hover.left="'Continue the sign-up process.'"
             type="button"
             class="mr-2"
             @click="showContinueModal()"
             squared
             variant="info"
+            v-if="loadingScreen === false"
             >Continue</b-button
           >
-
+          <b-button v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
+          <b-spinner small type="grow"></b-spinner>
+            Loading...
+          </b-button>
+  
           <b-modal
             id="modal-center"
             headerBgVariant="dark"
@@ -133,17 +141,17 @@
             centered
             hide-footer
           >
+          
             <template v-slot:modal-header>
               <h5>Mobile Validation</h5>
             </template>
-
+            
             <template>
               <b-row>
                 <b-col cols="1"></b-col>
                 <b-col cols="10">
                   <p>
-                    Please select the "Send" button we will send a code to your
-                    mobile phone. Then enter the code you recive in the input
+                    Enter the code you recive on your mobile into the input
                     field below.
                   </p>
                 </b-col>
@@ -151,10 +159,7 @@
               </b-row>
               <b-row>
                 <b-col cols="1"></b-col>
-                <b-col cols="2"
-                  >
-                </b-col>
-                <b-col cols="8">
+                <b-col cols="10">
                   <b-form-input
                     v-b-popover.hover.top="
                       'Please enter your 10 digit verification code here..'
@@ -167,15 +172,27 @@
                 </b-col>
                 <b-col cols="1"></b-col
               ></b-row>
-
+                <b-button
+                class="float-right ml-2  mt-4"
+                squared
+                type="submit"
+                variant="primary"
+                disabled
+                v-if="this.vCode === null && this.loading != true"
+              >Submit
+              </b-button>
               <b-button
                 class="float-right ml-2  mt-4"
                 squared
                 type="submit"
                 variant="primary"
                 @click="onSubmit()"
-              >
-                Submit
+                v-if="this.loading === false && this.vCode !=null"
+              >Submit
+              </b-button>
+              <b-button variant="primary" squared v-if="this.loading === true" disabled>
+              <b-spinner small type="grow"></b-spinner>
+                Loading...
               </b-button>
               <b-button
                 class="float-right mt-4"
@@ -187,7 +204,6 @@
               </b-button>
             </template>
           </b-modal>
-
           <!-- <b-button type="submit" squared variant="success">Submit</b-button> -->
           <b-button type="reset" squared variant="danger">Reset</b-button>
         </b-form>
@@ -267,70 +283,75 @@
 import { VueTelInput } from 'vue-tel-input'
 import * as auth from '../../../services/AuthService'
 import { required, minLength, email } from 'vuelidate/lib/validators'
+
 export default {
   computed: {
+    fNameState() {
+        return this.form.fName.length > 2 ? true : false
+      },
+      lNameState() {
+        return this.form.lName.length > 2 ? true : false
+      },
     stateP() {
-      
       let str = this.form.password
-      let space = str.search(" ")
-        return this.form.password.length >= 6 && space === -1 ? true : false
-      },
-      invalidFeedbackP() {
-        let str = this.form.password
-        let space = str.search(" ")
-        if (this.form.password.length > 6 && space !== -1) {
-          return ''
-        } else if (this.form.password.length > 0 && space !== -1) {
-          return 'Enter at least 6 characters and no spaces'
-        } else {
-          return 'Please enter something'
-        }
-      },
-      validFeedbackP() {
-        return this.stateP === true ? 'Thank you' : ''
-      },
-      state() {
-        const paragraph = this.form.email;
-        // eslint-disable-next-line no-useless-escape
-        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const found = paragraph.match(regex);
-        return found !== null ? true : false
-      },
-      invalidFeedback() {
-         const paragraph = this.form.email;
-        // eslint-disable-next-line no-useless-escape
-        const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        const found = paragraph.match(regex);
-        if (found === null) {
-          return ''
-        } else if (found === null) {
-          return 'Please enter a valid email'
-        }
-        else {
-          return 'Please enter a valid email'
-        }
-      },
-      validFeedback() {
-        return this.state === true ? 'Thank you' : ''
+      let space = str.search(' ')
+      return this.form.password.length >= 6 && space === -1 ? true : false
+    },
+    invalidFeedbackP() {
+      let str = this.form.password
+      let space = str.search(' ')
+      if (this.form.password.length > 6 && space !== -1) {
+        return ''
+      } else if (this.form.password.length > 0 && space !== -1) {
+        return 'Enter at least 6 characters and no spaces'
+      } else {
+        return 'Please enter something'
       }
     },
+    validFeedbackP() {
+      return this.stateP === true ? 'Thank you' : ''
+    },
+    state() {
+      const paragraph = this.form.email
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const found = paragraph.match(regex)
+      return found !== null ? true : false
+    },
+    invalidFeedback() {
+      const paragraph = this.form.email
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const found = paragraph.match(regex)
+      if (found === null) {
+        return ''
+      } else if (found === null) {
+        return 'Please enter a valid email'
+      } else {
+        return 'Please enter a valid email'
+      }
+    },
+    validFeedback() {
+      return this.state === true ? 'Thank you' : ''
+    },
+  },
   data() {
     return {
       components: {
-        VueTelInput
+        VueTelInput,
       },
       validations: {
         form: {
           email: {
             email,
             required,
-            minLength: minLength(6)
+            minLength: minLength(6),
           },
-          password:{
+          password: {
             required,
-            minlength: minLength(6)
-          }
-        }
+            minlength: minLength(6),
+          },
+        },
       },
       bindProps: {
         mode: 'international',
@@ -351,11 +372,11 @@ export default {
         wrapperClasses: '',
         inputClasses: '',
         dropdownOptions: {
-          disabledDialCode: false
+          disabledDialCode: false,
         },
         inputOptions: {
-          showDialCode: false
-        }
+          showDialCode: false,
+        },
       },
       modalProps: {},
       submitted: false,
@@ -366,21 +387,24 @@ export default {
         email: '',
         password: '',
         checked: null,
-        verified: true
+        verified: true,
       },
+      loading: false,
       vCode: null,
       show: true,
+      loadingScreen:false,
     }
   },
   methods: {
     onSubmit: async function() {
       let valid = false
+      this.loading = true
       if (this.vCode != null && this.vCode.length === 10) {
         const code = {
-          vCode: this.vCode
+          vCode: this.vCode,
         }
         const codePromise = auth.checkValidateAuthyUser(code)
-        await Promise.resolve(codePromise).then(response => {
+        await Promise.resolve(codePromise).then((response) => {
           if (response.data.message === true) {
             this.codeValid()
             valid = true
@@ -396,12 +420,13 @@ export default {
           email: this.form.email,
           password: this.form.password,
           phone: this.form.phone,
-          verified: this.form.verified
+          verified: this.form.verified,
         }
         const registerPromise = auth.registerAuthyUser(user)
-        await Promise.resolve(registerPromise).then(async response => {
+        await Promise.resolve(registerPromise).then(async (response) => {
           if (response.data.message === true) {
             this.makeToastSuccess()
+            this.loading = false
             this.hideModal()
             const loginPromise = auth.authyLogin(user)
             await Promise.resolve(loginPromise)
@@ -418,16 +443,17 @@ export default {
     hideModal() {
       this.$bvModal.hide('modal-center')
     },
-    showContinueModal() { 
+    showContinueModal() {
+      this.loadingScreen = true
       if (
         this.form.email != null &&
         this.form.fName != null &&
         this.form.lName != null &&
         this.form.password != null &&
-        this.form.email != "" &&
-        this.form.fName != "" &&
-        this.form.lName != "" &&
-        this.form.password != ""
+        this.form.email != '' &&
+        this.form.fName != '' &&
+        this.form.lName != '' &&
+        this.form.password != ''
       ) {
         if (this.form.checked === 'true') {
           this.verifyPing()
@@ -459,7 +485,7 @@ export default {
           title: 'Apologies!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -470,7 +496,7 @@ export default {
           title: 'Apologies!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -481,7 +507,7 @@ export default {
           title: 'Apologies!',
           variant: 'warning',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -490,7 +516,7 @@ export default {
         title: 'Congratulations!',
         variant: 'success',
         solid: true,
-        center: true
+        center: true,
       })
     },
     codeValid() {
@@ -498,7 +524,7 @@ export default {
         title: '2FA!',
         variant: 'info',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeSuccessCode() {
@@ -506,7 +532,7 @@ export default {
         title: '2FA!',
         variant: 'info',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeToastMessageError() {
@@ -516,7 +542,7 @@ export default {
           title: '2FA!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -524,28 +550,35 @@ export default {
       if (this.form.phone != '' && this.form.phone.length >= 10) {
         const verify = {
           phone: this.form.phone,
-          email: this.form.email
+          email: this.form.email,
         }
         const verifyAuth = {
-          phone: this.form.phone
+          phone: this.form.phone,
         }
         const verifyEmail = auth.checkSignUpEmail(verify)
-        Promise.resolve(verifyEmail).then(async resp1 => {
+        Promise.resolve(verifyEmail).then(async (resp1) => {
           if (resp1.data.message === true) {
             const verifyPromise = await auth.validateAuthyUser(verifyAuth)
-            await Promise.resolve(verifyPromise).then(response => {
+            await Promise.resolve(verifyPromise).then((response) => {
               if (response.data.message === true) {
                 this.makeSuccessCode()
+                this.loadingScreen = false
               } else if (response.data.message == false) {
                 this.makeToastMessageError()
+                this.loadingScreen = false
+                this.$bvModal.hide('modal-center')
               }
             })
           } else if (resp1.data.message === false) {
             this.makeToastMessageError()
+            this.loadingScreen = false
+            this.$bvModal.hide('modal-center')
           }
         })
       } else {
         this.makeToastForm()
+        this.loadingScreen = false
+        this.$bvModal.hide('modal-center')
       }
     },
     showMsgBoxTNC: function() {
@@ -560,21 +593,30 @@ export default {
             okVariant: 'success',
             headerClass: 'p-2 border-bottom-0',
             footerClass: 'p-2 border-top-0',
-            centered: true
+            centered: true,
           }
         )
-        .then(value => {
+        .then((value) => {
           this.boxTwo = value
         })
-        .catch(err => {
+        .catch((err) => {
           return err
         })
-    }
-  }
+    },
+  },
 }
 </script>
 
 <style>
+.overlay-signUp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
 .container-signUp {
   background: rgb(249, 190, 2);
   background: linear-gradient(

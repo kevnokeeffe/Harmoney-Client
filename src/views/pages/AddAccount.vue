@@ -4,15 +4,20 @@
     <b-jumbotron
       class="b-jumbotron-add-account"
     >
-    <h4 class="mb-4"><i class="fas fa-university"></i> Add Financial Institution</h4>
+    <h4><i class="fas fa-university"></i> Add Financial Institution</h4>
       <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-        <b-form-group
+        <b-form-group 
+          
           id="input-group-1"
           label="Email address:"
           label-for="input-1"
           description="We do not store any of your account information."
+          :invalid-feedback="invalidFeedback"
+            :valid-feedback="validFeedback"
+            :state="state"
         >
           <b-form-input
+          :state="state"
             id="input-1"
             v-model="form.email"
             type="email"
@@ -25,9 +30,13 @@
           id="input-group-2"
           label="Your Password:"
           label-for="input-2"
+          :invalid-feedback="invalidFeedbackP"
+            :valid-feedback="validFeedbackP"
+            :state="stateP"
           
         >
           <b-form-input
+          :state="stateP"
             id="input-2"
             v-model="form.password"
             required
@@ -50,11 +59,11 @@
         </b-form-group>
 
         <b-form-group id="input-group-4">
-          <b-form-checkbox v-model="form.checked" id="checkboxes-4" value="true"
+          <b-button class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
+          <b-form-checkbox class="mt-2 mb-4" v-model="form.checked" id="checkboxes-4" value="true"
             >Accept Terms & Conditions</b-form-checkbox
           >
           <div>
-            <b-button class="mt-2" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
             <b-modal
               id="modal-scrollable"
               scrollable
@@ -128,8 +137,12 @@
             </b-modal>
           </div>
         </b-form-group>
-
-        <b-button class="mr-2" squared type="submit" variant="info">Submit</b-button>
+        <b-button class="mr-2" squared variant="info" disabled v-if="this.loading === true">
+        <b-spinner small type="grow"></b-spinner>
+          Loading...
+        </b-button>
+        <b-button disabled v-if="this.state === false && this.stateP === false && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
+        <b-button v-if="this.state === true && this.stateP === true && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
         <b-button class="ml-2" squared type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-jumbotron>
@@ -159,13 +172,59 @@
 <script>
 import * as auth from '../../../services/FIAuthService'
 export default {
+  computed: {
+    stateP() {
+      let str = this.form.password
+      let space = str.search(' ')
+      return this.form.password.length >= 6 && space === -1 ? true : false
+    },
+    invalidFeedbackP() {
+      let str = this.form.password
+      let space = str.search(' ')
+      if (this.form.password.length > 6 && space !== -1) {
+        return ''
+      } else if (this.form.password.length > 0 && space !== -1) {
+        return 'Enter at least 6 characters and no spaces'
+      } else {
+        return 'Please enter something'
+      }
+    },
+    validFeedbackP() {
+      return this.stateP === true ? 'Thank you' : ''
+    },
+    state() {
+      const paragraph = this.form.email
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const found = paragraph.match(regex)
+      return found !== null ? true : false
+    },
+    invalidFeedback() {
+      const paragraph = this.form.email
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const found = paragraph.match(regex)
+      if (found === null) {
+        return ''
+      } else if (found === null) {
+        return 'Please enter a valid email'
+      } else {
+        return 'Please enter a valid email'
+      }
+    },
+    validFeedback() {
+      return this.state === true ? 'Thank you' : ''
+    },
+  },
   data() {
     return {
+      loading:false,
       form: {
         email: '',
         password: '',
         fi: null,
-        checked: null
+        checked: null,
+        valid:false,
       },
       fis: [
         { text: 'Please select one', value: null,disabled: true },
@@ -179,6 +238,7 @@ export default {
   },
   methods: {
     onSubmit: async function(evt) {
+      this.loading = true
       evt.preventDefault()
       const connect = {
         email: this.form.email,
@@ -191,8 +251,10 @@ export default {
           await Promise.all([connectPromise]).then(res => {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
+                this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.loading = false
               }
           })
         } else if (this.form.fi === 'Allied Irish Bank') {
@@ -200,8 +262,10 @@ export default {
           await Promise.all([connectPromise]).then(res => {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
+                this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.loading = false
               }
           })
         } else if (this.form.fi === 'Credit Union') {
@@ -209,8 +273,10 @@ export default {
           await Promise.all([connectPromise]).then(res => {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
+                this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.loading = false
               }
           })
         } else if (this.form.fi === 'Post Office') {
@@ -218,16 +284,20 @@ export default {
           await Promise.all([connectPromise]).then(res => {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
+                this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.loading = false
               }
           })
         }
       } else {
         this.showMsgBoxTwo()
+        this.loading = false
       }
     },
     onReset(evt) {
+      this.loading = false
       evt.preventDefault()
       // Reset our form values
       this.form.email = ''
@@ -296,6 +366,7 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
+  margin-bottom: 60px;
   }
   .vue-particles-add{
   height: 100%;
@@ -312,6 +383,12 @@ export default {
   z-index: 10;
   
 }
+
+#input-group-1{
+  margin-top:60px;
+  overflow: auto;
+}
+
 .b-jumbotron-add-account {
   display: block;
   margin-left: auto;
@@ -326,7 +403,7 @@ export default {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   
         background: rgb(255,255,255);
-background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 82%, rgba(254,169,104,1) 82%, rgba(254,169,104,1) 96%, rgba(254,221,124,1) 96%, rgba(254,221,124,1) 100%); }
+background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 84%, rgba(254,169,104,1) 84%, rgba(254,169,104,1) 93%); }
 
 .form-select-options {
   max-width: 200px;

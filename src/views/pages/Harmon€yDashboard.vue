@@ -70,7 +70,7 @@
                   <b-row class="b-card-row">
                     <b-col>
                       <b-row class="b-card-balance mb-1 ml-2"
-                        >Balance: €{{ currentAccount.balance }}</b-row
+                        >Balance: €{{ currentAccount.balance.toFixed(2) }}</b-row
                       >
                       <b-row
                         ><b-col class="ml-4 mt-3"
@@ -84,7 +84,7 @@
               <b-card v-b-popover.hover.bottom="`View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`" no-body class="b-card-account-small"
               @click="detailsModal(currentAccount)">
                     <h1 class="h1-fiName">{{ currentAccount.fiName }}</h1>
-                    <h1 class="h1-balance">€{{ currentAccount.balance }}</h1>      
+                    <h1 class="h1-balance">€{{ currentAccount.balance.toFixed(0) }}</h1>      
               </b-card>
             </div>
           </div>
@@ -118,7 +118,7 @@
               <b-row>
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
-                  <p class="text-ac-details">Balance: €{{ account.balance }}</p>
+                  <p class="text-ac-details">Balance: €{{ account.balance.toFixed(2) }}</p>
                 </b-col></b-row
               >
               <b-row>
@@ -131,7 +131,7 @@
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Aavailable Overdraft: €{{ account.overDraft }}
+                    Aavailable Overdraft: €{{ account.overDraft.toFixed(2) }}
                   </p>
                 </b-col></b-row
               >
@@ -229,7 +229,7 @@
                   <b-row class="b-card-row">
                     <b-col>
                       <b-row class=" b-card-balance mb-1 ml-2"
-                        >Balance: €{{ savingsAccount.balance }}</b-row
+                        >Balance: €{{ savingsAccount.balance.toFixed(2) }}</b-row
                       >
                       <b-row
                         ><b-col class="mt-3 ml-4"
@@ -243,7 +243,7 @@
 
               <b-card v-b-popover.hover.top="`View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`" no-body @click="detailsModalSave(savingsAccount)" class="b-card-account-savings-small">
 <h1 class="h1-fiName">{{ savingsAccount.fiName }}</h1>
-           <h1 class="h1-balance"> €{{ savingsAccount.balance }}</h1>
+           <h1 class="h1-balance"> €{{ savingsAccount.balance.toFixed(0) }}</h1>
               </b-card>
             </div>
           </div>
@@ -276,7 +276,7 @@
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
-                  <p class="text-ac-details">Balance: €{{ account.balance }}</p>
+                  <p class="text-ac-details">Balance: €{{ account.balance.toFixed(2) }}</p>
                 </b-col></b-row
               >
               <b-row>
@@ -387,10 +387,7 @@
               <b-row class="mt-2"></b-row>
               <b-row class="ml-2 mt-2">
                 <b-button squared variant="danger" @click="cancelModels()"
-                  >Cancel</b-button
-                >
-                <b-button class="ml-4" squared @click="backToDetails()"
-                  >Back</b-button
+                  >Close</b-button
                 >
               </b-row>
             </b-container>
@@ -416,19 +413,22 @@
                 <b-row class="ml-2 mr-2 mt-4">
                   <h6>Please enter the amount to transfer:</h6>
                 </b-row>
-                <b-row class="ml-2 mr-2">
+                <b-row class="ml-2 mr-2" 
+              >
                   <b-form-input
+      
                     v-model="transferNumber"
-                    min="0"
+                    min="0.01"
                     max="account.balance"
                     required
                     number
-                    placeholder="Enter Amount €.0"
+                    placeholder="Enter Amount €.00"
+                    pattern="^\d*(\.\d{0,2})?$"
                   ></b-form-input>
                 </b-row>
                 <b-row class="ml-2 mt-1">
                   <h6>
-                    Maximum for this account is €{{ this.account.balance }}
+                    Maximum for this account is €{{ this.account.balance.toFixed(2) }}
                   </h6>
                 </b-row>
                 <b-row class="mt-2 ml-2">
@@ -447,7 +447,7 @@
                 <b-row class="mt-4">
                   <b-col cols="3">
                     <b-button squared variant="danger" @click="cancelModels()"
-                      >Cancel</b-button
+                      >Close</b-button
                     >
                   </b-col>
                     <b-col cols="3">
@@ -460,9 +460,14 @@
                       class="float-right"
                       squared
                       variant="success"
+                      v-if="this.loading === false"
                       @click="sendInternal()"
                       >Send</b-button
                     >
+                    <b-button class="float-right" v-if="this.loading === true" squared variant="success" disabled>
+    <b-spinner small type="grow"></b-spinner>
+    Sending...
+  </b-button>
                   </b-col>
                 </b-row>
               </b-col>
@@ -490,19 +495,23 @@
                   <b-row class="ml-2 mr-2 mt-2">
                     <h6>Please enter the amount to transfer</h6>
                   </b-row>
-                  <b-row class="ml-2 mr-4">
+                  <b-row class="ml-2 mr-4" 
+                  
+                  >
                     <b-form-input
                       v-model="transferNumber"
-                      min="0"
                       max="account.balance"
+                      min="0.01"
                       required
                       number
-                      placeholder="Enter Amount €.0"
+                  
+                      placeholder="Enter Amount €.00"
+                      pattern="^\d*(\.\d{0,2})?$"
                     ></b-form-input>
                   </b-row>
                   <b-row class="ml-2 mt-1">
                     <h6>
-                      Maximum for this account is €{{ this.account.balance }}
+                      Maximum for this account is €{{ this.account.balance.toFixed(2) }}
                     </h6>
                   </b-row>
                   <b-row class="mt-2 ml-2">
@@ -521,7 +530,7 @@
                   <b-row class="mr-2 mt-4">
                     <b-col cols="3">
                       <b-button squared variant="danger" @click="cancelModels()"
-                        >Cancel</b-button
+                        >Close</b-button
                       >
                     </b-col>
                       <b-col cols="3">
@@ -536,8 +545,13 @@
                         @click="sendExternal()"
                         squared
                         variant="success"
+                        v-if="this.loading !== true"
                         >Send</b-button
                       >
+                      <b-button v-if="this.loading === true" class="float-right" variant="success" squared disabled>
+                      <b-spinner small type="grow"></b-spinner>
+                      Sending...
+                       </b-button>
                     </b-col>
                   </b-row>
                 </b-col>
@@ -558,6 +572,8 @@ export default {
   name: 'dashboard',
   data() {
     return {
+      loading:false,
+      log:false,
       selectedAccount: null,
       selected: null,
       status: 'false',
@@ -586,7 +602,7 @@ export default {
         dueDate: null,
         fiName: null,
         iban: null,
-        overDraft: null,
+        overDraft: 0,
         updatedAt: null,
         userId: null
       }
@@ -603,6 +619,7 @@ export default {
   },
   methods: {
     sendExternal() {
+      this.loading = true
       if (this.statusEx === 'true') {
         if (
           this.transferNumber <= this.account.balance &&
@@ -610,32 +627,44 @@ export default {
           this.transferNumber !== 0
         ) {
           if (this.enterIban != null) {
+            let num = this.transferNumber
             let iban = this.enterIban
-            this.transaction = [iban, this.account.id, this.transferNumber]
+            this.transaction = [iban, this.account.id, num]
             const transactionPromise = transactionService.postTransactionInternal(
               this.transaction
             )
             Promise.resolve(transactionPromise).then(response => {
               if (response === true) {
                 this.makeTransferSuccessful()
-                this.$bvModal.hide('modal-internal')
-                const path = `/harmoney-dashboard`
-                this.$router.push(path)
+                this.loading = false
+                this.currentAccount = []
+                this.savingsAccount = []
+                this.accountTotal = 0
+                this.savingsAccountTotal = 0
+                this.currentAccountTotal = 0
+                this.transferNumber = 0
+                this.getCurrentAccounts()
+                this.getSavingsAccounts()
               } else {
+                this.loading = false
                 this.makeToastTransferError()
               }
             })
           } else {
+            this.loading = false
             this.mustEnterIBAN()
           }
         } else if (this.transferNumber > this.account.balance) {
+          this.loading = false
           this.makeToastTransferTooHigh()
         } else if (this.transferNumber <= 0) {
+          this.loading = false
           this.makeTransferTooLow()
         }
       } else if (this.status === 'false') {
+        this.loading = false
         this.makeToastCheckbox()
-      }
+      } 
     },
     mustEnterIBAN() {
       this.$bvToast.toast('You must enter an IBAN!', {
@@ -697,6 +726,7 @@ export default {
       )
     },
     sendInternal() {
+      this.loading === true
       if (this.status === 'true') {
         if (
           this.transferNumber <= this.account.balance &&
@@ -705,31 +735,46 @@ export default {
         ) {
           if (this.selectedAccount != null) {
             let trasAcc = this.selectedAccount
+            let num = this.transferNumber
             let iban = trasAcc[2].split(' ').pop()
-            this.transaction = [iban, this.account.id, this.transferNumber]
+            this.transaction = [iban, this.account.id, num]
             const transactionPromise = transactionService.postTransactionInternal(
               this.transaction
             )
             Promise.resolve(transactionPromise).then(response => {
               if (response === true) {
+                this.loading = false
                 this.makeTransferSuccessful()
-                const path = `/harmoney-dashboard`
-                this.$router.push(path)
                 this.$bvModal.hide('modal-internal')
+                this.currentAccount = []
+                this.savingsAccount = []
+                this.accountTotal = 0
+                this.savingsAccountTotal = 0
+                this.currentAccountTotal = 0
+                this.transferNumber = 0
+                this.getCurrentAccounts()
+                this.getSavingsAccounts()
+
+
               } else {
                 this.makeToastTransferError()
+                this.loading = false
               }
             })
           } else {
             this.makeToastSelectAccountToTransfer()
+            this.loading = false
           }
         } else if (this.transferNumber > this.account.balance) {
           this.makeToastTransferTooHigh()
+          this.loading = false
         } else if (this.transferNumber <= 0) {
           this.makeTransferTooLow()
+          this.loading = false
         }
       } else if (this.status === 'false') {
         this.makeToastCheckbox()
+        this.loading = false
       }
     },
     combineAccounts() {
@@ -772,6 +817,7 @@ export default {
       this.transferNumber = null
       this.combineAccounts()
       this.sortAccounts(this.accounts)
+      this.$bvModal.hide('modal-center-save')
       this.$bvModal.hide('modal-center')
       this.$bvModal.show('modal-transfer')
     },
@@ -779,6 +825,7 @@ export default {
       this.enterIban = null
       this.selectedAccount = null
       this.transferNumber = null
+      this.$bvModal.hide('modal-center-save')
       this.$bvModal.hide('modal-internal')
       this.$bvModal.hide('modal-external')
       this.$bvModal.show('modal-transfer')
@@ -790,6 +837,13 @@ export default {
       this.transferNumber = null
       this.$bvModal.hide('modal-transfer')
       this.$bvModal.show('modal-center')
+    },
+    backToDetailsSave() {
+      this.enterIban = null
+      this.selectedAccount = null
+      this.transferNumber = null
+      this.$bvModal.hide('modal-transfer')
+      this.$bvModal.show('modal-center-save')
     },
 
     internal() {
@@ -1204,7 +1258,7 @@ height:100px;
   
   }
   .h1-balance{
-    font-size: 20px;
+    font-size: 18px;
     text-shadow: .151px .151px .151px black;
      font-family: 'Roboto', sans-serif;
     font-family: 'Open Sans', sans-serif;

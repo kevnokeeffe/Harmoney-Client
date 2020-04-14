@@ -23,8 +23,8 @@
           label="Your Password:"
           label-for="input-password"
           :invalid-feedback="invalidFeedback"
-              :valid-feedback="validFeedback"
-              :state="state"
+          :valid-feedback="validFeedback"
+          :state="state"
         >
           <b-form-input
             id="input-password"
@@ -38,59 +38,111 @@
         </b-form-group>
 
         <b-button
+          class="mt-2"
+          squared
+          type="button"
+          variant="info"
+          disabled
+          v-if="this.form.password.length < 6"
+        >
+          Continue
+        </b-button>
+        <b-button
+          class="mt-2"
+          v-if="this.form.password.length >= 6 && this.loading === true"
+          squared
+          variant="info"
+          disabled
+        >
+          <b-spinner small type="grow"></b-spinner>
+          Loading...
+        </b-button>
+        <b-button
           type="button"
           class="mt-2"
           @click="showValidationModal()"
           squared
           variant="info"
+          v-if="this.form.password.length >= 6 && this.loading === false"
           >Continue</b-button
         >
-<b-modal id="modal-center" centered hide-footer headerBgVariant= 'dark'
-        headerTextVariant= 'light' title="Two Factor Authentication">
-        <b-row>
-          <b-col cols="2"></b-col>
-          <b-col cols="8">
-            <p class="mt-2">Please enter the validation code we have sent to your registered mobile number in the text field below.</p>
+        <b-modal
+          id="modal-center"
+          centered
+          hide-footer
+          headerBgVariant="dark"
+          headerTextVariant="light"
+          title="Two Factor Authentication"
+        >
+          <b-row>
+            <b-col cols="2"></b-col>
+            <b-col cols="8">
+              <p class="mt-2">
+                Please enter the validation code we have sent to your registered
+                mobile number in the text field below.
+              </p>
             </b-col>
             <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-          <b-col cols="2"></b-col>
-          <b-col cols="9">
-            <b-form-input
-              id="vCode-input"
-              v-model="vCode"
-              required
-              placeholder="Enter validation code"
-            ></b-form-input>
-          </b-col>
-          <b-col cols="1"></b-col></b-row>
+          </b-row>
+          <b-row>
+            <b-col cols="2"></b-col>
+            <b-col cols="9">
+              <b-form-input
+                id="vCode-input"
+                v-model="vCode"
+                required
+                placeholder="Enter validation code"
+              ></b-form-input>
+            </b-col>
+            <b-col cols="1"></b-col
+          ></b-row>
           <b-row class="buttons-row-modal">
-          <b-col cols="2"></b-col>
-          <b-col cols="10">
-            <div>
-              <b-button
+            <b-col cols="2"></b-col>
+            <b-col cols="10">
+              <div>
+                <b-button
+                  class="mt-4 mr-2"
+                  squared
+                  variant="danger"
+                  @click="hideModal()"
+                >
+                  Cancel
+                </b-button>
+
+                <b-button
+                  class="mt-4 mr-2"
+                  squared
+                  type="submit"
+                  variant="primary"
+                  disabled
+                  v-if="this.vCode === null && this.loading === false"
+                >
+                  Submit
+                </b-button>
+                <b-button
                 class="mt-4 mr-2"
-                squared
-                variant="danger"
-                @click="hideModal()"
-              >
-                Cancel
-              </b-button>
-              <b-button
-                class="mt-4 mr-2"
-                squared
-                type="submit"
-                variant="primary"
-                @click="onSubmit()"
-              >
-                Submit
-              </b-button>
-              
-            </div>
-          </b-col></b-row>
-          </b-modal>
-        
+                  v-if="this.vCode != null && this.loading === true"
+                  variant="primary"
+                  squared
+                  disabled
+                >
+                  <b-spinner small type="grow"></b-spinner>
+                  Loading...
+                </b-button>
+                <b-button
+                  class="mt-4 mr-2"
+                  squared
+                  type="submit"
+                  variant="primary"
+                  @click="onSubmit()"
+                  v-if="this.loading === false && this.vCode != null"
+                >
+                  Submit
+                </b-button>
+              </div>
+            </b-col></b-row
+          >
+        </b-modal>
       </b-form>
     </b-jumbotron>
     <!-- <b-card class="mt-3" header="Form Data Result">
@@ -104,83 +156,95 @@ import * as auth from '../../../services/AuthService'
 export default {
   computed: {
     state() {
-      
       let str = this.form.password
-      let space = str.search(" ")
-        return this.form.password.length >= 6 && space === -1 ? true : false
-      },
-      invalidFeedback() {
-        let str = this.form.password
-        let space = str.search(" ")
-        if (this.form.password.length > 6 && space !== -1) {
-          return ''
-        } else if (this.form.password.length > 0 && space !== -1) {
-          return 'Enter at least 6 characters and no spaces'
-        } else {
-          return 'Please enter your password'
-        }
-      },
-      validFeedback() {
-        return this.stateP === true ? 'Thank you' : ''
-      },},
+      let space = str.search(' ')
+      return this.form.password.length >= 6 && space === -1 ? true : false
+    },
+    invalidFeedback() {
+      let str = this.form.password
+      let space = str.search(' ')
+      if (this.form.password.length > 6 && space !== -1) {
+        return ''
+      } else if (this.form.password.length > 0 && space !== -1) {
+        return 'Enter at least 6 characters and no spaces'
+      } else {
+        return 'Please enter your password'
+      }
+    },
+    validFeedback() {
+      return this.state === true ? 'Thank you' : ''
+    },
+  },
   data() {
     return {
       form: {
         email: null,
-        password: ""
+        password: '',
       },
       show: true,
-      vCode: null
+      vCode: null,
+      loading: false,
+      log: false,
     }
   },
   methods: {
     onSubmit() {
+      this.loading = true
       if (this.vCode != null && this.vCode.length === 6) {
         const code = {
-          vCode: this.vCode
+          vCode: this.vCode,
         }
         const codePromise = auth.checkValidateAuthyUserLogin(code)
-        Promise.resolve(codePromise).then(async response => {
+        Promise.resolve(codePromise).then(async (response) => {
           if (response.data.message === true) {
             const user = {
               email: this.form.email,
-              password: this.form.password
+              password: this.form.password,
             }
             const loginPromise = auth.authyLogin(user)
             await Promise.resolve(loginPromise)
             this.hideModal()
+            this.loading = false
             await this.$router.push({ path: '/harmoney-dashboard' })
           } else if (response.data.message === false) {
             this.codeInValid()
+            this.loading = false
           }
         })
       } else {
         this.codeInValid()
+        this.loading = false
       }
     },
     hideModal() {
       this.$bvModal.hide('modal-center')
     },
     showValidationModal() {
+      this.loading = true
       if (this.form.email != null && this.form.password != null) {
         const uCheck = {
-          email: this.form.email
+          email: this.form.email,
         }
         const emailPromise = auth.checkForUserEmail(uCheck)
-        Promise.resolve(emailPromise).then(response => {
+        Promise.resolve(emailPromise).then((response) => {
           if (response.data.message === false) {
             this.makeToastEmailInv()
+            this.loading = false
           } else if (response.data.message === true) {
             this.makeToastEmailValid()
             this.$bvModal.show('modal-center')
+            this.loading = false
           } else if (response.data.message === null) {
             this.seriousError()
-          } else if (response.data.message === "password"){
+            this.loading = false
+          } else if (response.data.message === 'password') {
             this.passwordError()
+            this.loading = false
           }
         })
       } else {
         this.makeToastForm()
+        this.loading = false
       }
     },
     makeToastForm() {
@@ -190,7 +254,7 @@ export default {
           title: 'Apologies!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -201,7 +265,7 @@ export default {
           title: 'Apologies!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -212,7 +276,7 @@ export default {
           title: 'Apologies!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -221,7 +285,7 @@ export default {
         title: 'Hurray.',
         variant: 'info',
         solid: true,
-        center: true
+        center: true,
       })
     },
     seriousError() {
@@ -231,7 +295,7 @@ export default {
           title: '!!Something went wrong!!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -240,7 +304,7 @@ export default {
         title: '2FA!',
         variant: 'success',
         solid: true,
-        center: true
+        center: true,
       })
     },
     codeInValid() {
@@ -248,10 +312,10 @@ export default {
         title: '2FA!',
         variant: 'warning',
         solid: true,
-        center: true
+        center: true,
       })
-    }
-  }
+    },
+  },
 }
 </script>
 
@@ -267,31 +331,31 @@ export default {
   padding-top: 4px;
   padding-bottom: 30%;
   height: 100%;
-  position:relative;
+  position: relative;
   left: 0;
   right: 0;
 }
-.buttons-row-modal{
+.buttons-row-modal {
   margin-bottom: 20px;
 }
 
 .h1-login {
   text-align: center;
-  color:rgb(255, 255, 221);
+  color: rgb(255, 255, 221);
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   font-size: 2em;
   padding-bottom: 2em;
 }
 
-#vCode-input{
-  width:50%;
+#vCode-input {
+  width: 60%;
 }
 
-@media (max-width: 600px){
-#vCode-input{
-  width:70%;
-}
+@media (max-width: 600px) {
+  #vCode-input {
+    width: 70%;
+  }
 }
 
 .b-jumbotron-login {
@@ -311,6 +375,4 @@ export default {
     rgba(252, 74, 26, 1) 98%
   );
 }
-
-
 </style>

@@ -99,6 +99,10 @@ export function deleteFiInfo(id) {
   return http().delete(`/api/account/delete/fi-details/${id}`,id);
 }
 
+export function deleteFiIndividual(body) {
+  return http().post(`/api/account/delete/fi-individual`,body);
+}
+
 export function validateAuthyUser(verify) {
   return http().post("api/auth/authy-validate", verify);
 }

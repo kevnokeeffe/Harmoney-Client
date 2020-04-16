@@ -47,8 +47,7 @@
         :clickEffect="true"
         clickMode="push">
       </vue-particles>
-
-      <b-modal size="sm" hide-footer centered id="modal-remove" title="Delete">
+      <b-modal size="md" hide-footer centered id="modal-remove" title="Delete">
         <b-container>
           <b-row>
     <p class="my-4 ml-3 mr-2"> Are you sure you wish to delete this account!</p>
@@ -58,10 +57,10 @@
       <b-button  @click="cancel()" class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
       </b-col>
       <b-col class="float-right" cols="6">
-       <b-button @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger"> <i class="far fa-trash-alt"></i> Delete</b-button>
+       <b-button @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger">Delete</b-button>
        <b-button class="float-right mt-2 mb-2" v-if="this.loading === true" squared variant="danger" disabled>
       <b-spinner small type="grow"></b-spinner>
-        ....
+        Loading....
       </b-button>
   </b-col>
   </b-row>
@@ -78,6 +77,7 @@ export default {
     
     data() {
     return {
+      show:false,
       loading:false,
       form: {
         email: '',
@@ -90,11 +90,10 @@ export default {
       fis: [
         { text: 'Please select one', value: null,disabled: true },
         'Bank of WIT',
-        'Allied Irish Bank',
+        'AIB',
         'Credit Union',
         'Post Office'
       ],
-      show: true
     }
   },
 methods: {
@@ -112,11 +111,54 @@ methods: {
     cancel(){
       this.$bvModal.hide('modal-remove')
       this.loading = false
+      this.form.checked = false
+      this.form.fi = null
     },
     deleteAccount(){
-    
+    this.show = true
     this.loading = true
-    console.log(this.loading)
+    let id = this.form.userId
+    let fiName = this.form.fi
+    let data = [fiName , id]
+    const deletePromise = auth.deleteFiIndividual(data)
+    Promise.resolve(deletePromise).then(res => {
+      if (res.data.message === "no matching account"){
+        this.noMatchingAccount()
+        this.loading = false
+        this.$bvModal.hide('modal-remove')
+        this.form.checked = false
+      this.form.fi = null
+      }
+      if(res.data.message === true){
+this.successFullDelete()
+this.loading = false
+this.form.checked = false
+      this.form.fi = null
+this.$bvModal.hide('modal-remove')
+      }
+    })
+    },
+    successFullDelete() {
+      this.$bvToast.toast(
+        'You have deleted the accounts successfully.',
+        {
+          title: 'Congratulations!',
+          variant: 'success',
+          solid: true,
+          center: true
+        }
+      )
+    },
+    noMatchingAccount() {
+      this.$bvToast.toast(
+        'You have no matching account! Delete account from an existing financial instution.',
+        {
+          title: 'Apologies!',
+          variant: 'danger',
+          solid: true,
+          center: true
+        }
+      )
     },
     mustAccept() {
       this.$bvToast.toast(
@@ -149,10 +191,10 @@ methods: {
    display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 .bt-remove{
-   margin-top: 50px;
+   margin-top: 30px;
     display: block;
     margin-left: auto;
     margin-right: auto
@@ -239,13 +281,13 @@ background: linear-gradient(0deg, rgba(133,163,146,1) 4%, rgba(255,255,255,1) 4%
   width: 80%;
   margin-top: 60px;
   max-height: 100%;
-  min-height: 500px;
+  min-height: 400px;
   max-width: 400px;
   overflow: auto;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   
         background: rgb(255,255,255);
-background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 84%, rgba(254,169,104,1) 84%, rgba(254,169,104,1) 93%); }
+background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 78%, rgba(254,169,104,1) 78%, rgba(254,169,104,1) 93%); }
 }
 .form-select-options {
   max-width: 200px;

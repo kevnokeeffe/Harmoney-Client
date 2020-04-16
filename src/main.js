@@ -43,7 +43,6 @@ Vue.use(VueParticlesBg);
 Vue.use(VueNumeric)
 Vue.use(Vuelidate)
 Vue.use(NProgress)
-
 // eslint-disable-next-line no-unused-vars
 const options = {
   latencyThreshold: 200, // Number of ms before progressbar starts showing, default: 100,

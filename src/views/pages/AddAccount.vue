@@ -190,7 +190,7 @@ export default {
       }
     },
     validFeedbackP() {
-      return this.stateP === true ? 'Thank you' : ''
+      return this.stateP === true ? '' : ''
     },
     state() {
       const paragraph = this.form.email
@@ -213,7 +213,7 @@ export default {
       }
     },
     validFeedback() {
-      return this.state === true ? 'Thank you' : ''
+      return this.state === true ? '' : ''
     },
   },
   data() {

@@ -2,9 +2,10 @@ import { http } from './HttpService'
 // import jwt from 'jsonwebtoken'
 
 // Working function
-export async function getAllCurrentAccounts() {
+export async function getAllCurrentAccounts(id) {
   return http()
-    .get(`api/account/current-all`, {
+    .get(`api/account/current-all`,{
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -15,9 +16,10 @@ export async function getAllCurrentAccounts() {
     })
 }
 
-export async function getAllSavingsAccounts() {
+export async function getAllSavingsAccounts(id) {
   return http()
     .get(`api/account/savings-all`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -28,10 +30,11 @@ export async function getAllSavingsAccounts() {
     })
 }
 
-export async function getPostCurrentAccounts() {
+export async function getPostCurrentAccounts(id) {
   let message = false
   return http()
     .get(`api/account/current-all-post`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -50,10 +53,11 @@ export async function getPostCurrentAccounts() {
     })
 }
 
-export async function getAIBCurrentAccounts() {
+export async function getAIBCurrentAccounts(id) {
   let message = false
   return http()
     .get(`api/account/current-all-aib`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -73,10 +77,11 @@ export async function getAIBCurrentAccounts() {
     })
 }
 
-export async function getAllCUcurrentAccounts() {
+export async function getAllCUcurrentAccounts(id) {
   let message = false
   return http()
     .get(`api/account/current-all-cu`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -96,10 +101,11 @@ export async function getAllCUcurrentAccounts() {
     })
 }
 
-export async function getAllWITcurrentAccounts() {
+export async function getAllWITcurrentAccounts(id) {
   let message = false
   return http()
     .get(`api/account/current-all-wit`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -121,10 +127,11 @@ export async function getAllWITcurrentAccounts() {
 // SAVINGS ACCOUNT CALLS
 
 // WIT method call
-export async function getAllWITsavingsAccounts() {
+export async function getAllWITsavingsAccounts(id) {
   let message = false
   return http()
     .get(`api/account/saving-all-wit`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -144,10 +151,11 @@ export async function getAllWITsavingsAccounts() {
 }
 
 // AIB method call
-export async function getAllAIBsavingsAccounts() {
+export async function getAllAIBsavingsAccounts(id) {
   let message = false
   return http()
     .get(`api/account/saving-all-aib`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -167,10 +175,11 @@ export async function getAllAIBsavingsAccounts() {
 }
 
 // Credit Union method call
-export async function getAllCUsavingsAccounts() {
+export async function getAllCUsavingsAccounts(id) {
   let message = false
   return http()
     .get(`api/account/saving-all-cu`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -190,10 +199,11 @@ export async function getAllCUsavingsAccounts() {
 }
 
 // AIB method call
-export async function getAllPostSavingsAccounts() {
+export async function getAllPostSavingsAccounts(id) {
   let message = false
   return http()
     .get(`api/account/saving-all-post`, {
+      id,
       method: 'GET'
     })
     .then(res => {
@@ -232,3 +242,5 @@ export function deleteCU(id) {
 export function deletePO(id) {
   return http().get(`api/account/current-all/${id}`)
 }
+
+

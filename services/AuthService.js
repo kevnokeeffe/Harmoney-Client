@@ -26,21 +26,6 @@ export function authyLogin(user) {
     })
 }
 
-export function login(user) {
-  return http()
-    .post("api/auth/login", user)
-    .then(res => {
-      if (res) {
-        setToken(res.data.token);
-      }
-    }).catch(err => {
-      if (err) {
-        return null
-      }
-      return null
-    })
-}
-
 export function logout() {
   localStorage.clear();
   store.dispatch("authenticate");
@@ -103,16 +88,15 @@ export function getUserId() {
   }
 }
 
-export function registerUser(user) {
-  return http().post("api/auth/register", user);
-}
-
 export function registerAuthyUser(user) {
   return http().post("api/auth/authy-register", user);
 }
 
-export function checkUserEmail(email) {
-  return http().get("/check-user-email",email);
+export function deleteAuthyUser(id) {
+  return http().delete(`api/auth/authy-delete/${id}`,id);
+}
+export function deleteFiInfo(id) {
+  return http().delete(`/api/account/delete/fi-details/${id}`,id);
 }
 
 export function validateAuthyUser(verify) {

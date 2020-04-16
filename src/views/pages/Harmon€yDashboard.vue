@@ -49,7 +49,15 @@
             class="no-accounts mb-2 mt-2"
             v-if="currentAccount && currentAccount.length < 1"
           >
-          <b-card v-b-popover.hover.bottom="'Click here to add an account'" @click="addAccount()" class="add-current">
+          <b-card v-if="this.loadAccountsCurrent === true" v-b-popover.hover.bottom="'Loading..'" class="add-current">
+            <div class="text-center">
+            </div>
+  <b-spinner variant="primary" label="Text Centered"></b-spinner>
+ <div class="text-center">
+ <strong>Loading...</strong>
+</div>
+          </b-card>
+          <b-card v-if="this.loadAccountsCurrent === false" v-b-popover.hover.bottom="'Click here to add an account'" @click="addAccount()" class="add-current">
             <h5 class="add-h5"><i class="fas fa-plus-circle"></i> Add Account</h5>
           </b-card>
           </div>
@@ -208,7 +216,15 @@
             class="no-accounts mb-2 mt-2"
             v-if="savingsAccount && savingsAccount.length < 1"
           >
-          <b-card v-b-popover.hover.top="'Click here to add an account'" @click="addAccount()" class="add-savings">
+          <b-card v-if="this.loadAccountsSavings === true" v-b-popover.hover.bottom="'Loading..'" class="add-current">
+            <div class="text-center">
+            </div>
+  <b-spinner variant="primary" label="Text Centered"></b-spinner>
+ <div class="text-center">
+ <strong>Loading...</strong>
+</div>
+          </b-card>
+          <b-card v-if="this.loadAccountsSavings === false" v-b-popover.hover.top="'Click here to add an account'" @click="addAccount()" class="add-savings">
             <h5 class="add-h5"><i class="fas fa-plus-circle"></i> Add Account</h5>
           </b-card>
           </div>
@@ -560,6 +576,7 @@
           </b-modal>
         </b-col>
       </b-row>
+      
     </b-container>
   </div>
 </template>
@@ -572,7 +589,11 @@ export default {
   name: 'dashboard',
   data() {
     return {
+      userLogged:auth.getUserId(),
+      show:false,
       loading:false,
+      loadAccountsCurrent:false,
+      loadAccountsSavings:false,
       log:false,
       selectedAccount: null,
       selected: null,
@@ -892,10 +913,11 @@ export default {
       this.account.userId = savingsAccount.userId
     },
     getCurrentAccounts() {
-      const postAccount = accountService.getPostCurrentAccounts()
-      const aibAccount = accountService.getAIBCurrentAccounts()
-      const creditUnionAccount = accountService.getAllCUcurrentAccounts()
-      const witAccount = accountService.getAllWITcurrentAccounts()
+      this.loadAccountsCurrent = true
+      const postAccount = accountService.getPostCurrentAccounts(this.userLogged)
+      const aibAccount = accountService.getAIBCurrentAccounts(this.userLogged)
+      const creditUnionAccount = accountService.getAllCUcurrentAccounts(this.userLogged)
+      const witAccount = accountService.getAllWITcurrentAccounts(this.userLogged)
       Promise.all([
         postAccount,
         aibAccount,
@@ -911,13 +933,15 @@ export default {
         }
         this.currentAccount = this.currentAccount.flat()
         this.addUpCurrentAccounts(values)
+        this.loadAccountsCurrent = false
       })
     },
     getSavingsAccounts() {
-      const postAccount = accountService.getAllPostSavingsAccounts()
-      const aibAccount = accountService.getAllAIBsavingsAccounts()
-      const creditUnionAccount = accountService.getAllCUsavingsAccounts()
-      const witAccount = accountService.getAllWITsavingsAccounts()
+      this.loadAccountsSavings = true
+      const postAccount = accountService.getAllPostSavingsAccounts(this.userLogged)
+      const aibAccount = accountService.getAllAIBsavingsAccounts(this.userLogged)
+      const creditUnionAccount = accountService.getAllCUsavingsAccounts(this.userLogged)
+      const witAccount = accountService.getAllWITsavingsAccounts(this.userLogged)
 
       Promise.all([
         postAccount,
@@ -934,6 +958,7 @@ export default {
         }
         this.savingsAccount = this.savingsAccount.flat()
         this.addUpSavingsAccounts(values)
+        this.loadAccountsSavings = false
       })
     },
 

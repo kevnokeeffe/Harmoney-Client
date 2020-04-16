@@ -129,7 +129,7 @@
             v-if="loadingScreen === false"
             >Continue</b-button
           >
-          <b-button v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
+          <b-button class="mr-2" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
           <b-spinner small type="grow"></b-spinner>
             Loading...
           </b-button>
@@ -190,10 +190,10 @@
                 v-if="this.loading === false && this.vCode !=null"
               >Submit
               </b-button>
-              <b-button variant="primary" squared v-if="this.loading === true" disabled>
-              <b-spinner small type="grow"></b-spinner>
-                Loading...
-              </b-button>
+              <b-button class="float-right ml-2  mt-4" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loading === true">
+          <b-spinner small type="grow"></b-spinner>
+            Loading...
+          </b-button>
               <b-button
                 class="float-right mt-4"
                 squared
@@ -309,7 +309,7 @@ export default {
       }
     },
     validFeedbackP() {
-      return this.stateP === true ? 'Thank you' : ''
+      return this.stateP === true ? '' : ''
     },
     state() {
       const paragraph = this.form.email
@@ -332,7 +332,7 @@ export default {
       }
     },
     validFeedback() {
-      return this.state === true ? 'Thank you' : ''
+      return this.state === true ? '' : ''
     },
   },
   data() {
@@ -408,8 +408,10 @@ export default {
           if (response.data.message === true) {
             this.codeValid()
             valid = true
+            this.loading = false
           } else if (response.data.message === false) {
             valid = false
+            this.loading = false
           }
         })
       }
@@ -425,7 +427,6 @@ export default {
         const registerPromise = auth.registerAuthyUser(user)
         await Promise.resolve(registerPromise).then(async (response) => {
           if (response.data.message === true) {
-            this.makeToastSuccess()
             this.loading = false
             this.hideModal()
             const loginPromise = auth.authyLogin(user)
@@ -434,10 +435,12 @@ export default {
           } else if (response.data.message === false) {
             this.makeToastEmailError()
             this.hideModal()
+            this.loading = false
           }
         })
       } else {
         this.makeToastCode()
+        this.loading = false
       }
     },
     hideModal() {
@@ -458,11 +461,14 @@ export default {
         if (this.form.checked === 'true') {
           this.verifyPing()
           this.$bvModal.show('modal-center')
+          this.loadingScreen === false
         } else {
           this.showMsgBoxTNC()
+          this.loadingScreen === false
         }
       } else {
         this.makeToastForm()
+        this.loadingScreen === false
       }
     },
     onReset() {

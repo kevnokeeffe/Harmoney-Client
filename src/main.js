@@ -6,7 +6,7 @@ import './assets/css/style.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Progress from 'easy-circular-progress';
-import { MediaPlugin,LayoutPlugin,ModalPlugin,CardPlugin,VBScrollspyPlugin,DropdownPlugin, TablePlugin,BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
+import {MediaPlugin,LayoutPlugin,ModalPlugin,CardPlugin,VBScrollspyPlugin,DropdownPlugin, TablePlugin,BootstrapVue, IconsPlugin, BootstrapVueIcons } from 'bootstrap-vue'
 import VueTelInput from 'vue-tel-input'
 import vueCountryRegionSelect from 'vue-country-region-select'
 import AnimatedNumber from 'animated-number-vue'

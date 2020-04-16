@@ -460,7 +460,7 @@ export default {
       ) {
         if (this.form.checked === 'true') {
           this.verifyPing()
-          this.$bvModal.show('modal-center')
+          
           this.loadingScreen === false
         } else {
           this.showMsgBoxTNC()
@@ -568,6 +568,7 @@ export default {
             await Promise.resolve(verifyPromise).then((response) => {
               if (response.data.message === true) {
                 this.makeSuccessCode()
+                this.$bvModal.show('modal-center')
                 this.loadingScreen = false
               } else if (response.data.message == false) {
                 this.makeToastMessageError()

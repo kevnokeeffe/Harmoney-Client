@@ -172,7 +172,7 @@ export default {
       }
     },
     validFeedback() {
-      return this.state === true ? 'Thank you' : ''
+      return this.state === true ? '' : ''
     },
   },
   data() {

@@ -376,7 +376,7 @@ export default {
 } 
 .overlay-add{
   position: absolute;
-  top: 0;
+  top: 2;
   left: 0;
   width: 100%;
   height: 100%;
@@ -388,23 +388,45 @@ export default {
   margin-top:60px;
   overflow: auto;
 }
+@media (max-width: 870px) {
+  .b-jumbotron-add-account {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  width: 80%;
+  margin-bottom: 40px;
+  margin-top: 60px;
+  max-height: 100%;
+  min-height: 650px;
+  max-width: 400px;
+  padding-bottom: 20px;
+  overflow: auto;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  
+        background: rgb(255,255,255);
+background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 86%, rgba(254,169,104,1) 86%, rgba(254,169,104,1) 93%); }
+}
 
+@media (min-width: 870px){
 .b-jumbotron-add-account {
   display: block;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   width: 80%;
+  margin-bottom: 40px;
   margin-top: 60px;
   max-height: 100%;
-  min-height: 40%;
+  min-height: 650px;
   max-width: 400px;
+  padding-bottom: 20px;
   overflow: auto;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   
         background: rgb(255,255,255);
-background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 84%, rgba(254,169,104,1) 84%, rgba(254,169,104,1) 93%); }
-
+background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 80%, rgba(254,169,104,1) 80%, rgba(254,169,104,1) 93%); }
+}
 .form-select-options {
   max-width: 200px;
 }

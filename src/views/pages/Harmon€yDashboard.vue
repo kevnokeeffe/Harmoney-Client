@@ -139,7 +139,7 @@
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Aavailable Overdraft: €{{ account.overDraft.toFixed(2) }}
+                    Bank ID: {{ account.bankId }}
                   </p>
                 </b-col></b-row
               >
@@ -160,7 +160,7 @@
                     variant="info"
                     size="md"
                     class="float-left"
-                    @click="statement(account)"
+                    @click="statement()"
                   >
                     Statement
                   </b-button>
@@ -305,7 +305,7 @@
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Aavailable Overdraft: €{{ account.overDraft }}
+                    Account Name: {{ account.accountName }}
                   </p>
                 </b-col></b-row
               >
@@ -326,7 +326,7 @@
                     variant="info"
                     size="md"
                     class="float-left"
-                    @click="statement(account)"
+                    @click="statement()"
                   >
                     Statement
                   </b-button>
@@ -561,7 +561,7 @@
                         @click="sendExternal()"
                         squared
                         variant="success"
-                        v-if="this.loading !== true"
+                        v-if="this.loading === false"
                         >Send</b-button
                       >
                       <b-button v-if="this.loading === true" class="float-right" variant="success" squared disabled>
@@ -576,7 +576,12 @@
           </b-modal>
         </b-col>
       </b-row>
-      
+      <b-modal id="modal-tall" title="Bank Statement">
+    <p class="my-4" >
+      Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
+      in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
+    </p>
+  </b-modal>
     </b-container>
   </div>
 </template>
@@ -616,14 +621,14 @@ export default {
       account: {
         id: null,
         balance: 0,
+        bankId:null,
         accountType: null,
-        bankId: null,
+        accountName: null,
         createdAt: null,
         currency: null,
         dueDate: null,
         fiName: null,
         iban: null,
-        overDraft: 0,
         updatedAt: null,
         userId: null
       }
@@ -883,7 +888,9 @@ export default {
       this.$bvModal.hide('modal-transfer')
       this.$bvModal.show('modal-external')
     },
-    statement() {},
+    statement() {
+      this.$bvModal.show('modal-tall')
+    },
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
       this.account.id = currentAccount._id
@@ -894,7 +901,6 @@ export default {
       this.account.currency = currentAccount.currency
       this.account.fiName = currentAccount.fiName
       this.account.iban = currentAccount.iban
-      this.account.overDraft = currentAccount.overDraft
       this.account.updatedAt = currentAccount.updatedAt
       this.account.userId = currentAccount.userId
     },
@@ -903,12 +909,11 @@ export default {
       this.account.id = savingsAccount._id
       this.account.balance = savingsAccount.balance
       this.account.accountType = savingsAccount.accountType
-      this.account.bankId = savingsAccount.bankId
+      this.account.accountName = savingsAccount.accountName
       this.account.createdAt = savingsAccount.createdAt
       this.account.currency = savingsAccount.currency
       this.account.fiName = savingsAccount.fiName
       this.account.iban = savingsAccount.iban
-      this.account.overDraft = savingsAccount.overDraft
       this.account.updatedAt = savingsAccount.updatedAt
       this.account.userId = savingsAccount.userId
     },

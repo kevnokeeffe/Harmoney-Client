@@ -14,12 +14,20 @@
           >
             <b-form-input
               v-b-popover.hover.top="'Enter first name.'"
+              v-if="this.loadingScreen === false"
               id="input-fName"
               v-model="form.fName"
               required
               :state="fNameState"
               placeholder="Enter first name"
             ></b-form-input>
+
+              <b-form-input
+              v-if="this.loadingScreen === true"
+              disabled
+              placeholder="Enter first name"
+            ></b-form-input>
+
           </b-form-group>
 
           <b-form-group
@@ -33,6 +41,12 @@
               :state="lNameState"
               v-model="form.lName"
               required
+              placeholder="Enter last name"
+              v-if="this.loadingScreen === false"
+            ></b-form-input>
+            <b-form-input
+           disabled
+           v-if="this.loadingScreen === true"
               placeholder="Enter last name"
             ></b-form-input>
           </b-form-group>
@@ -57,6 +71,16 @@
               placeholder="Enter email"
               :state="state"
               trim
+              v-if="this.loadingScreen === false"
+            ></b-form-input>
+             <b-form-input
+              class="form__input"
+              name="email"
+              type="email"
+              required
+              placeholder="Enter email"
+              disabled
+              v-if="this.loadingScreen === true"
             ></b-form-input>
           </b-form-group>
 
@@ -68,6 +92,12 @@
               v-b-popover.hover.top="'Enter phone number here.'"
               v-bind="bindProps"
               v-model="form.phone"
+              v-if="this.loadingScreen === false"
+            ></vue-tel-input>
+             <vue-tel-input
+             v-if="this.loadingScreen === true"
+              v-b-popover.hover.top="'Enter phone number here.'"
+              disabled
             ></vue-tel-input>
           </b-form-group>
 
@@ -90,6 +120,14 @@
               v-model="form.password"
               required
               :state="stateP"
+              v-if="this.loadingScreen === false"
+              placeholder="Enter password"
+            ></b-form-input>
+            <b-form-input
+            v-if="this.loadingScreen === true"
+              type="password"
+              aria-describedby="password-help-block"
+              disabled
               placeholder="Enter password"
             ></b-form-input>
             <b-form-text id="password-help-block">
@@ -204,12 +242,11 @@
               </b-button>
             </template>
           </b-modal>
-          <!-- <b-button type="submit" squared variant="success">Submit</b-button> -->
-          <b-button type="reset" squared variant="danger">Reset</b-button>
+
+          <b-button v-if="this.loadingScreen === false" type="reset" squared variant="danger">Reset</b-button>
+          <b-button v-if="this.loadingScreen === true" disabled squared variant="danger">Reset</b-button>
         </b-form>
-        <!-- <b-card class="mt-3" header="Form Data Result">
-          <pre class="m-0">{{ form }}</pre>
-        </b-card> -->
+ 
       </div>
     </b-jumbotron>
     <div>

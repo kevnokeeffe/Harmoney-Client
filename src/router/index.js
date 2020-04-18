@@ -47,19 +47,6 @@ const routes = [
     }
   },
   {
-    path: '/transactions',
-    name: 'transactions',
-    component: () =>
-      import(/* webpackChunkName: "transactions" */ '../views/pages/Transactions.vue'),
-    beforeEnter: (to, from, next) => {
-      if (auth.isLoggedIn()) {
-        next()
-      } else {
-        next('/login')
-      }
-    }
-  },
-  {
     path: '/add-account',
     name: 'add-account',
     component: () =>

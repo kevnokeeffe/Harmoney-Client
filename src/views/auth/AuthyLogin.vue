@@ -8,12 +8,24 @@
           label="Email address:"
           label-for="input-email"
           description="Please enter a valid email and password."
+          :invalid-feedback="invalidFeedbackE"
+            :valid-feedback="validFeedbackE"
+            :state="stateE"
         >
           <b-form-input
             id="input-email"
             v-model="form.email"
             type="email"
             required
+            placeholder="Enter email"
+            :state="stateE"
+            v-if="this.loadingContinue === false"
+          ></b-form-input>
+          <b-form-input
+            id="input-email"
+            v-if="this.loadingContinue === true"
+            type="email"
+            disabled
             placeholder="Enter email"
           ></b-form-input>
         </b-form-group>
@@ -34,6 +46,16 @@
             aria-describedby="password-help-block"
             placeholder="Enter password"
             :state="state"
+            v-if="this.loadingContinue === false"
+          ></b-form-input>
+
+          <b-form-input
+            id="input-password"
+            v-if="this.loadingContinue === true"
+            type="password"
+            aria-describedby="password-help-block"
+            placeholder="Enter password"
+            disabled
           ></b-form-input>
         </b-form-group>
 
@@ -49,7 +71,7 @@
         </b-button>
         <b-button
           class="mt-2"
-          v-if="this.form.password.length >= 6 && this.loading === true"
+          v-if="this.form.password.length >= 6 && this.loadingContinue === true"
           squared
           variant="info"
           disabled
@@ -63,7 +85,7 @@
           @click="showValidationModal()"
           squared
           variant="info"
-          v-if="this.form.password.length >= 6 && this.loading === false"
+          v-if="this.form.password.length >= 6 && this.loadingContinue === false"
           >Continue</b-button
         >
         <b-modal
@@ -105,10 +127,19 @@
                   squared
                   variant="danger"
                   @click="hideModal()"
+                  v-if="this.loading === false"
                 >
                   Cancel
                 </b-button>
-
+<b-button
+                  class="mt-4 mr-2"
+                  squared
+                  variant="danger"
+                  disabled
+                  v-if="this.loading === true"
+                >
+                  Cancel
+                </b-button>
                 <b-button
                   class="mt-4 mr-2"
                   squared
@@ -155,6 +186,29 @@
 import * as auth from '../../../services/AuthService'
 export default {
   computed: {
+    stateE() {
+      const paragraph = this.form.email
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const found = paragraph.match(regex)
+      return found !== null ? true : false
+    },
+    invalidFeedbackE() {
+      const paragraph = this.form.email
+      // eslint-disable-next-line no-useless-escape
+      const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      const found = paragraph.match(regex)
+      if (found === null) {
+        return ''
+      } else if (found === null) {
+        return 'Please enter a valid email'
+      } else {
+        return 'Please enter a valid email'
+      }
+    },
+    validFeedbackE() {
+      return this.state === true ? '' : ''
+    },
     state() {
       let str = this.form.password
       let space = str.search(' ')
@@ -178,12 +232,13 @@ export default {
   data() {
     return {
       form: {
-        email: null,
+        email: '',
         password: '',
       },
       show: true,
       vCode: null,
       loading: false,
+      loadingContinue:false,
       log: false,
     }
   },
@@ -220,7 +275,7 @@ export default {
       this.$bvModal.hide('modal-center')
     },
     showValidationModal() {
-      this.loading = true
+      this.loadingContinue = true
       if (this.form.email != null && this.form.password != null) {
         const uCheck = {
           email: this.form.email,
@@ -229,22 +284,22 @@ export default {
         Promise.resolve(emailPromise).then((response) => {
           if (response.data.message === false) {
             this.makeToastEmailInv()
-            this.loading = false
+            this.loadingContinue = false
           } else if (response.data.message === true) {
             this.makeToastEmailValid()
             this.$bvModal.show('modal-center')
-            this.loading = false
+            this.loadingContinue = false
           } else if (response.data.message === null) {
             this.seriousError()
-            this.loading = false
+            this.loadingContinue = false
           } else if (response.data.message === 'password') {
             this.passwordError()
-            this.loading = false
+            this.loadingContinue = false
           }
         })
       } else {
         this.makeToastForm()
-        this.loading = false
+        this.loadingContinue = false
       }
     },
     makeToastForm() {

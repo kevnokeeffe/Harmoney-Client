@@ -93,7 +93,7 @@
                     <b-col>
                       <b-row class="b-card-balance mb-1 ml-2"
                         >Balance: €{{
-                          currentAccount.balance.toFixed(2)
+                          currentAccount.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                         }}</b-row
                       >
                       <b-row><b-col class="ml-4 mt-3"></b-col></b-row>
@@ -111,7 +111,7 @@
               >
                 <h1 class="h1-fiName">{{ currentAccount.fiName }}</h1>
                 <h1 class="h1-balance">
-                  €{{ currentAccount.balance.toFixed(0) }}
+                  €{{ currentAccount.balance.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, '$&,') }}
                 </h1>
               </b-card>
             </div>
@@ -147,7 +147,7 @@
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Balance: €{{ account.balance.toFixed(2) }}
+                    Balance: €{{ account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
                   </p>
                 </b-col></b-row
               >
@@ -285,7 +285,7 @@
                     <b-col>
                       <b-row class=" b-card-balance mb-1 ml-2"
                         >Balance: €{{
-                          savingsAccount.balance.toFixed(2)
+                          savingsAccount.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                         }}</b-row
                       >
                       <b-row><b-col class="mt-3 ml-4"></b-col></b-row>
@@ -304,7 +304,7 @@
               >
                 <h1 class="h1-fiName">{{ savingsAccount.fiName }}</h1>
                 <h1 class="h1-balance">
-                  €{{ savingsAccount.balance.toFixed(0) }}
+                  €{{ savingsAccount.balance.toFixed(0).replace(/\d{1,3}(?=(\d{3})+(?!\d))/g, '$&,') }}
                 </h1>
               </b-card>
             </div>
@@ -339,7 +339,7 @@
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Balance: €{{ account.balance.toFixed(2) }}
+                    Balance: €{{ account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
                   </p>
                 </b-col></b-row
               >
@@ -491,7 +491,7 @@
                 <b-row class="ml-2 mt-1">
                   <h6>
                     Maximum for this account is €{{
-                      this.account.balance.toFixed(2)
+                      this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                     }}
                   </h6>
                 </b-row>
@@ -585,7 +585,7 @@
                   <b-row class="ml-2 mt-1">
                     <h6>
                       Maximum for this account is €{{
-                        this.account.balance.toFixed(2)
+                        this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                       }}
                     </h6>
                   </b-row>
@@ -715,10 +715,10 @@
                 >
                 <b-container fluid>  
                   <b-row style="background-color:#f7f7f7;" class="state-row">  
-                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{currentAccountTransactions.updatedBalance.toFixed(2)}}</h5></b-col>                       
-                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{currentAccountTransactions.amount.toFixed(2)}}</h5></b-col>                                
-                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{currentAccountTransactions.amount.toFixed(2)}}</h5></b-col>
-                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{currentAccountTransactions.currentBalance.toFixed(2)}}</h5></b-col>
+                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{currentAccountTransactions.updatedBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                       
+                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{currentAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
+                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{currentAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
+                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{currentAccountTransactions.currentBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
                     <b-col cols="6"> <h5 class="float-left" id="h5-statement-2">Date: {{currentAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
                     <b-col  cols="6"> <h5 class="float-right" id="h5-statement-2">Time: {{currentAccountTransactions.createdAt.slice(11,19)}}</h5> </b-col>
                 </b-row> 
@@ -815,10 +815,10 @@
                 >
                 <b-container fluid>  
                   <b-row style="background-color:#f7f7f7;" class="state-row">  
-                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{savingsAccountTransactions.updatedBalance.toFixed(2)}}</h5></b-col>                       
-                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{savingsAccountTransactions.amount.toFixed(2)}}</h5></b-col>                                
-                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2)}}</h5></b-col>
-                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{savingsAccountTransactions.currentBalance.toFixed(2)}}</h5></b-col>
+                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{savingsAccountTransactions.updatedBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                       
+                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
+                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
+                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{savingsAccountTransactions.currentBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
                    <b-col cols="6"> <h5 class="float-left" id="h5-statement-2">Date: {{savingsAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
                     <b-col  cols="6"> <h5 class="float-right" id="h5-statement-2">Time: {{savingsAccountTransactions.createdAt.slice(11,19)}}</h5> </b-col>
                 </b-row> 
@@ -884,6 +884,8 @@ export default {
       transferNumber: 0,
       enterIban: null,
       accountHoldNumber: null,
+      // eslint-disable-next-line no-useless-escape
+      regexNumberFormat:"^\d{1,8}$|^\d{1,3},\d{3}$|^\d{1,2},\d{3},\d{3}$",
       account: {
         id: null,
         balance: 0,
@@ -1361,10 +1363,12 @@ export default {
       if (this.$route.path !== path) this.$router.push(path)
     },
     theFormat(number) {
-      return `€ ${number.toFixed(2)}`
+      // eslint-disable-next-line no-useless-escape
+      return `€ ${number.toFixed(2).replace(/\€\d(?=(\d{3})+\.)/g, '$&,')}`
     },
     theFormatAC(number) {
-      return `€${number.toFixed(2)}`
+      // eslint-disable-next-line no-useless-escape
+      return `€${number.toFixed(2).replace(/\€\d(?=(\d{3})+\.)/g, '$&,')}`
     },
     addAccount() {
       const path = `/add-account`
@@ -1739,7 +1743,7 @@ export default {
     font-family: 'Roboto', sans-serif;
   }
   .h1-balance {
-    font-size: 18px;
+    font-size: 15px;
     text-shadow: 0.151px 0.151px 0.151px black;
     font-family: 'Roboto', sans-serif;
     font-family: 'Open Sans', sans-serif;

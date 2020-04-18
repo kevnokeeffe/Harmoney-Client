@@ -59,10 +59,6 @@
               ><i class="fas fa-user"></i> User Profile</b-dropdown-item
             >
             <b-dropdown-item
-              to="/transactions"
-              ><i class="fas fa-exchange-alt"></i> Transactions</b-dropdown-item
-            >
-            <b-dropdown-item
               to="/about"
               ><i class="fas fa-info-circle"></i> About Us</b-dropdown-item
             >

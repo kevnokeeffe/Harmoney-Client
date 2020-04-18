@@ -13,6 +13,7 @@
             label-for="input-fName"
           >
             <b-form-input
+              data-test="fName"
               v-b-popover.hover.top="'Enter first name.'"
               v-if="this.loadingScreen === false"
               id="input-fName"
@@ -85,10 +86,13 @@
           </b-form-group>
 
           <b-form-group
+          id="vue-tel"
             label="Phone number:"
             description="We'll never share your phone number with anyone else."
           >
             <vue-tel-input
+            id="vue-tel-input"
+            data-test="phoneNo"
               v-b-popover.hover.top="'Enter phone number here.'"
               v-bind="bindProps"
               v-model="form.phone"
@@ -139,7 +143,7 @@
           <b-form-group id="input-group-checkboxes">
             <b-button
               v-b-popover.hover.top="'Read the terms and conditions.'"
-              class="mt-2 mb-2"
+              class="t-and-c mt-2 mb-2"
               squared
               variant="warning"
               size="sm"
@@ -164,7 +168,16 @@
             @click="showContinueModal()"
             squared
             variant="info"
-            v-if="loadingScreen === false"
+            v-if="loadingScreen === false  && form.checked !== false"
+            >Continue</b-button
+          >
+          <b-button
+            type="button"
+            class="mr-2"
+            squared
+            disabled
+            variant="info"
+            v-if="loadingScreen === false && form.checked === false"
             >Continue</b-button
           >
           <b-button class="mr-2" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
@@ -216,7 +229,7 @@
                 type="submit"
                 variant="primary"
                 disabled
-                v-if="this.vCode === null && this.loading != true"
+                v-if="this.vCode === null && this.loading === true"
               >Submit
               </b-button>
               <b-button
@@ -423,7 +436,7 @@ export default {
         phone: '',
         email: '',
         password: '',
-        checked: null,
+        checked: false,
         verified: true,
       },
       loading: false,
@@ -436,6 +449,7 @@ export default {
     onSubmit: async function() {
       let valid = false
       this.loading = true
+      this.loadingScreen === false
       if (this.vCode != null && this.vCode.length === 10) {
         const code = {
           vCode: this.vCode,
@@ -497,25 +511,27 @@ export default {
       ) {
         if (this.form.checked === 'true') {
           this.verifyPing()
-          
-          this.loadingScreen === false
+          this.loadingScreen = false
         } else {
           this.showMsgBoxTNC()
-          this.loadingScreen === false
+          this.loadingScreen = false
+          this.form.checked = false
         }
       } else {
         this.makeToastForm()
-        this.loadingScreen === false
+        this.loadingScreen = false
+        this.form.checked = false
       }
     },
     onReset() {
       // Reset our form values
+      this.loadingScreen = false
+      this.form.checked = false
       this.form.email = null
       this.form.fName = null
       this.form.lName = null
       this.form.password = null
       this.form.phone = null
-      this.form.checked = null
       this.show = false
       this.$nextTick(() => {
         this.show = true
@@ -610,18 +626,22 @@ export default {
               } else if (response.data.message == false) {
                 this.makeToastMessageError()
                 this.loadingScreen = false
+
                 this.$bvModal.hide('modal-center')
               }
+              else{this.loadingScreen = false}
             })
           } else if (resp1.data.message === false) {
             this.makeToastMessageError()
             this.loadingScreen = false
+
             this.$bvModal.hide('modal-center')
           }
         })
       } else {
         this.makeToastForm()
         this.loadingScreen = false
+
         this.$bvModal.hide('modal-center')
       }
     },

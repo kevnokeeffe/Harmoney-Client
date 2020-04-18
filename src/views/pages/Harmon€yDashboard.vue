@@ -181,6 +181,7 @@
                     squared
                     variant="info"
                     size="md"
+                    id="state-current"
                     class="float-left"
                     @click="statementCurrent()"
                   >
@@ -191,6 +192,7 @@
                   <b-button
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
+                    id="trans-current"
                     variant="warning"
                     size="md"
                     class="float-left ml-4"
@@ -428,6 +430,7 @@
                     v-b-popover.hover.top="
                       'Transfer between accounts registered on Harmon€y'
                     "
+                    id="trans-int"
                     squared
                     variant="info"
                     @click="internal(account)"
@@ -449,7 +452,7 @@
               </b-row>
               <b-row class="mt-2"></b-row>
               <b-row class="ml-2 mt-2">
-                <b-button squared variant="danger" @click="cancelModels()"
+                <b-button id="close-btn" squared variant="danger" @click="cancelModels()"
                   >Close</b-button
                 >
               </b-row>
@@ -469,6 +472,7 @@
                 </b-row>
                 <b-row class="ml-2 mr-2">
                   <b-form-select
+                  id="b-form-select-account"
                     required
                     v-model="selectedAccount"
                     :options="options"
@@ -479,6 +483,7 @@
                 </b-row>
                 <b-row class="ml-2 mr-2">
                   <b-form-input
+                  id="input-form"
                     v-model="transferNumber"
                     min="0.01"
                     max="account.balance"
@@ -500,6 +505,7 @@
                     v-b-popover.hover.top="'Switch this to accept'"
                     id="checkbox-internal-transfer"
                     v-model="status"
+                    type="checkbox"
                     name="Internal Transfer"
                     value="true"
                     unchecked-value="false"
@@ -529,6 +535,7 @@
                     <b-button
                       class="float-right"
                       squared
+                      id="send-internal"
                       variant="success"
                       v-if="this.loading === false"
                       @click="sendInternal()"
@@ -735,6 +742,7 @@
             <b-col class="float-right">
               <b-button
                 squared
+                id="ok-close-state"
                 variant="success"
                 @click="closeStatement()"
                 class="float-right"
@@ -834,6 +842,7 @@
             <b-col class="float-right">
               <b-button
                 squared
+                id="ok-close-state"
                 variant="success"
                 @click="closeStatement()"
                 class="float-right"

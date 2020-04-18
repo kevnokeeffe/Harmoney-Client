@@ -4,12 +4,16 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "cypress:open": "npx cypress open",
+    "clean:videos": "rimraf ./cypress/videos",
     "prebuild": "npm run clean",
     "build": "npm run compile",
     "postbuild": "cross-env NODE_ENV=dev vue-cli-service build",
     "lint": "vue-cli-service lint",
     "clean": "rimraf ./dist && mkdir dist",
-    "compile": "babel ./ --out-dir dist/ --ignore ./node_modules,./test --copy-files"
+    "compile": "babel ./ --out-dir dist/ --ignore ./node_modules,./test --copy-files",
+    "cy:run": "cypress run",
+    "test": "start-server-and-test start http://localhost:8080 cy:run"
   },
   "dependencies": {
     "@babel/runtime": "^7.6.3",
@@ -52,11 +56,13 @@
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "google-fonts-webpack-plugin": "^0.4.4",
+    "http-server": "^0.12.1",
     "jquery": "^3.4.1",
     "npm-run-all": "^4.1.5",
     "nprogress": "^0.2.0",
     "popper.js": "^1.16.1",
     "rimraf": "^3.0.2",
+    "start-server-and-test": "^1.11.0",
     "vue": "^2.6.11",
     "vue-awesome": "^4.0.2",
     "vue-country-region-select": "^2.0.13",

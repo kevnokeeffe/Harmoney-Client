@@ -39,7 +39,7 @@
             right
           >
             <!-- Using 'button-content' slot -->
-            <template v-slot:button-content>
+            <template id="nav-opt" v-slot:button-content>
               <i class="fas fa-cogs"></i> Options
             </template>
             <b-dropdown-item
@@ -47,14 +47,17 @@
               ><i class="fas fa-chart-bar"></i> Dashboard</b-dropdown-item
             >
             <b-dropdown-item
+            id="add-acc" 
               to="/add-account"
               ><i class="fas fa-plus-circle"></i> Add Account</b-dropdown-item
             >
             <b-dropdown-item
+            id="remove-acc"
               to="/remove-account"
               ><i class="fas fa-minus-circle"></i> Remove Account</b-dropdown-item
             >
             <b-dropdown-item
+            id="user-profile"
               to="/user-profile"
               ><i class="fas fa-user"></i> User Profile</b-dropdown-item
             >
@@ -72,7 +75,6 @@
             v-if="$store.state.isLoggedIn"
             class="b-nav-item"
             v-on:click.prevent="logout()"
-            href="#"
             ><i class="fas fa-power-off"></i> Logout
           </b-nav-item>
           <b-navbar-brand

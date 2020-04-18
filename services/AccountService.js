@@ -89,7 +89,6 @@ export async function getAllCUcurrentAccounts(id) {
         return message
       } 
       if (res.data.message === true){
-        console.log(res.data)
         return res.data
       }
       else{

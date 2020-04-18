@@ -1,7 +1,31 @@
 image: node:latest
 
 stages:
+    - install
+    - test
     - deploy
+
+Install_dependencies:
+  stage: install
+  script:
+    - npm install
+    - npm install babel-polyfill --save
+  artifacts:
+    paths:
+      - node_modules/
+      - dist/
+
+Testing:
+  image: cypress/base:10
+  stage: test
+  before_script:
+    - npm run clean
+    - npm install cypress --save
+    - npm install start-server-and-test --save
+    - npm install http-server --save
+    - npm install babel-polyfill --save
+  script:
+    - npm run test
 
 deploy_production:
     stage: deploy

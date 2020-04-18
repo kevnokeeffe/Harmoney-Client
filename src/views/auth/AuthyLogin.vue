@@ -64,6 +64,7 @@
           squared
           type="button"
           variant="info"
+          
           disabled
           v-if="this.form.password.length < 6"
         >
@@ -82,6 +83,7 @@
         <b-button
           type="button"
           class="mt-2"
+          id="press-me"
           @click="showValidationModal()"
           squared
           variant="info"
@@ -99,7 +101,7 @@
           <b-row>
             <b-col cols="2"></b-col>
             <b-col cols="8">
-              <p class="mt-2">
+              <p class="p-log mt-2">
                 Please enter the validation code we have sent to your registered
                 mobile number in the text field below.
               </p>
@@ -162,6 +164,7 @@
                 </b-button>
                 <b-button
                   class="mt-4 mr-2"
+                  id="login-button"
                   squared
                   type="submit"
                   variant="primary"

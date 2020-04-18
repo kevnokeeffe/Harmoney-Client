@@ -40,26 +40,34 @@
               :delay="2"
               easing="Power1.easeOut"
             />
-          
           </b-container>
-          
         </b-col>
         <b-col class="right-col" cols="10">
-           <div
+          <div
             class="no-accounts mb-2 mt-2"
             v-if="currentAccount && currentAccount.length < 1"
           >
-          <b-card v-if="this.loadAccountsCurrent === true" v-b-popover.hover.bottom="'Loading..'" class="add-current">
-            <div class="text-center">
-            </div>
-  <b-spinner variant="primary" label="Text Centered"></b-spinner>
- <div class="text-center">
- <strong>Loading...</strong>
-</div>
-          </b-card>
-          <b-card v-if="this.loadAccountsCurrent === false" v-b-popover.hover.bottom="'Click here to add an account'" @click="addAccount()" class="add-current">
-            <h5 class="add-h5"><i class="fas fa-plus-circle"></i> Add Account</h5>
-          </b-card>
+            <b-card
+              v-if="this.loadAccountsCurrent === true"
+              v-b-popover.hover.bottom="'Loading..'"
+              class="add-current"
+            >
+              <div class="text-center"></div>
+              <b-spinner variant="primary" label="Text Centered"></b-spinner>
+              <div class="text-center">
+                <strong>Loading...</strong>
+              </div>
+            </b-card>
+            <b-card
+              v-if="this.loadAccountsCurrent === false"
+              v-b-popover.hover.bottom="'Click here to add an account'"
+              @click="addAccount()"
+              class="add-current"
+            >
+              <h5 class="add-h5">
+                <i class="fas fa-plus-circle"></i> Add Account
+              </h5>
+            </b-card>
           </div>
           <div
             class="accounts mb-2 mt-2"
@@ -70,7 +78,13 @@
               v-for="currentAccount in currentAccount"
               :key="currentAccount.currentAccount"
             >
-              <b-card v-b-popover.hover.bottom="`View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`" @click="detailsModal(currentAccount)" class="b-card-account">
+              <b-card
+                v-b-popover.hover.bottom="
+                  `View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`
+                "
+                @click="detailsModal(currentAccount)"
+                class="b-card-account"
+              >
                 <b-container fluid class="b-card-div">
                   <div>
                     <h6 class="b-card-header">{{ currentAccount.fiName }}</h6>
@@ -78,21 +92,27 @@
                   <b-row class="b-card-row">
                     <b-col>
                       <b-row class="b-card-balance mb-1 ml-2"
-                        >Balance: €{{ currentAccount.balance.toFixed(2) }}</b-row
+                        >Balance: €{{
+                          currentAccount.balance.toFixed(2)
+                        }}</b-row
                       >
-                      <b-row
-                        ><b-col class="ml-4 mt-3"
-                          ></b-col
-                        ></b-row
-                      >
+                      <b-row><b-col class="ml-4 mt-3"></b-col></b-row>
                     </b-col>
                   </b-row>
                 </b-container>
               </b-card>
-              <b-card v-b-popover.hover.bottom="`View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`" no-body class="b-card-account-small"
-              @click="detailsModal(currentAccount)">
-                    <h1 class="h1-fiName">{{ currentAccount.fiName }}</h1>
-                    <h1 class="h1-balance">€{{ currentAccount.balance.toFixed(0) }}</h1>      
+              <b-card
+                v-b-popover.hover.bottom="
+                  `View ${currentAccount.fiName} ${currentAccount.accountType} Account Details.`
+                "
+                no-body
+                class="b-card-account-small"
+                @click="detailsModal(currentAccount)"
+              >
+                <h1 class="h1-fiName">{{ currentAccount.fiName }}</h1>
+                <h1 class="h1-balance">
+                  €{{ currentAccount.balance.toFixed(0) }}
+                </h1>
               </b-card>
             </div>
           </div>
@@ -126,7 +146,9 @@
               <b-row>
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
-                  <p class="text-ac-details">Balance: €{{ account.balance.toFixed(2) }}</p>
+                  <p class="text-ac-details">
+                    Balance: €{{ account.balance.toFixed(2) }}
+                  </p>
                 </b-col></b-row
               >
               <b-row>
@@ -139,7 +161,7 @@
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Bank ID: {{ account.bankId }}
+                    Account Name: {{ account.accountName }}
                   </p>
                 </b-col></b-row
               >
@@ -160,7 +182,7 @@
                     variant="info"
                     size="md"
                     class="float-left"
-                    @click="statement()"
+                    @click="statementCurrent()"
                   >
                     Statement
                   </b-button>
@@ -180,12 +202,13 @@
                 <b-col cols="3">
                   <b-button
                     squared
+                    id="btn-ok"
                     variant="success"
-                    size="md"
+                    size="sm"
                     class="float-right"
                     @click="closeModel()"
                   >
-                    OK
+                    <i class="fas fa-check-circle"></i>
                   </b-button>
                 </b-col></b-row
               >
@@ -216,17 +239,27 @@
             class="no-accounts mb-2 mt-2"
             v-if="savingsAccount && savingsAccount.length < 1"
           >
-          <b-card v-if="this.loadAccountsSavings === true" v-b-popover.hover.bottom="'Loading..'" class="add-current">
-            <div class="text-center">
-            </div>
-  <b-spinner variant="primary" label="Text Centered"></b-spinner>
- <div class="text-center">
- <strong>Loading...</strong>
-</div>
-          </b-card>
-          <b-card v-if="this.loadAccountsSavings === false" v-b-popover.hover.top="'Click here to add an account'" @click="addAccount()" class="add-savings">
-            <h5 class="add-h5"><i class="fas fa-plus-circle"></i> Add Account</h5>
-          </b-card>
+            <b-card
+              v-if="this.loadAccountsSavings === true"
+              v-b-popover.hover.bottom="'Loading..'"
+              class="add-current"
+            >
+              <div class="text-center"></div>
+              <b-spinner variant="primary" label="Text Centered"></b-spinner>
+              <div class="text-center">
+                <strong>Loading...</strong>
+              </div>
+            </b-card>
+            <b-card
+              v-if="this.loadAccountsSavings === false"
+              v-b-popover.hover.top="'Click here to add an account'"
+              @click="addAccount()"
+              class="add-savings"
+            >
+              <h5 class="add-h5">
+                <i class="fas fa-plus-circle"></i> Add Account
+              </h5>
+            </b-card>
           </div>
           <div
             class="accounts mb-2 mt-2"
@@ -237,7 +270,13 @@
               v-for="savingsAccount in savingsAccount"
               :key="savingsAccount.savingsAccount"
             >
-              <b-card v-b-popover.hover.top="`View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`" @click="detailsModalSave(savingsAccount)" class="b-card-account-savings">
+              <b-card
+                v-b-popover.hover.top="
+                  `View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`
+                "
+                @click="detailsModalSave(savingsAccount)"
+                class="b-card-account-savings"
+              >
                 <b-container fluid class="b-card-div">
                   <div>
                     <h6 class="b-card-header">{{ savingsAccount.fiName }}</h6>
@@ -245,21 +284,28 @@
                   <b-row class="b-card-row">
                     <b-col>
                       <b-row class=" b-card-balance mb-1 ml-2"
-                        >Balance: €{{ savingsAccount.balance.toFixed(2) }}</b-row
+                        >Balance: €{{
+                          savingsAccount.balance.toFixed(2)
+                        }}</b-row
                       >
-                      <b-row
-                        ><b-col class="mt-3 ml-4"
-                          ></b-col
-                        ></b-row
-                      >
+                      <b-row><b-col class="mt-3 ml-4"></b-col></b-row>
                     </b-col>
                   </b-row>
                 </b-container>
               </b-card>
 
-              <b-card v-b-popover.hover.top="`View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`" no-body @click="detailsModalSave(savingsAccount)" class="b-card-account-savings-small">
-<h1 class="h1-fiName">{{ savingsAccount.fiName }}</h1>
-           <h1 class="h1-balance"> €{{ savingsAccount.balance.toFixed(0) }}</h1>
+              <b-card
+                v-b-popover.hover.top="
+                  `View ${savingsAccount.fiName} ${savingsAccount.accountType} Account Details.`
+                "
+                no-body
+                @click="detailsModalSave(savingsAccount)"
+                class="b-card-account-savings-small"
+              >
+                <h1 class="h1-fiName">{{ savingsAccount.fiName }}</h1>
+                <h1 class="h1-balance">
+                  €{{ savingsAccount.balance.toFixed(0) }}
+                </h1>
               </b-card>
             </div>
           </div>
@@ -292,7 +338,9 @@
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
-                  <p class="text-ac-details">Balance: €{{ account.balance.toFixed(2) }}</p>
+                  <p class="text-ac-details">
+                    Balance: €{{ account.balance.toFixed(2) }}
+                  </p>
                 </b-col></b-row
               >
               <b-row>
@@ -326,7 +374,7 @@
                     variant="info"
                     size="md"
                     class="float-left"
-                    @click="statement()"
+                    @click="statementSavings()"
                   >
                     Statement
                   </b-button>
@@ -343,17 +391,19 @@
                     Transfer
                   </b-button>
                 </b-col>
-                <b-col cols="3">   <b-button
+                <b-col cols="3">
+                  <b-button
                     squared
+                    id="btn-ok"
                     variant="success"
-                    size="md"
+                    size="sm"
                     class="float-right"
                     @click="closeModelSave()"
                   >
-                    OK
-                  </b-button></b-col>
-                </b-row
-              >
+                   <i class="fas fa-check-circle"></i>
+                  </b-button></b-col
+                >
+              </b-row>
             </b-container>
           </b-modal>
         </b-col>
@@ -366,39 +416,35 @@
               <b-row class="ml-2 mr-2 mb-2">
                 <p>
                   Welcome to the transfer wizzard. Please select one of the
-                  options below. "Internal transfer", to transfer money
-                  between your accounts registered on Harmon€y.
-                  "External transfers" to transfer funds from your
-                  account anywhere.
+                  options below. "Internal transfer", to transfer money between
+                  your accounts registered on Harmon€y. "External transfers" to
+                  transfer funds from your account anywhere.
                 </p>
               </b-row>
               <b-row class="mb-4">
-              
                 <b-col cols="6">
-                  
-                    <b-button
-                      v-b-popover.hover.top="'Transfer between accounts registered on Harmon€y'"
-                      squared
-                      variant="info"
-                      @click="internal(account)"
-                    >
-                      <i class="fas fa-sign-in-alt"></i> Internal Transfer</b-button
-                    >
-                
+                  <b-button
+                    v-b-popover.hover.top="
+                      'Transfer between accounts registered on Harmon€y'
+                    "
+                    squared
+                    variant="info"
+                    @click="internal(account)"
+                  >
+                    <i class="fas fa-sign-in-alt"></i> Internal
+                    Transfer</b-button
+                  >
                 </b-col>
                 <b-col cols="6">
-                
-                    <b-button
-                      v-b-popover.hover.top="'Transfer funds anywhere'"
-                      squared
-                      variant="info"
-                      @click="external(account)"
-                      ><i class="fas fa-sign-out-alt"></i> External
-                      Transfer</b-button
-                    >
-                 
+                  <b-button
+                    v-b-popover.hover.top="'Transfer funds anywhere'"
+                    squared
+                    variant="info"
+                    @click="external(account)"
+                    ><i class="fas fa-sign-out-alt"></i> External
+                    Transfer</b-button
+                  >
                 </b-col>
-               
               </b-row>
               <b-row class="mt-2"></b-row>
               <b-row class="ml-2 mt-2">
@@ -429,10 +475,8 @@
                 <b-row class="ml-2 mr-2 mt-4">
                   <h6>Please enter the amount to transfer:</h6>
                 </b-row>
-                <b-row class="ml-2 mr-2" 
-              >
+                <b-row class="ml-2 mr-2">
                   <b-form-input
-      
                     v-model="transferNumber"
                     min="0.01"
                     max="account.balance"
@@ -444,7 +488,9 @@
                 </b-row>
                 <b-row class="ml-2 mt-1">
                   <h6>
-                    Maximum for this account is €{{ this.account.balance.toFixed(2) }}
+                    Maximum for this account is €{{
+                      this.account.balance.toFixed(2)
+                    }}
                   </h6>
                 </b-row>
                 <b-row class="mt-2 ml-2">
@@ -466,12 +512,12 @@
                       >Close</b-button
                     >
                   </b-col>
-                    <b-col cols="3">
+                  <b-col cols="3">
                     <b-button class="ml-2" squared @click="backToTransfer()"
                       >Back</b-button
                     >
                   </b-col>
-                  <b-col  cols="6">
+                  <b-col cols="6">
                     <b-button
                       class="float-right"
                       squared
@@ -480,10 +526,16 @@
                       @click="sendInternal()"
                       >Send</b-button
                     >
-                    <b-button class="float-right" v-if="this.loading === true" squared variant="success" disabled>
-    <b-spinner small type="grow"></b-spinner>
-    Sending...
-  </b-button>
+                    <b-button
+                      class="float-right"
+                      v-if="this.loading === true"
+                      squared
+                      variant="success"
+                      disabled
+                    >
+                      <b-spinner small type="grow"></b-spinner>
+                      Sending...
+                    </b-button>
                   </b-col>
                 </b-row>
               </b-col>
@@ -511,23 +563,22 @@
                   <b-row class="ml-2 mr-2 mt-2">
                     <h6>Please enter the amount to transfer</h6>
                   </b-row>
-                  <b-row class="ml-2 mr-4" 
-                  
-                  >
+                  <b-row class="ml-2 mr-4">
                     <b-form-input
                       v-model="transferNumber"
                       max="account.balance"
                       min="0.01"
                       required
                       number
-                  
                       placeholder="Enter Amount €.00"
                       pattern="^\d*(\.\d{0,2})?$"
                     ></b-form-input>
                   </b-row>
                   <b-row class="ml-2 mt-1">
                     <h6>
-                      Maximum for this account is €{{ this.account.balance.toFixed(2) }}
+                      Maximum for this account is €{{
+                        this.account.balance.toFixed(2)
+                      }}
                     </h6>
                   </b-row>
                   <b-row class="mt-2 ml-2">
@@ -549,14 +600,13 @@
                         >Close</b-button
                       >
                     </b-col>
-                      <b-col cols="3">
+                    <b-col cols="3">
                       <b-button class="ml-2" squared @click="backToTransfer()"
                         >Back</b-button
                       >
                     </b-col>
                     <b-col cols="6">
                       <b-button
-                      
                         class="float-right"
                         @click="sendExternal()"
                         squared
@@ -564,10 +614,16 @@
                         v-if="this.loading === false"
                         >Send</b-button
                       >
-                      <b-button v-if="this.loading === true" class="float-right" variant="success" squared disabled>
-                      <b-spinner small type="grow"></b-spinner>
-                      Sending...
-                       </b-button>
+                      <b-button
+                        v-if="this.loading === true"
+                        class="float-right"
+                        variant="success"
+                        squared
+                        disabled
+                      >
+                        <b-spinner small type="grow"></b-spinner>
+                        Sending...
+                      </b-button>
                     </b-col>
                   </b-row>
                 </b-col>
@@ -576,12 +632,200 @@
           </b-modal>
         </b-col>
       </b-row>
-      <b-modal id="modal-tall" title="Bank Statement">
-    <p class="my-4" >
-      Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-      in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-    </p>
-  </b-modal>
+      <!-- Here -->
+      <b-modal hide-footer hide-header id="modal-tall" title="Bank Statement">
+        <b-container>
+          <b-row>
+            <b-col
+              style="background-color:#cbe2b0;font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif; padding:10px;"
+              ><h4  class="ml-2 mt-2">
+                <i class="far fa-list-alt"></i> Statement 
+              </h4></b-col
+            >
+          </b-row>
+          <b-row>
+            <b-col cols="1" style="background-color:#ffeb99;"> </b-col>
+          </b-row>
+
+          <b-row>
+            <b-col cols="1" style="background-color:#ffeb99;"></b-col>
+            <b-col
+              cols="11"
+              class=" loading-spinner-statement d-flex justify-content-center mb-3"
+              v-if="this.stateLoad === true"
+            >
+              <div>
+                <b-row>
+                  <b-spinner
+                    variant="warning"
+                    style="width: 3rem; height: 3rem;"
+                    label="Large Spinner"
+                  ></b-spinner>
+                </b-row>
+                <b-row><strong class="mt-2">Loading...</strong></b-row>
+              </div>
+            </b-col>
+
+            <b-col
+              cols="11"
+              class=" loading-spinner-statement d-flex justify-content-center mb-3"
+              v-if="
+                this.stateLoad === false &&
+                  currentAccountTransactions.length === 0
+              "
+            >
+              <div>
+                <b-row
+                  ><strong class="mt-2"
+                    >No transactions on record.</strong
+                  ></b-row
+                >
+              </div>
+            </b-col>
+
+           <b-col v-if="this.stateLoad === false" cols="11">
+              <b-row v-if="currentAccountTransactions.length > 0"><b-col cols="4"><h5 class="float-left" id="h5-titles">Previous Balance</h5></b-col><b-col cols="4"><h5 class="float-center" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="4"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
+              <div
+                class="accounts mb-2 mt-2"
+                v-if="
+                  currentAccountTransactions &&
+                    currentAccountTransactions.length > 0
+                "
+              >
+ 
+                <div
+                  class="mb-2 mt-2"
+                  v-for="currentAccountTransactions in currentAccountTransactions"
+                  :key="currentAccountTransactions.currentAccountTransactions"
+                >
+                <b-container fluid>  
+                  <b-row style="background-color:#f7f7f7;" class="state-row" @click="toggleDetails()">  
+                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{currentAccountTransactions.updatedBalance.toFixed(2)}}</h5></b-col>                       
+                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{currentAccountTransactions.amount.toFixed(2)}}</h5></b-col>                                
+                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{currentAccountTransactions.amount.toFixed(2)}}</h5></b-col>
+                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{currentAccountTransactions.currentBalance.toFixed(2)}}</h5></b-col>
+                    <b-col cols="6"> <h5 class="float-left" id="h5-statement-2">Date: {{currentAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
+                    <b-col  cols="6"> <h5 class="float-right" id="h5-statement-2">Time: {{currentAccountTransactions.createdAt.slice(11,19)}}</h5> </b-col>
+                </b-row> 
+                </b-container>
+                </div>
+   <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2)}}</h5></b-col></b-row>
+              </div>
+            </b-col>
+          </b-row>
+          <b-row
+            >
+            
+            <b-col style="background-color:#ffeb99;"  cols="10"></b-col>
+            <b-col class="float-right">
+              <b-button
+                squared
+                variant="success"
+                @click="closeStatement()"
+                class="float-right"
+                ><i class="fas fa-check-circle"></i></b-button></b-col
+          ></b-row>
+        </b-container>
+      </b-modal>
+
+      <!-- Here -->
+      <b-modal
+        hide-footer
+        hide-header
+        id="modal-tall-save"
+        title="Bank Statement"
+      >
+        <b-container>
+          <b-row>
+            <b-col
+              style="background-color:#c3f584;font-family: 'Roboto', sans-serif;
+  font-family: 'Open Sans', sans-serif; padding:10px;"
+              ><h4 class="ml-2 mt-2">
+                <i class="far fa-list-alt"></i> Statement
+              </h4></b-col
+            >
+          </b-row>
+          <b-row>
+            <b-col cols="1" style="background-color:#dff6f0;"> </b-col>
+          </b-row>
+          <b-row>
+            <b-col cols="1" style="background-color:#dff6f0;"></b-col>
+            <b-col
+              cols="11"
+              class=" loading-spinner-statement d-flex justify-content-center mb-3"
+              v-if="this.stateLoad === true"
+            >
+              <div>
+                <b-row>
+                  <b-spinner
+                    variant="warning"
+                    style="width: 3rem; height: 3rem;"
+                    label="Large Spinner"
+                  ></b-spinner>
+                </b-row>
+                <b-row><strong class="mt-2">Loading...</strong></b-row>
+              </div>
+            </b-col>
+<!-- here -->
+            <b-col
+              cols="11"
+              class=" loading-spinner-statement d-flex justify-content-center mb-3"
+              v-if="
+                this.stateLoad === false &&
+                  savingsAccountTransactions.length === 0
+              "
+            >
+              <div>
+                <b-row
+                  ><strong class="mt-2"
+                    >No transactions on record.</strong
+                  ></b-row
+                >
+              </div>
+            </b-col>
+            <b-col v-if="this.stateLoad === false" cols="11">
+              <b-row v-if="savingsAccountTransactions.length > 0"><b-col cols="4"><h5 class="float-left" id="h5-titles">Previous Balance</h5></b-col><b-col cols="4"><h5 class="float-center" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="4"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
+              <div
+                class="accounts mb-2 mt-2"
+                v-if="
+                  savingsAccountTransactions &&
+                    savingsAccountTransactions.length > 0
+                "
+              >
+ 
+                <div
+                  class="mb-2 mt-2"
+                  v-for="savingsAccountTransactions in savingsAccountTransactions"
+                  :key="savingsAccountTransactions.savingsAccountTransactions"
+                >
+                <b-container fluid>  
+                  <b-row style="background-color:#f7f7f7;" class="state-row">  
+                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{savingsAccountTransactions.updatedBalance.toFixed(2)}}</h5></b-col>                       
+                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{savingsAccountTransactions.amount.toFixed(2)}}</h5></b-col>                                
+                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2)}}</h5></b-col>
+                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{savingsAccountTransactions.currentBalance.toFixed(2)}}</h5></b-col>
+                    <b-col cols="12"><h5 id="h5-statement">Time Stamp{{savingsAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
+                </b-row> 
+                </b-container>
+                </div>
+                 <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2)}}</h5></b-col></b-row>
+   
+              </div>
+            </b-col>
+          </b-row>
+          <b-row
+            ><b-col cols="10" style="background-color:#dff6f0;"></b-col>
+            <b-col class="float-right">
+              <b-button
+                squared
+                variant="success"
+                @click="closeStatement()"
+                class="float-right"
+                ><i class="fas fa-check-circle"></i></b-button></b-col
+          ></b-row>
+        </b-container>
+      </b-modal>
     </b-container>
   </div>
 </template>
@@ -594,12 +838,19 @@ export default {
   name: 'dashboard',
   data() {
     return {
-      userLogged:auth.getUserId(),
-      show:false,
-      loading:false,
-      loadAccountsCurrent:false,
-      loadAccountsSavings:false,
-      log:false,
+      stateDetails:false,
+      stateLoad: false,
+      isBusy: false,
+      userLogged: auth.getUserId(),
+      show: false,
+      loading: false,
+      transactions: [],
+      accountTransactions: [],
+      currentAccountTransactions: [],
+      savingsAccountTransactions: [],
+      loadAccountsCurrent: false,
+      loadAccountsSavings: false,
+      log: false,
       selectedAccount: null,
       selected: null,
       status: 'false',
@@ -621,7 +872,7 @@ export default {
       account: {
         id: null,
         balance: 0,
-        bankId:null,
+        bankId: null,
         accountType: null,
         accountName: null,
         createdAt: null,
@@ -630,8 +881,8 @@ export default {
         fiName: null,
         iban: null,
         updatedAt: null,
-        userId: null
-      }
+        userId: null,
+      },
     }
   },
   created() {
@@ -644,6 +895,96 @@ export default {
     $getSavingsAccounts: 'getSavingsAccounts',
   },
   methods: {
+    toggleDetails(){
+     this.$bvModal.show('modal-details-state')
+    },
+    closeStatement() {
+      this.$bvModal.hide('modal-tall')
+      this.$bvModal.hide('modal-tall-save')
+      this.currentAccountTransactions = []
+      this.savingsAccountTransactions = []
+    },
+    toggleBusy() {
+      this.isBusy = !this.isBusy
+    },
+    getTransactionsCurrent() {
+      this.currentAccountTransactions = []
+      this.accountTransactions = []
+      this.transactions = []
+      const cwit = transactionService.transactionCurrentWIT()
+      const caib = transactionService.transactionCurrentAIB()
+      const ccu = transactionService.transactionCurrentCU()
+      const cpost = transactionService.transactionCurrentPost()
+      Promise.all([cwit, caib, ccu, cpost])
+        .then((resp) => {
+          let i = 0
+          for (i = 0; i < resp.length; i++) {
+            if (resp[i] != false) {
+              this.accountTransactions[i] = resp[i].data.transactions
+            }
+          }
+          this.transactions = this.accountTransactions.flat()
+        })
+        .then(() => {
+          let catArray = this.transactions
+          for (let x = 0; x < catArray.length; x++) {
+            if (
+              catArray[x] != null &&
+              catArray[x].fiId === this.account.bankId
+            ) {
+              this.currentAccountTransactions[x] = catArray[x]
+            }
+          }
+          this.currentAccountTransactions = this.currentAccountTransactions.flat()
+        })
+        .then(() => {
+          this.stateLoad = false
+        })
+    },
+    getTransactionSavings() {
+      this.savingsAccountTransactions = []
+      this.accountTransactions = []
+      this.transactions = []
+      const swit = transactionService.transactionSavingsWIT()
+      const saib = transactionService.transactionSavingsAIB()
+      const scu = transactionService.transactionSavingsCU()
+      const spost = transactionService.transactionSavingsPost()
+      Promise.all([swit, saib, scu, spost])
+        .then((resp) => {
+          let i = 0
+          for (i = 0; i < resp.length; i++) {
+            if (resp[i] != false) {
+              this.accountTransactions[i] = resp[i].data.transactions
+            }
+          }
+          this.transactions = this.accountTransactions.flat()
+        })
+        .then(() => {
+          let catArray = this.transactions
+          for (let x = 0; x < catArray.length; x++) {
+            if (
+              catArray[x] != null &&
+              catArray[x].fiId === this.account.bankId
+            ) {
+              this.savingsAccountTransactions[x] = catArray[x]
+            }
+          }
+          this.savingsAccountTransactions = this.savingsAccountTransactions.flat()
+        })
+        .then(() => {
+          this.stateLoad = false
+        })
+    },
+    statementCurrent() {
+      this.stateLoad = true
+      this.$bvModal.show('modal-tall')
+      this.getTransactionsCurrent()
+    },
+    statementSavings() {
+      this.stateLoad = true
+      this.$bvModal.show('modal-tall-save')
+      this.getTransactionSavings()
+    },
     sendExternal() {
       this.loading = true
       if (this.statusEx === 'true') {
@@ -659,7 +1000,7 @@ export default {
             const transactionPromise = transactionService.postTransactionInternal(
               this.transaction
             )
-            Promise.resolve(transactionPromise).then(response => {
+            Promise.resolve(transactionPromise).then((response) => {
               if (response === true) {
                 this.makeTransferSuccessful()
                 this.loading = false
@@ -690,14 +1031,14 @@ export default {
       } else if (this.status === 'false') {
         this.loading = false
         this.makeToastCheckbox()
-      } 
+      }
     },
     mustEnterIBAN() {
       this.$bvToast.toast('You must enter an IBAN!', {
         title: 'Apologies!',
         variant: 'warning',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeToastTransferTooHigh() {
@@ -705,7 +1046,7 @@ export default {
         title: 'Apologies!',
         variant: 'warning',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeToastCheckbox() {
@@ -713,7 +1054,7 @@ export default {
         title: 'Apologies!',
         variant: 'danger',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeTransferSuccessful() {
@@ -721,7 +1062,7 @@ export default {
         title: 'Congratulations!',
         variant: 'success',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeTransferTooLow() {
@@ -729,7 +1070,7 @@ export default {
         title: 'Apologies!',
         variant: 'warning',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeToastSelectAccountToTransfer() {
@@ -737,7 +1078,7 @@ export default {
         title: 'Apologies!',
         variant: 'warning',
         solid: true,
-        center: true
+        center: true,
       })
     },
     makeToastTransferError() {
@@ -747,7 +1088,7 @@ export default {
           title: 'Apologies!',
           variant: 'danger',
           solid: true,
-          center: true
+          center: true,
         }
       )
     },
@@ -767,7 +1108,7 @@ export default {
             const transactionPromise = transactionService.postTransactionInternal(
               this.transaction
             )
-            Promise.resolve(transactionPromise).then(response => {
+            Promise.resolve(transactionPromise).then((response) => {
               if (response === true) {
                 this.loading = false
                 this.makeTransferSuccessful()
@@ -780,8 +1121,6 @@ export default {
                 this.transferNumber = 0
                 this.getCurrentAccounts()
                 this.getSavingsAccounts()
-
-
               } else {
                 this.makeToastTransferError()
                 this.loading = false
@@ -820,14 +1159,14 @@ export default {
           this.options[i] = [
             accounts[i].fiName,
             ' Type: ' + accounts[i].accountType,
-            ' IBAN: ' + accounts[i].iban
+            ' IBAN: ' + accounts[i].iban,
           ]
         }
       }
       this.options.unshift({
         value: null,
         text: 'Please select account',
-        disabled: true
+        disabled: true,
       })
     },
     cancelModels() {
@@ -888,15 +1227,13 @@ export default {
       this.$bvModal.hide('modal-transfer')
       this.$bvModal.show('modal-external')
     },
-    statement() {
-      this.$bvModal.show('modal-tall')
-    },
     detailsModal(currentAccount) {
       this.$bvModal.show('modal-center')
       this.account.id = currentAccount._id
       this.account.balance = currentAccount.balance
       this.account.accountType = currentAccount.accountType
       this.account.bankId = currentAccount.bankId
+      this.account.accountName = currentAccount.accountName
       this.account.createdAt = currentAccount.createdAt
       this.account.currency = currentAccount.currency
       this.account.fiName = currentAccount.fiName
@@ -908,6 +1245,7 @@ export default {
       this.$bvModal.show('modal-center-save')
       this.account.id = savingsAccount._id
       this.account.balance = savingsAccount.balance
+      this.account.bankId = savingsAccount.bankId
       this.account.accountType = savingsAccount.accountType
       this.account.accountName = savingsAccount.accountName
       this.account.createdAt = savingsAccount.createdAt
@@ -921,14 +1259,18 @@ export default {
       this.loadAccountsCurrent = true
       const postAccount = accountService.getPostCurrentAccounts(this.userLogged)
       const aibAccount = accountService.getAIBCurrentAccounts(this.userLogged)
-      const creditUnionAccount = accountService.getAllCUcurrentAccounts(this.userLogged)
-      const witAccount = accountService.getAllWITcurrentAccounts(this.userLogged)
+      const creditUnionAccount = accountService.getAllCUcurrentAccounts(
+        this.userLogged
+      )
+      const witAccount = accountService.getAllWITcurrentAccounts(
+        this.userLogged
+      )
       Promise.all([
         postAccount,
         aibAccount,
         creditUnionAccount,
-        witAccount
-      ]).then(values => {
+        witAccount,
+      ]).then((values) => {
         let i = 0
         for (i = 0; i < values.length; i++) {
           if (values[i] != false) {
@@ -943,17 +1285,25 @@ export default {
     },
     getSavingsAccounts() {
       this.loadAccountsSavings = true
-      const postAccount = accountService.getAllPostSavingsAccounts(this.userLogged)
-      const aibAccount = accountService.getAllAIBsavingsAccounts(this.userLogged)
-      const creditUnionAccount = accountService.getAllCUsavingsAccounts(this.userLogged)
-      const witAccount = accountService.getAllWITsavingsAccounts(this.userLogged)
+      const postAccount = accountService.getAllPostSavingsAccounts(
+        this.userLogged
+      )
+      const aibAccount = accountService.getAllAIBsavingsAccounts(
+        this.userLogged
+      )
+      const creditUnionAccount = accountService.getAllCUsavingsAccounts(
+        this.userLogged
+      )
+      const witAccount = accountService.getAllWITsavingsAccounts(
+        this.userLogged
+      )
 
       Promise.all([
         postAccount,
         aibAccount,
         creditUnionAccount,
-        witAccount
-      ]).then(values => {
+        witAccount,
+      ]).then((values) => {
         let i = 0
         for (i = 0; i < values.length; i++) {
           if (values[i] != false) {
@@ -1001,18 +1351,108 @@ export default {
     theFormatAC(number) {
       return `€${number.toFixed(2)}`
     },
-    addAccount(){
+    addAccount() {
       const path = `/add-account`
-        if (this.$route.path !== path) this.$router.push(path)
+      if (this.$route.path !== path) this.$router.push(path)
     },
-  }
+  },
 }
 </script>
 
 <style>
-.particles-div-har{
-background-color:#f7f7f7;
-max-height: 100%;
+@media (min-width: 870px) {
+.state-row{
+  padding:8px;
+  width:100%;
+  min-width:400px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+#h5-statement-b{
+  margin-top:6px;
+  text-shadow: 0.15px 0.15px 0.15px black;
+  font-size:16px; 
+  color:gray; 
+}
+#h5-statement-2{
+  font-size: 16px;
+  color:gray;
+  text-shadow: 0.15px 0.15px 0.15px black;
+}
+
+#h5-titles{
+  margin-top:6px;
+  margin-left:6px;
+  text-shadow: 0.15px 0.15px 0.15px black;
+}
+
+.state-row:hover{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.details-but{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+#h5-statement{
+  font-size: 18px;
+  margin-top:6px;
+  text-shadow: 0.15px 0.15px 0.15px black;
+}
+}
+
+@media (max-width: 870px) {
+.state-row{
+  width:100%;
+  min-width:260px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+#h5-statement-b{
+  margin-top:8px;
+  text-shadow: 0.15px 0.15px 0.15px black;
+  font-size:12px; 
+  color:gray; 
+}
+
+#h5-statement-2{
+  font-size: 10px;
+  color:gray;
+  text-shadow: 0.15px 0.15px 0.15px black;
+}
+
+
+#h5-titles{
+  margin-top:6px;
+  margin-left:6px;
+  font-size:13px;
+}
+
+#h5-statement{
+  font-size: 12px;
+  margin-top:8px;
+}
+
+.state-row:hover{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.details-but{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+}
+
+.particles-div-har {
+  background-color: #f7f7f7;
+  max-height: 100%;
+}
+
+.loading-spinner-statement {
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
 
 .line-border {
@@ -1024,15 +1464,13 @@ max-height: 100%;
   margin-left: 10px;
   margin-right: 10px;
 }
-.vue-particles-har{
+.vue-particles-har {
   max-height: 100%;
 }
 
 #fa-balance-lg {
   align-self: center;
 }
-
-
 
 .b-card-div {
   padding-top: 5px;
@@ -1059,12 +1497,12 @@ max-height: 100%;
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   margin-bottom: 20px;
-  text-shadow: .15px .15px .15px black;
+  text-shadow: 0.15px 0.15px 0.15px black;
 }
-.b-card-balance{
-  text-shadow: .15px .15px .15px black;
-   font-family: 'Roboto', sans-serif;
-  
+.b-card-balance {
+  text-shadow: 0.15px 0.15px 0.15px black;
+  font-family: 'Roboto', sans-serif;
+
   font-size: 20px;
 }
 .left-col-top {
@@ -1096,20 +1534,20 @@ max-height: 100%;
   margin-right: 10px;
 }
 .col-modal-details {
-  background: #18b0b0;
+  background: #c0ffb3;
 }
 .col-modal-detailsS {
-  background: #de7119;
+  background: #fbe555;
 }
 .col-row-top {
-  background-color: #dee3e2;
+  background-color: #94ceca;
 }
 .col-row-topS {
-  background-color: #dee3e2;
+  background-color: #94ceca;
 }
 .row-gap-top {
   padding-top: 10px;
-  background-color: #dee3e2;
+  background-color: #94ceca;
 }
 .text-ac-details {
   font-family: 'Roboto', sans-serif;
@@ -1118,7 +1556,7 @@ max-height: 100%;
   display: none;
 }
 .right-col-savings {
-  background-color:#f1f1f0;
+  background-color: #f1f1f0;
 }
 .left-col-savings {
   background-color: #ef4b4b;
@@ -1134,9 +1572,9 @@ max-height: 100%;
   background-color: #6b7a86;
   padding: 1px;
 }
-.little-ca-row{
-    display:none;
-  }
+.little-ca-row {
+  display: none;
+}
 #fa-balance-sm {
   display: none;
 }
@@ -1145,7 +1583,7 @@ max-height: 100%;
   display: inline-block;
   margin-right: 10px;
 }
-.no-accounts{
+.no-accounts {
   padding: 5px;
   display: flex;
   flex-direction: column;
@@ -1153,9 +1591,9 @@ max-height: 100%;
   justify-content: space-evenly;
   margin: 10px;
 }
-.add-current{
-width: 180px;
-height:100px;
+.add-current {
+  width: 180px;
+  height: 100px;
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   background: rgb(67, 171, 146);
@@ -1166,15 +1604,15 @@ height:100px;
     rgba(249, 249, 249, 1) 10%,
     rgba(249, 249, 249, 1) 100%
   );
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 .add-current:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
-.add-savings{
- width: 180px;
-height:100px;
+.add-savings {
+  width: 180px;
+  height: 100px;
   font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif;
   background: rgb(247, 95, 0);
@@ -1184,126 +1622,124 @@ height:100px;
     rgba(247, 95, 0, 1) 10%,
     rgba(249, 249, 249, 1) 10%
   );
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 .add-savings:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 .div-center-top {
   width: 70%;
 }
 @media (min-width: 870px) {
-
-.accounts {
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  flex-flow: row wrap;
-  justify-content: space-evenly;
-  margin: 4px;
-}
+  .accounts {
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    margin: 4px;
+  }
 
   .b-card-account {
-  width: 280px;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  
-  background: rgb(67, 171, 146);
-  background: linear-gradient(
-    90deg,
-    rgba(67, 171, 146, 1) 0%,
-    rgba(67, 171, 146, 1) 10%,
-    rgba(249, 249, 249, 1) 10%,
-    rgba(249, 249, 249, 1) 100%
-  );
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-}
+    width: 280px;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
 
-.b-card-account:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
+    background: rgb(67, 171, 146);
+    background: linear-gradient(
+      90deg,
+      rgba(67, 171, 146, 1) 0%,
+      rgba(67, 171, 146, 1) 10%,
+      rgba(249, 249, 249, 1) 10%,
+      rgba(249, 249, 249, 1) 100%
+    );
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
 
-.b-card-account-savings:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
+  .b-card-account:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
 
-.b-card-account-savings {
-  width: 280px;
-  font-family: 'Roboto', sans-serif;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  background: rgb(247, 95, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(247, 95, 0, 1) 0%,
-    rgba(247, 95, 0, 1) 10%,
-    rgba(249, 249, 249, 1) 10%
-  );
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
-}
- .b-card-account-small{
-   display:none;
- }
- .b-card-account-savings-small{
-   display:none;
- }
+  .b-card-account-savings:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .b-card-account-savings {
+    width: 280px;
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    background: rgb(247, 95, 0);
+    background: linear-gradient(
+      90deg,
+      rgba(247, 95, 0, 1) 0%,
+      rgba(247, 95, 0, 1) 10%,
+      rgba(249, 249, 249, 1) 10%
+    );
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+  .b-card-account-small {
+    display: none;
+  }
+  .b-card-account-savings-small {
+    display: none;
+  }
 }
 @media (max-width: 870px) {
-  .b-card-account-small{
+  .b-card-account-small {
     width: 100px;
-    height:100px;
+    height: 100px;
     background: rgb(67, 171, 146);
-  background: linear-gradient(
-    90deg,
-    rgba(67, 171, 146, 1) 0%,
-    rgba(67, 171, 146, 1) 10%,
-    rgba(249, 249, 249, 1) 10%,
-    rgba(249, 249, 249, 1) 100%
-  );
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
+    background: linear-gradient(
+      90deg,
+      rgba(67, 171, 146, 1) 0%,
+      rgba(67, 171, 146, 1) 10%,
+      rgba(249, 249, 249, 1) 10%,
+      rgba(249, 249, 249, 1) 100%
+    );
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
   }
-  .b-card-account-savings-small{
+  .b-card-account-savings-small {
     width: 100px;
-    height:100px;
+    height: 100px;
     background: rgb(247, 95, 0);
-  background: linear-gradient(
-    90deg,
-    rgba(247, 95, 0, 1) 0%,
-    rgba(247, 95, 0, 1) 10%,
-    rgba(249, 249, 249, 1) 10%
-  );
-  box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
-  transition: 0.3s;
+    background: linear-gradient(
+      90deg,
+      rgba(247, 95, 0, 1) 0%,
+      rgba(247, 95, 0, 1) 10%,
+      rgba(249, 249, 249, 1) 10%
+    );
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
   }
-  .h1-fiName{
+  .h1-fiName {
     font-size: 13px;
     margin-top: 16px;
-    text-shadow: .21px .21px .21px black;
-     font-family: 'Roboto', sans-serif;
-  
+    text-shadow: 0.21px 0.21px 0.21px black;
+    font-family: 'Roboto', sans-serif;
   }
-  .h1-balance{
+  .h1-balance {
     font-size: 18px;
-    text-shadow: .151px .151px .151px black;
-     font-family: 'Roboto', sans-serif;
+    text-shadow: 0.151px 0.151px 0.151px black;
+    font-family: 'Roboto', sans-serif;
     font-family: 'Open Sans', sans-serif;
   }
   .b-card-account-small:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-.b-card-account-savings-small:hover{
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  .b-card-account-savings-small:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
   .accounts {
     display: flex;
     flex-direction: column;
     flex-flow: row wrap;
-    justify-content: space-evenly; 
+    justify-content: space-evenly;
   }
   #h5-total-balance {
     display: none;
@@ -1318,14 +1754,14 @@ height:100px;
   .div-center-top {
     width: 80%;
   }
-  .big-ca-row{
-    display:none;
+  .big-ca-row {
+    display: none;
   }
   .b-card-account {
-   display:none;
+    display: none;
   }
   .b-card-account-savings {
-   display:none;
+    display: none;
   }
   .h5-ca {
     font-family: 'Roboto', sans-serif;

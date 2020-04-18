@@ -28,26 +28,24 @@ export async function postTransactionInternal(transaction) {
       })
   }
 
-  export function transactionCurrentWIT() {
+  export async function transactionCurrentWIT() {
     let message = false
-    return http()
-      .get(`api/transaction/transaction-current-wit`, {
-        method: 'GET',
-      })
-      .then(res => {
-        if(res.data.message === false){
-        return res.data.message
+      return http()
+        .get(`api/transaction/transaction-current-wit`, {
+          method: 'GET',
+        }).then(res => {
+      if (res.data.message === false) {
+        return message
       }
-        if(res.data.message === "No transactions"){
-          return message
-        }
-        else{
-          return res.data
-        }
-      })
-      .catch(error => {
-        return error
-      })
+      if (res.data.message === "No transactions") {
+        return message
+      }
+      if (res.data.message === true) {
+        return res.data
+      }
+    }).catch(error => {
+      return error
+    })
   }
 
   export function transactionSavingsWIT() {
@@ -57,20 +55,19 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
+    }
 
   export function transactionSavingsAIB() {
     let message = false
@@ -79,20 +76,19 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
+    }
 
   export function transactionCurrentAIB() {
     let message = false
@@ -101,20 +97,19 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
+    }
 
   export function transactionCurrentCU() {
     let message = false
@@ -123,20 +118,19 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
+    }
 
   export function transactionSavingsCU() {
     let message = false
@@ -145,20 +139,19 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
+    }
 
   export function transactionSavingsPost() {
     let message = false
@@ -167,21 +160,20 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
-
+    }
+    
   export function transactionCurrentPost() {
     let message = false
     return http()
@@ -189,17 +181,16 @@ export async function postTransactionInternal(transaction) {
         method: 'GET',
       })
       .then(res => {
-        if(res.data.message === false){
-        return res.data.message
-      }
-        if(res.data.message === "No transactions"){
+        if (res.data.message === false) {
           return message
         }
-        else{
+        if (res.data.message === "No transactions") {
+          return message
+        }
+        if (res.data.message === true) {
           return res.data
         }
-      })
-      .catch(error => {
+      }).catch(error => {
         return error
       })
-  }
+    }

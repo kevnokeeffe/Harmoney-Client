@@ -7,8 +7,8 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     isLoggedIn: auth.isLoggedIn(),
-    //apiUrl: `http://localhost:${process.env.VUE_APP_PORT}`,
-    apiUrl: 'https://harmoney-server.herokuapp.com/',
+    apiUrl: `http://localhost:${process.env.VUE_APP_PORT}`,
+    // apiUrl: 'https://harmoney-server.herokuapp.com/',
     fName: null,
     email: null,
     userId: null

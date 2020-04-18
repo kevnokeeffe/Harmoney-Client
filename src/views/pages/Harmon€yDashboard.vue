@@ -169,7 +169,7 @@
                 <b-col class="col-modal-details" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Updated Last: {{ account.updatedAt }}
+                    Updated on {{account.updatedAt}}
                   </p>
                 </b-col></b-row
               >
@@ -361,7 +361,7 @@
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="">
                   <p class="text-ac-details">
-                    Updated Last: {{ account.updatedAt }}
+                    Updated on {{ account.updatedAt }}
                   </p>
                 </b-col></b-row
               >
@@ -409,6 +409,7 @@
         </b-col>
         <b-col class="bottom-col" cols="12">
           <b-modal id="modal-transfer" hide-footer hide-header squared centered>
+            <div>
             <b-container fluid>
               <b-row class="mb-4 ml-2 mt-2">
                 <h4><i class="fas fa-hat-wizard"></i> Transfer Wizzard</h4>
@@ -453,6 +454,7 @@
                 >
               </b-row>
             </b-container>
+            </div>
           </b-modal>
         </b-col>
         <b-col class="bottom-col-last" cols="12">
@@ -508,12 +510,18 @@
                 </b-row>
                 <b-row class="mt-4">
                   <b-col cols="3">
-                    <b-button squared variant="danger" @click="cancelModels()"
+                    <b-button squared variant="danger" v-if="this.loading === false" @click="cancelModels()"
+                      >Close</b-button
+                    >
+                    <b-button squared variant="danger" v-if="this.loading === true" disabled
                       >Close</b-button
                     >
                   </b-col>
                   <b-col cols="3">
-                    <b-button class="ml-2" squared @click="backToTransfer()"
+                    <b-button class="ml-2" v-if="this.loading === false" squared @click="backToTransfer()"
+                      >Back</b-button
+                    >
+                    <b-button class="ml-2" v-if="this.loading === true" squared disabled
                       >Back</b-button
                     >
                   </b-col>
@@ -544,8 +552,8 @@
         </b-col>
         <b-col class="bottom-col-last" cols="12">
           <b-modal id="modal-external" hide-footer hide-header squared centered>
-            <b-container fluid>
-              <b-row class="ml-2 mr-2 mt-2 mb-4">
+            <b-container  fluid>
+              <b-row  class="ml-2 mr-2 mt-2 mb-4">
                 <h4><i class="fas fa-sign-out-alt"></i> External Transfer</h4>
               </b-row>
               <b-row>
@@ -596,12 +604,18 @@
                   </b-row>
                   <b-row class="mr-2 mt-4">
                     <b-col cols="3">
-                      <b-button squared variant="danger" @click="cancelModels()"
+                      <b-button squared variant="danger" v-if="this.loading===false" @click="cancelModels()"
+                        >Close</b-button
+                      >
+                      <b-button squared variant="danger" v-if="this.loading===true" disabled
                         >Close</b-button
                       >
                     </b-col>
                     <b-col cols="3">
-                      <b-button class="ml-2" squared @click="backToTransfer()"
+                      <b-button class="ml-2" v-if="this.loading===false" squared @click="backToTransfer()"
+                        >Back</b-button
+                      >
+                      <b-button class="ml-2" v-if="this.loading===true" squared disabled
                         >Back</b-button
                       >
                     </b-col>
@@ -700,7 +714,7 @@
                   :key="currentAccountTransactions.currentAccountTransactions"
                 >
                 <b-container fluid>  
-                  <b-row style="background-color:#f7f7f7;" class="state-row" @click="toggleDetails()">  
+                  <b-row style="background-color:#f7f7f7;" class="state-row">  
                     <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{currentAccountTransactions.updatedBalance.toFixed(2)}}</h5></b-col>                       
                     <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{currentAccountTransactions.amount.toFixed(2)}}</h5></b-col>                                
                     <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{currentAccountTransactions.amount.toFixed(2)}}</h5></b-col>
@@ -805,7 +819,8 @@
                     <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{savingsAccountTransactions.amount.toFixed(2)}}</h5></b-col>                                
                     <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2)}}</h5></b-col>
                     <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{savingsAccountTransactions.currentBalance.toFixed(2)}}</h5></b-col>
-                    <b-col cols="12"><h5 id="h5-statement">Time Stamp{{savingsAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
+                   <b-col cols="6"> <h5 class="float-left" id="h5-statement-2">Date: {{savingsAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
+                    <b-col  cols="6"> <h5 class="float-right" id="h5-statement-2">Time: {{savingsAccountTransactions.createdAt.slice(11,19)}}</h5> </b-col>
                 </b-row> 
                 </b-container>
                 </div>
@@ -1093,7 +1108,7 @@ export default {
       )
     },
     sendInternal() {
-      this.loading === true
+      this.loading = true
       if (this.status === 'true') {
         if (
           this.transferNumber <= this.account.balance &&
@@ -1238,7 +1253,7 @@ export default {
       this.account.currency = currentAccount.currency
       this.account.fiName = currentAccount.fiName
       this.account.iban = currentAccount.iban
-      this.account.updatedAt = currentAccount.updatedAt
+      this.account.updatedAt = currentAccount.updatedAt.slice(0,10) +" at "+ currentAccount.updatedAt.slice(11,19)
       this.account.userId = currentAccount.userId
     },
     detailsModalSave(savingsAccount) {
@@ -1252,7 +1267,7 @@ export default {
       this.account.currency = savingsAccount.currency
       this.account.fiName = savingsAccount.fiName
       this.account.iban = savingsAccount.iban
-      this.account.updatedAt = savingsAccount.updatedAt
+      this.account.updatedAt = savingsAccount.updatedAt.slice(0,10) +" at "+ savingsAccount.updatedAt.slice(11,19)
       this.account.userId = savingsAccount.userId
     },
     getCurrentAccounts() {

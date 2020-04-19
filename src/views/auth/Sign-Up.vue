@@ -164,7 +164,7 @@
           <b-button
             v-b-popover.hover.left="'Continue the sign-up process.'"
             type="button"
-            class="mr-2"
+            class="no-class"
             @click="showContinueModal()"
             squared
             variant="info"
@@ -173,14 +173,14 @@
           >
           <b-button
             type="button"
-            class="mr-2"
+            class="no-class"
             squared
             disabled
             variant="info"
             v-if="loadingScreen === false && form.checked === false"
             >Continue</b-button
           >
-          <b-button class="mr-2" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
+          <b-button class="no-class" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
           <b-spinner small type="grow"></b-spinner>
             Loading...
           </b-button>
@@ -256,9 +256,7 @@
             </template>
           </b-modal>
 
-          <b-button v-if="this.loadingScreen === false" type="reset" squared variant="danger">Reset</b-button>
-          <b-button v-if="this.loadingScreen === true" disabled squared variant="danger">Reset</b-button>
-        </b-form>
+       </b-form>
  
       </div>
     </b-jumbotron>
@@ -449,7 +447,7 @@ export default {
     onSubmit: async function() {
       let valid = false
       this.loading = true
-      this.loadingScreen === false
+      this.loadingScreen = false
       if (this.vCode != null && this.vCode.length === 10) {
         const code = {
           vCode: this.vCode,

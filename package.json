@@ -13,6 +13,7 @@
     "clean": "rimraf ./dist && mkdir dist",
     "compile": "babel ./ --out-dir dist/ --ignore ./node_modules,./test --copy-files",
     "cy:run": "cypress run",
+    "start": "npm-run-all serve",
     "test": "start-server-and-test start http://localhost:8080 cy:run"
   },
   "dependencies": {

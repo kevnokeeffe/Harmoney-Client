@@ -53,7 +53,6 @@ describe("Testing the sign-up page", () => {
 
                 cy.get("#input-group-checkboxes")
                 .eq(0)
-                cy.get("button[type=reset]").click();
             });
           });
       });

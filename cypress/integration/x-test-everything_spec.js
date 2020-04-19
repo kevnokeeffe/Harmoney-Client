@@ -3,7 +3,7 @@ describe('Testing the login page', () => {
     before(() => {
       cy.visit('http://localhost:8080/#/login')
     })
-    it('should check login elements', () => {
+    it('should check all elements', () => {
       cy.get('.container-authyLogin')
         .eq(0)
         .within(() => {
@@ -21,7 +21,7 @@ describe('Testing the login page', () => {
               cy.get('#input-password').eq(0)
               cy.get('input[id=input-password]').type('123456')
               cy.get('button[type=button]').eq(0).click()
-              cy.wait(3000)
+              cy.wait(6000)
             })
         })
       cy.get('#modal-center').eq(0)

@@ -3,7 +3,6 @@ describe('Testing the login page', () => {
     before(() => {
       cy.visit('http://localhost:8080/#/login')
     })
-  
     it('should check login elements', () => {
       cy.get('.container-authyLogin')
         .eq(0)

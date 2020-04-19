@@ -46,7 +46,7 @@ describe('Testing the login page', () => {
         cy.contains(".text-ac-details","Updated on").eq(0)
         cy.wait(1000)
         cy.get("#state-current").contains("Statement").click();
-        cy.wait(1000)
+        cy.wait(10000)
         cy.contains("Statement")
         cy.contains("Previous Balance")
         cy.contains("Transaction Amount")

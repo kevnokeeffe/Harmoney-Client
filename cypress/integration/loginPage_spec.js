@@ -22,7 +22,7 @@ describe('Testing the login page', () => {
             cy.get('#input-password').eq(0)
             cy.get('input[id=input-password]').type('123456')
             cy.get('button[type=button]').eq(0).click()
-            cy.wait(3000)
+            cy.wait(6000)
           })
       })
     cy.get('#modal-center').eq(0)

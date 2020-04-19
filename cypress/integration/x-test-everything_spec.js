@@ -30,7 +30,7 @@ describe('Testing the login page', () => {
         .eq(0)
         .type('102938')
         cy.get('#login-button').eq(0).click()
-        cy.wait(3000)
+        cy.wait(10000)
         cy.contains(".nav-item", "Options")
         cy.contains(".nav-item", "Add Account")
         cy.contains(".nav-item", "Remove Account")

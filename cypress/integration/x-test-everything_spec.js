@@ -55,7 +55,10 @@ describe('Testing the login page', () => {
         cy.get('button[id=trans-current]').contains("Transfer").click()
         cy.wait(1000)
         cy.contains("Transfer Wizzard")
-        cy.contains(`Welcome to the transfer wizzard. Please select one of the options below. "Internal transfer", to transfer money between your accounts registered on Harmon€y. "External transfers" to transfer funds from your account anywhere.`)
+        cy.contains(`Welcome to the transfer wizzard. Please select one of the
+        options below. "Internal transfer", to transfer money between
+        your accounts registered on Harmon€y. "External transfers" to
+        transfer funds from your account to any other anywhere.`)
         cy.contains("Close")
         cy.get('button[id=close-btn]').eq(0).click()
         cy.wait(1000)

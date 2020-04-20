@@ -168,7 +168,7 @@
             @click="showContinueModal()"
             squared
             variant="info"
-            v-if="loadingScreen === false  && form.checked !== false"
+            v-if="this.loadingScreen === false  && this.form.checked !== false"
             >Continue</b-button
           >
           <b-button
@@ -177,10 +177,10 @@
             squared
             disabled
             variant="info"
-            v-if="loadingScreen === false && form.checked === false"
+            v-if="this.loadingScreen === false && this.form.checked === false"
             >Continue</b-button
           >
-          <b-button class="no-class" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="loadingScreen === true">
+          <b-button class="no-class" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="this.loadingScreen === true">
           <b-spinner small type="grow"></b-spinner>
             Loading...
           </b-button>
@@ -229,7 +229,7 @@
                 type="submit"
                 variant="primary"
                 disabled
-                v-if="this.vCode === null && this.loading === true"
+                v-if="this.loading === false && this.vCode === null"
               >Submit
               </b-button>
               <b-button
@@ -250,6 +250,16 @@
                 squared
                 variant="danger"
                 @click="hideModal()"
+                v-if="this.loading ===false"
+              >
+                Cancel
+              </b-button>
+              <b-button
+                class="float-right mt-4"
+                squared
+                variant="danger"
+                disabled
+v-if="this.loading ===true"
               >
                 Cancel
               </b-button>
@@ -461,7 +471,10 @@ export default {
           } else if (response.data.message === false) {
             valid = false
             this.loading = false
-          }
+            this.makeToastCode()
+          }else{valid = false
+            this.loading = false
+            this.makeToastCode()}
         })
       }
       if (valid === true) {
@@ -509,7 +522,7 @@ export default {
       ) {
         if (this.form.checked === 'true') {
           this.verifyPing()
-          this.loadingScreen = false
+          //this.loadingScreen = false
         } else {
           this.showMsgBoxTNC()
           this.loadingScreen = false
@@ -520,20 +533,6 @@ export default {
         this.loadingScreen = false
         this.form.checked = false
       }
-    },
-    onReset() {
-      // Reset our form values
-      this.loadingScreen = false
-      this.form.checked = false
-      this.form.email = null
-      this.form.fName = null
-      this.form.lName = null
-      this.form.password = null
-      this.form.phone = null
-      this.show = false
-      this.$nextTick(() => {
-        this.show = true
-      })
     },
     makeToastForm() {
       this.$bvToast.toast(
@@ -604,10 +603,11 @@ export default {
       )
     },
     verifyPing() {
+      this.loadingScreen = true
       if (this.form.phone != '' && this.form.phone.length >= 10) {
         const verify = {
           phone: this.form.phone,
-          email: this.form.email,
+          email: this.form.email.toLowerCase(),
         }
         const verifyAuth = {
           phone: this.form.phone,

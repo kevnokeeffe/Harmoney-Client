@@ -187,6 +187,19 @@
                   >
                     Statement
                   </b-button>
+
+                    <b-button
+                    v-b-popover.hover.top="'View your account statement'"
+                    squared
+                    variant="info"
+                    size="md"
+                    id="state-current-2"
+                    class="float-left"
+                    @click="statementCurrent()"
+                  >
+                    <i class="fas fa-list"></i>
+                  </b-button>
+
                 </b-col>
                 <b-col cols="4">
                   <b-button
@@ -195,10 +208,22 @@
                     id="trans-current"
                     variant="warning"
                     size="md"
+                    
                     class="float-left ml-4"
                     @click="transfer(account)"
                   >
                     Transfer
+                  </b-button>
+                  <b-button
+                    v-b-popover.hover.top="'Transfer funds to another account'"
+                    squared
+                    id="trans-current-2"
+                    variant="warning"
+                    size="md"
+                    class="float-left ml-4"
+                    @click="transfer(account)"
+                  >
+                    <i class="fas fa-exchange-alt"></i>
                   </b-button>
                 </b-col>
                 <b-col cols="3">
@@ -206,7 +231,17 @@
                     squared
                     id="btn-ok"
                     variant="success"
-                    size="sm"
+                    size="md"
+                    class="float-right"
+                    @click="closeModel()"
+                  >
+                    OK
+                  </b-button>
+                  <b-button
+                    squared
+                    id="btn-ok-2"
+                    variant="success"
+                    size="md"
                     class="float-right"
                     @click="closeModel()"
                   >
@@ -373,12 +408,24 @@
                   <b-button
                     v-b-popover.hover.top="'View your account statement'"
                     squared
+                    id="state-current"
                     variant="info"
                     size="md"
                     class="float-left"
                     @click="statementSavings()"
                   >
                     Statement
+                  </b-button>
+                   <b-button
+                    v-b-popover.hover.top="'View your account statement'"
+                    squared
+                    variant="info"
+                    size="md"
+                    id="state-current-2"
+                    class="float-left"
+                    @click="statementCurrent()"
+                  >
+                    <i class="fas fa-list"></i>
                   </b-button>
                 </b-col>
                 <b-col cols="4">
@@ -387,18 +434,41 @@
                     squared
                     variant="warning"
                     size="md"
+                    id="trans-current"
                     class="float-left ml-4"
                     @click="transfer(account)"
                   >
                     Transfer
                   </b-button>
+
+                  <b-button
+                    v-b-popover.hover.top="'Transfer funds to another account'"
+                    squared
+                    id="trans-current-2"
+                    variant="warning"
+                    size="md"
+                    class="float-left ml-4"
+                    @click="transfer(account)"
+                  >
+                    <i class="fas fa-exchange-alt"></i>
+                  </b-button>
                 </b-col>
                 <b-col cols="3">
-                  <b-button
+                    <b-button
                     squared
                     id="btn-ok"
                     variant="success"
-                    size="sm"
+                    size="md"
+                    class="float-right"
+                    @click="closeModelSave()"
+                  >
+                    OK
+                  </b-button>
+                  <b-button
+                    squared
+                    id="btn-ok-2"
+                    variant="success"
+                    size="md"
                     class="float-right"
                     @click="closeModelSave()"
                   >
@@ -731,7 +801,7 @@
                 </b-row> 
                 </b-container>
                 </div>
-   <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2)}}</h5></b-col></b-row>
+   <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col></b-row>
               </div>
             </b-col>
           </b-row>
@@ -832,7 +902,7 @@
                 </b-row> 
                 </b-container>
                 </div>
-                 <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2)}}</h5></b-col></b-row>
+                 <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col></b-row>
    
               </div>
             </b-col>
@@ -927,8 +997,6 @@ export default {
     closeStatement() {
       this.$bvModal.hide('modal-tall')
       this.$bvModal.hide('modal-tall-save')
-      this.currentAccountTransactions = []
-      this.savingsAccountTransactions = []
     },
     toggleBusy() {
       this.isBusy = !this.isBusy
@@ -1373,11 +1441,11 @@ export default {
     },
     theFormat(number) {
       // eslint-disable-next-line no-useless-escape
-      return `€ ${number.toFixed(2).replace(/\€\d(?=(\d{3})+\.)/g, '$&,')}`
+      return `€ ${number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
     },
     theFormatAC(number) {
       // eslint-disable-next-line no-useless-escape
-      return `€${number.toFixed(2).replace(/\€\d(?=(\d{3})+\.)/g, '$&,')}`
+      return `€${number.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`
     },
     addAccount() {
       const path = `/add-account`
@@ -1577,8 +1645,10 @@ export default {
   padding-top: 10px;
   background-color: #94ceca;
 }
+
 .text-ac-details {
   font-family: 'Roboto', sans-serif;
+  text-shadow: 0.21px 0.21px 0.21px black;
 }
 #fa-bank-sm {
   display: none;
@@ -1668,6 +1738,15 @@ export default {
     justify-content: space-evenly;
     margin: 4px;
   }
+#state-current-2{
+  display: none;
+  }
+  #trans-current-2{
+    display:none
+  }
+  #btn-ok-2{
+    display:none
+  }
 
   .b-card-account {
     width: 280px;
@@ -1731,6 +1810,15 @@ export default {
     );
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
+  }
+  #trans-current{
+    display:none
+  }
+  #btn-ok{
+    display:none
+  }
+  #state-current{
+  display: none;
   }
   .b-card-account-savings-small {
     width: 100px;

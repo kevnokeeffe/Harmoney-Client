@@ -23,6 +23,15 @@
             type="email"
             required
             placeholder="Enter email"
+            v-if="this.loading === false"
+          ></b-form-input>
+          <b-form-input
+      
+            id="input-1"
+            v-if="this.loading === true"
+            type="email"
+            disabled
+            placeholder="Enter email"
           ></b-form-input>
         </b-form-group>
 
@@ -42,6 +51,15 @@
             required
             type="password"
             placeholder="Enter password"
+             v-if="this.loading === false"
+          ></b-form-input>
+          <b-form-input
+      
+            id="input-2"
+          v-if="this.loading === true"
+          disabled
+            type="password"
+            placeholder="Enter password"
           ></b-form-input>
         </b-form-group>
 
@@ -59,7 +77,8 @@
         </b-form-group>
 
         <b-form-group id="input-group-4">
-          <b-button class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
+          <b-button v-if="this.loading === false" class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
+          <b-button v-if="this.loading === true" disabled class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
           <b-form-checkbox class="mt-2 mb-4" v-model="form.checked" id="checkboxes-4" value="true"
             >Accept Terms & Conditions</b-form-checkbox
           >
@@ -143,7 +162,8 @@
         </b-button>
         <b-button disabled v-if="this.state === false && this.stateP === false && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
         <b-button v-if="this.state === true && this.stateP === true && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
-        <b-button class="ml-2" squared type="reset" variant="danger">Reset</b-button>
+        <b-button v-if="this.loading===false" class="ml-2" squared type="reset" variant="danger">Reset</b-button>
+        <b-button v-if="this.loading===true" disabled class="ml-2" squared type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-jumbotron>
   </div>
@@ -254,6 +274,7 @@ export default {
                 this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.successFullAdd()
                 this.loading = false
               }
           })
@@ -265,6 +286,7 @@ export default {
                 this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.successFullAdd()
                 this.loading = false
               }
           })
@@ -276,6 +298,7 @@ export default {
                 this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.successFullAdd()
                 this.loading = false
               }
           })
@@ -287,6 +310,7 @@ export default {
                 this.loading = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
+                this.successFullAdd()
                 this.loading = false
               }
           })
@@ -348,7 +372,18 @@ export default {
         .catch(err => {
           return err
         })
-    }
+    },
+    successFullAdd() {
+      this.$bvToast.toast(
+        'You have add the account successfully.',
+        {
+          title: 'Congratulations!',
+          variant: 'success',
+          solid: true,
+          center: true
+        }
+      )
+    },
   }
 }
 </script>

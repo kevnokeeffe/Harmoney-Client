@@ -137,7 +137,7 @@
               </b-row>
               <b-row class="mt-2">
                 <b-col class="col-modal-details" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#ffffdd; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;" cols="">
                   <p class="text-ac-details">
                     Account Type: {{ account.accountType }}
                   </p>
@@ -145,7 +145,7 @@
               </b-row>
               <b-row>
                 <b-col class="col-modal-details" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#ffeadb; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">
                     Balance: €{{ account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
                   </p>
@@ -153,21 +153,21 @@
               >
               <b-row>
                 <b-col class="col-modal-details" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#ffffdd; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">IBAN: {{ account.iban }}</p>
                 </b-col></b-row
               >
               <b-row>
                 <b-col class="col-modal-details" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#ffeadb; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;" >
                   <p class="text-ac-details">
                     Account Name: {{ account.accountName }}
                   </p>
                 </b-col></b-row
               >
-              <b-row>
+              <b-row >
                 <b-col class="col-modal-details" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#ffffdd; margin-bottom:10px; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">
                     Updated on {{account.updatedAt}}
                   </p>
@@ -179,6 +179,7 @@
                   <b-button
                     v-b-popover.hover.top="'View your account statement'"
                     squared
+                    style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     variant="info"
                     size="md"
                     id="state-current"
@@ -189,6 +190,7 @@
                   </b-button>
 
                     <b-button
+                    style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'View your account statement'"
                     squared
                     variant="info"
@@ -203,6 +205,7 @@
                 </b-col>
                 <b-col cols="4">
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
                     id="trans-current"
@@ -215,6 +218,7 @@
                     Transfer
                   </b-button>
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
                     id="trans-current-2"
@@ -228,6 +232,7 @@
                 </b-col>
                 <b-col cols="3">
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     squared
                     id="btn-ok"
                     variant="success"
@@ -238,6 +243,7 @@
                     OK
                   </b-button>
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     squared
                     id="btn-ok-2"
                     variant="success"
@@ -366,7 +372,7 @@
               </b-row>
               <b-row class="mt-2">
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#f6eec7; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">
                     Account Type: {{ account.accountType }}
                   </p>
@@ -374,7 +380,7 @@
               </b-row>
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#f3f3f3; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">
                     Balance: €{{ account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,') }}
                   </p>
@@ -382,13 +388,13 @@
               >
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#f6eec7; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">IBAN: {{ account.iban }}</p>
                 </b-col></b-row
               >
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#f3f3f3; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">
                     Account Name: {{ account.accountName }}
                   </p>
@@ -396,7 +402,7 @@
               >
               <b-row>
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
-                <b-col cols="">
+                <b-col style="background-color:#f6eec7; margin-bottom:10px; margin-left:4px; margin-top:2px; box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2); padding-top:14px;">
                   <p class="text-ac-details">
                     Updated on {{ account.updatedAt }}
                   </p>
@@ -406,6 +412,7 @@
                 <b-col class="col-modal-detailsS" cols="2"></b-col>
                 <b-col cols="3">
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'View your account statement'"
                     squared
                     id="state-current"
@@ -417,6 +424,7 @@
                     Statement
                   </b-button>
                    <b-button
+                   style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'View your account statement'"
                     squared
                     variant="info"
@@ -430,6 +438,7 @@
                 </b-col>
                 <b-col cols="4">
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
                     variant="warning"
@@ -442,6 +451,7 @@
                   </b-button>
 
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'Transfer funds to another account'"
                     squared
                     id="trans-current-2"
@@ -455,6 +465,7 @@
                 </b-col>
                 <b-col cols="3">
                     <b-button
+                    style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     squared
                     id="btn-ok"
                     variant="success"
@@ -465,6 +476,7 @@
                     OK
                   </b-button>
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     squared
                     id="btn-ok-2"
                     variant="success"
@@ -482,21 +494,23 @@
         <b-col class="bottom-col" cols="12">
           <b-modal id="modal-transfer" hide-footer hide-header squared centered>
             <div>
-            <b-container fluid>
-              <b-row class="mb-4 ml-2 mt-2">
-                <h4><i class="fas fa-hat-wizard"></i> Transfer Wizzard</h4>
+            <b-container style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); padding:16px; background-color:#faf4f4;" fluid>
+              <b-row style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); background-color:#ecfbfc; padding:10px; padding-left:30px; padding-top:15px; "  class="mb-4 mr-2 ml-2 mt-2">
+                <h4 ><i class="fas fa-hat-wizard"></i> Transfer Wizzard</h4>
               </b-row>
               <b-row class="ml-2 mr-2 mb-2">
                 <p>
                   Welcome to the transfer wizzard. Please select one of the
                   options below. "Internal transfer", to transfer money between
                   your accounts registered on Harmon€y. "External transfers" to
-                  transfer funds from your account anywhere.
+                  transfer funds from your account to any other anywhere.
                 </p>
               </b-row>
               <b-row class="mb-4">
                 <b-col cols="6">
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
+                  class="ml-2"
                     v-b-popover.hover.top="
                       'Transfer between accounts registered on Harmon€y'
                     "
@@ -511,6 +525,7 @@
                 </b-col>
                 <b-col cols="6">
                   <b-button
+                  style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                     v-b-popover.hover.top="'Transfer funds anywhere'"
                     squared
                     variant="info"
@@ -522,7 +537,7 @@
               </b-row>
               <b-row class="mt-2"></b-row>
               <b-row class="ml-2 mt-2">
-                <b-button id="close-btn" squared variant="danger" @click="cancelModels()"
+                <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" id="close-btn" squared variant="danger" @click="cancelModels()"
                   >Close</b-button
                 >
               </b-row>
@@ -531,11 +546,11 @@
           </b-modal>
         </b-col>
         <b-col class="bottom-col-last" cols="12">
-          <b-modal id="modal-internal" hide-footer hide-header squared centered>
-            <b-container fluid>
+          <b-modal  id="modal-internal" hide-footer hide-header squared centered>
+            <b-container style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); background-color:#fef6fb; padding:10px;" fluid>
               <b-col cols="12">
-                <b-row class="ml-2 mr-2 mt-2 mb-4">
-                  <h4><i class="fas fa-sign-in-alt"></i> Internal Transfer</h4>
+                <b-row style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); background-color:#f4f4f4; padding:10px; padding-top:15px; padding-left:30px;" class="ml-2 mr-2 mt-2 mb-4">
+                  <h4 ><i class="fas fa-sign-in-alt"></i> Internal Transfer</h4>
                 </b-row>
                 <b-row class="ml-2 mr-2 mt-2">
                   <h6>Please select an account to transfer to:</h6>
@@ -571,7 +586,7 @@
                 </b-form-group>
                 </b-row>
                 <b-row class="ml-2 mt-1">
-                  <h6>
+                  <h6 style="text-shadow: .12px .12px .12px black;">
                     Maximum for this account is €{{
                       this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
                     }}
@@ -593,23 +608,24 @@
                 </b-row>
                 <b-row class="mt-4">
                   <b-col cols="3">
-                    <b-button squared variant="danger" v-if="this.loading === false" @click="cancelModels()"
+                    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" squared variant="danger" v-if="this.loading === false" @click="cancelModels()"
                       >Close</b-button
                     >
-                    <b-button squared variant="danger" v-if="this.loading === true" disabled
+                    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" squared variant="danger" v-if="this.loading === true" disabled
                       >Close</b-button
                     >
                   </b-col>
                   <b-col cols="3">
-                    <b-button class="ml-2" v-if="this.loading === false" squared @click="backToTransfer()"
+                    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="ml-2" v-if="this.loading === false" squared @click="backToTransfer()"
                       >Back</b-button
                     >
-                    <b-button class="ml-2" v-if="this.loading === true" squared disabled
+                    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="ml-2" v-if="this.loading === true" squared disabled
                       >Back</b-button
                     >
                   </b-col>
                   <b-col cols="6">
                     <b-button
+                    style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                       class="float-right"
                       squared
                       id="send-internal"
@@ -619,6 +635,7 @@
                       >Send</b-button
                     >
                     <b-button
+                    style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                       class="float-right"
                       v-if="this.loading === true"
                       squared
@@ -636,9 +653,9 @@
         </b-col>
         <b-col class="bottom-col-last" cols="12">
           <b-modal id="modal-external" hide-footer hide-header squared centered>
-            <b-container  fluid>
-              <b-row  class="ml-2 mr-2 mt-2 mb-4">
-                <h4><i class="fas fa-sign-out-alt"></i> External Transfer</h4>
+            <b-container style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); background-color:#f5fcc1; padding:10px;"  fluid>
+              <b-row style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); background-color:#f4f4f4; padding:10px; padding-left:20px; padding-top:15px" class="ml-2 mr-2 mt-2 mb-4">
+                <h4 ><i class="fas fa-sign-out-alt"></i> External Transfer</h4>
               </b-row>
               <b-row>
                 <b-col cols="12">
@@ -694,23 +711,24 @@
                   </b-row>
                   <b-row class="mr-2 mt-4">
                     <b-col cols="3">
-                      <b-button squared variant="danger" v-if="this.loading===false" @click="cancelModels()"
+                      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" squared variant="danger" v-if="this.loading===false" @click="cancelModels()"
                         >Close</b-button
                       >
-                      <b-button squared variant="danger" v-if="this.loading===true" disabled
+                      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" squared variant="danger" v-if="this.loading===true" disabled
                         >Close</b-button
                       >
                     </b-col>
                     <b-col cols="3">
-                      <b-button class="ml-2" v-if="this.loading===false" squared @click="backToTransfer()"
+                      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="ml-2" v-if="this.loading===false" squared @click="backToTransfer()"
                         >Back</b-button
                       >
-                      <b-button class="ml-2" v-if="this.loading===true" squared disabled
+                      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="ml-2" v-if="this.loading===true" squared disabled
                         >Back</b-button
                       >
                     </b-col>
                     <b-col cols="6">
                       <b-button
+                      style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                         class="float-right"
                         @click="sendExternal()"
                         squared
@@ -719,6 +737,7 @@
                         >Send</b-button
                       >
                       <b-button
+                      style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                         v-if="this.loading === true"
                         class="float-right"
                         variant="success"
@@ -767,7 +786,8 @@
                     label="Large Spinner"
                   ></b-spinner>
                 </b-row>
-                <b-row><strong class="mt-2">Loading...</strong></b-row>
+                <b-row><strong class="mt-2">Please Wait it's</strong></b-row>
+                <b-row><strong class="mt-2"><i class="fas fa-truck-loading"></i> Loading...</strong></b-row>
               </div>
             </b-col>
 
@@ -824,6 +844,7 @@
             <b-col style="background-color:#ffeb99;"  cols="10"></b-col>
             <b-col class="float-right">
               <b-button
+              style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                 squared
                 id="ok-close-state"
                 variant="success"
@@ -869,7 +890,8 @@
                     label="Large Spinner"
                   ></b-spinner>
                 </b-row>
-                <b-row><strong class="mt-2">Loading...</strong></b-row>
+                <b-row><strong class="mt-2">Please Wait it's</strong></b-row>
+                <b-row><strong class="mt-2"><i class="fas fa-truck-loading"></i> Loading...</strong></b-row>
               </div>
             </b-col>
 <!-- here -->
@@ -924,6 +946,7 @@
             ><b-col cols="10" style="background-color:#dff6f0;"></b-col>
             <b-col class="float-right">
               <b-button
+              style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
                 squared
                 id="ok-close-state"
                 variant="success"
@@ -1020,8 +1043,6 @@ export default {
   created() {
     this.getCurrentAccounts()
     this.getSavingsAccounts()
-    this.getTransactionsCurrent()
-    this.getTransactionSavings()
   },
   watch: {
     // call again the method if the route changes
@@ -1686,7 +1707,7 @@ export default {
 
 .text-ac-details {
   font-family: 'Roboto', sans-serif;
-  text-shadow: 0.21px 0.21px 0.21px black;
+  text-shadow: 0.121px 0.121px 0.121px black;
 }
 #fa-bank-sm {
   display: none;

@@ -22,7 +22,7 @@
   </div>
   
   <vue-particles
-        class="vue-particles-add"
+        class="vue-particles-about"
         color="#839c99"
         :particleOpacity="0.7"
         :particlesNumber="80"
@@ -74,5 +74,9 @@ text-align: left;
   position: fixed;
   left: 0;
   right: 0;
-} 
+     background: rgb(255,255,255);
+background: -moz-linear-gradient(159deg, rgba(255,255,255,1) 68%, rgba(140,186,81,1) 68%, rgba(140,186,81,1) 82%, rgba(253,94,83,1) 82%);
+background: -webkit-linear-gradient(159deg, rgba(255,255,255,1) 68%, rgba(140,186,81,1) 68%, rgba(140,186,81,1) 82%, rgba(253,94,83,1) 82%);
+background: linear-gradient(159deg, rgba(255,255,255,1) 68%, rgba(140,186,81,1) 68%, rgba(140,186,81,1) 82%, rgba(253,94,83,1) 82%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#fd5e53",GradientType=1);  } 
 </style>

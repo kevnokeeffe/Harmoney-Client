@@ -9,9 +9,11 @@
           id="input-group-remove"
           label="Financial Instutition:"
           label-for="input-3"
+
         >
         <b-row>
           <b-form-select
+
             id="input-remove"
             v-model="form.fi"
             :options="fis"
@@ -22,7 +24,7 @@
             <b-form-checkbox class="check-remove" v-model="form.checked" switch size="lg">Accept</b-form-checkbox>
           </b-row>
           <b-row>
-          <b-button class="bt-remove" variant="danger" squared @click="removeContinue()">Remove</b-button>
+          <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="bt-remove" variant="danger" size="lg" squared @click="removeContinue()">Remove</b-button>
           </b-row>
         </b-form-group>
         </b-row>
@@ -54,11 +56,12 @@
     </b-row>
     <b-row>
       <b-col cols="6">
-      <b-button  @click="cancel()" class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
+      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false"  @click="cancel()" class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
+      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true"  disabled class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
       </b-col>
       <b-col class="float-right" cols="6">
-       <b-button @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger">Delete</b-button>
-       <b-button class="float-right mt-2 mb-2" v-if="this.loading === true" squared variant="danger" disabled>
+       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger"><i class="fas fa-trash"></i> Delete</b-button>
+       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="float-right mt-2 mb-2" v-if="this.loading === true" squared variant="danger" disabled>
       <b-spinner small type="grow"></b-spinner>
         Loading....
       </b-button>
@@ -114,27 +117,27 @@ methods: {
       this.form.checked = false
       this.form.fi = null
     },
-    deleteAccount(){
+    deleteAccount: async function(){
     this.show = true
     this.loading = true
     let id = this.form.userId
     let fiName = this.form.fi
     let data = [fiName , id]
     const deletePromise = auth.deleteFiIndividual(data)
-    Promise.resolve(deletePromise).then(res => {
-      if (res.data.message === "no matching account"){
+    await Promise.resolve(deletePromise).then(res => {
+      if (res === false){
         this.noMatchingAccount()
         this.loading = false
         this.$bvModal.hide('modal-remove')
         this.form.checked = false
       this.form.fi = null
       }
-      if(res.data.message === true){
-this.successFullDelete()
-this.loading = false
-this.form.checked = false
+      if(res === true){
+      this.successFullDelete()
+      this.loading = false
+      this.form.checked = false
       this.form.fi = null
-this.$bvModal.hide('modal-remove')
+      this.$bvModal.hide('modal-remove')
       }
     })
     },

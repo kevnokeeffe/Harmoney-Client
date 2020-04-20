@@ -14,8 +14,8 @@
       <h6>E-mail: {{this.email}}</h6>
    </b-row>
    <b-row class="ml-2 mt-4">
-     <b-button v-b-modal.modal-sm squared>
-       Delete Account
+     <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-b-modal.modal-sm squared>
+       <i class="far fa-trash-alt"></i> Delete Account
      </b-button>
    </b-row>
    </b-container>
@@ -29,13 +29,13 @@
               value="true"
               >Confirm Deletion</b-form-checkbox
             ></b-row>
-      <b-row class="mt-4"><b-col cols="6"><b-button @click="cancelModels()" squared variant="info">Cancel</b-button></b-col>
+      <b-row class="mt-4"><b-col cols="6"><b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" @click="cancelModels()" squared variant="info">Cancel</b-button></b-col>
       <b-col cols="6">
-        <b-button v-if="this.loading === true" variant="danger" disabled>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true" variant="danger" disabled>
     <b-spinner small type="grow"></b-spinner>
     Deleting...
   </b-button>
-        <b-button v-if="this.loading === false" @click="deleteAccount()" class="float-right" squared variant="danger">Delete</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false" @click="deleteAccount()" class="float-right" squared variant="danger"><i class="far fa-trash-alt"></i> Delete</b-button>
         </b-col></b-row></b-modal>
     </div>
     <vue-particles
@@ -166,7 +166,7 @@ background: linear-gradient(299deg, rgba(34,193,195,1) 11%, rgba(255,255,255,1) 
   margin-top:60px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
      background: rgb(222,88,88);
-background: linear-gradient(90deg, rgba(222,88,88,1) 4%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 78%, rgba(255,169,48,1) 78%); 
+background: linear-gradient(90deg, rgba(222,88,88,1) 4%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 90%, rgba(255,169,48,1) 90%); 
 
 }
 </style>

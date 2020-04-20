@@ -30,7 +30,7 @@
             v-if="!$store.state.isLoggedIn"
             class="b-nav-item"
             @click="about()"
-            >About Us <i class="fas fa-question"></i
+            >About Us <i class="fas fa-info"></i
           ></b-nav-item>
 
           <b-nav-item-dropdown

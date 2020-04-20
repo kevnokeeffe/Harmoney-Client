@@ -73,12 +73,19 @@
             v-model="form.fi"
             :options="fis"
             required
+            v-if="this.loading === false"
+          ></b-form-select>
+          <b-form-select
+            id="input-3"
+            :options="fis"
+            disabled
+            v-if="this.loading ===true"
           ></b-form-select>
         </b-form-group>
 
         <b-form-group id="input-group-4">
-          <b-button v-if="this.loading === false" class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
-          <b-button v-if="this.loading === true" disabled class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
+          <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false" class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
+          <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true" disabled class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
           <b-form-checkbox class="mt-2 mb-4" v-model="form.checked" id="checkboxes-4" value="true"
             >Accept Terms & Conditions</b-form-checkbox
           >
@@ -156,14 +163,14 @@
             </b-modal>
           </div>
         </b-form-group>
-        <b-button class="mr-2" squared variant="info" disabled v-if="this.loading === true">
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="mr-2" squared variant="info" disabled v-if="this.loading === true">
         <b-spinner small type="grow"></b-spinner>
           Loading...
         </b-button>
-        <b-button disabled v-if="this.state === false && this.stateP === false && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
-        <b-button v-if="this.state === true && this.stateP === true && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
-        <b-button v-if="this.loading===false" class="ml-2" squared type="reset" variant="danger">Reset</b-button>
-        <b-button v-if="this.loading===true" disabled class="ml-2" squared type="reset" variant="danger">Reset</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" disabled v-if="this.state === false && this.stateP === false && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.state === true && this.stateP === true && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading===false" class="ml-2" squared type="reset" variant="danger">Reset</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading===true" disabled class="ml-2" squared type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-jumbotron>
   </div>
@@ -327,7 +334,7 @@ export default {
       this.form.email = ''
       this.form.password = ''
       this.form.fi = null
-      this.form.checked = []
+      this.form.checked = null
       // Trick to reset/clear native browser form validation state
       this.show = false
       this.$nextTick(() => {
@@ -402,13 +409,15 @@ export default {
   left: 0;
   right: 0;
   margin-bottom: 60px;
-  }
+  background: rgb(255,255,255);
+background: linear-gradient(90deg, rgba(255,255,255,1) 82.1%, rgba(222,255,139,1) 82.1%);   }
   .vue-particles-add{
   height: 100%;
   position: fixed;
   left: 0;
   right: 0;
-} 
+        background: rgb(246,75,60);
+background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(222,255,139,1) 85%);  } 
 .overlay-add{
   position: absolute;
   top: 2;

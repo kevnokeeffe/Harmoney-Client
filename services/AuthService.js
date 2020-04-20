@@ -100,7 +100,15 @@ export function deleteFiInfo(id) {
 }
 
 export function deleteFiIndividual(body) {
-  return http().post(`/api/account/delete/fi-individual`,body);
+  return http().post(`/api/account/delete/fi-individual`,body).then(res => {
+      if (res) {
+        return res.data.message
+      }
+    }).catch(err => {
+      if (err) {
+        return false
+      }
+    });
 }
 
 export function validateAuthyUser(verify) {

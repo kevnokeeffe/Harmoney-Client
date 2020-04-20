@@ -503,8 +503,7 @@
                   Welcome to the transfer wizzard. Please select one of the
                   options below. "Internal transfer", to transfer money between
                   your accounts registered on Harmon€y. "External transfers" to
-                  transfer funds from your account to any other anywhere.
-                </p>
+                  transfer funds from your account to any other anywhere.</p>
               </b-row>
               <b-row class="mb-4">
                 <b-col cols="6">

@@ -51,9 +51,9 @@ describe('Testing the login page', () => {
         cy.contains("Transaction Amount")
         cy.contains("Updated Balance")
         cy.get("#ok-close-state").click();
-        cy.wait(1000)
+        cy.wait(3000)
         cy.get('button[id=trans-current]').contains("Transfer").click()
-        cy.wait(1000)
+        cy.wait(3000)
         cy.contains("Transfer Wizzard")
         cy.contains(`Welcome to the transfer wizzard. Please select one of the
         options below. "Internal transfer", to transfer money between

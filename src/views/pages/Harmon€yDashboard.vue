@@ -551,8 +551,14 @@
                 <b-row class="ml-2 mr-2 mt-4">
                   <h6>Please enter the amount to transfer:</h6>
                 </b-row>
-                <b-row class="ml-2 mr-2">
+                <b-row class="ml-2 mr-2"
+                >
+                <b-form-group
+                :invalid-feedback="invalidFeedback"
+          :valid-feedback="validFeedback"
+          :state="state">
                   <b-form-input
+                  :state="state"
                   id="input-form"
                     v-model="transferNumber"
                     min="0.01"
@@ -562,6 +568,7 @@
                     placeholder="Enter Amount €.00"
                     pattern="^\d*(\.\d{0,2})?$"
                   ></b-form-input>
+                </b-form-group>
                 </b-row>
                 <b-row class="ml-2 mt-1">
                   <h6>
@@ -649,7 +656,12 @@
                     <h6>Please enter the amount to transfer</h6>
                   </b-row>
                   <b-row class="ml-2 mr-4">
+                     <b-form-group
+                :invalid-feedback="invalidFeedback"
+          :valid-feedback="validFeedback"
+          :state="state">
                     <b-form-input
+                    :state="state"
                       v-model="transferNumber"
                       max="account.balance"
                       min="0.01"
@@ -658,6 +670,7 @@
                       placeholder="Enter Amount €.00"
                       pattern="^\d*(\.\d{0,2})?$"
                     ></b-form-input>
+                     </b-form-group>
                   </b-row>
                   <b-row class="ml-2 mt-1">
                     <h6>
@@ -929,6 +942,29 @@ import * as accountService from '../../../services/AccountService'
 import * as auth from '../../../services/AuthService'
 import * as transactionService from '../../../services/TransactionService'
 export default {
+  computed: {
+    state() {
+      const number = this.transferNumber
+      // eslint-disable-next-line no-useless-escape
+      //const regex = /^[0-9]*$/gm
+      const found = String(number).match(/^0$|^[1-9]\d*$|^\.\d+$|^0\.\d*$|^[1-9]\d*\.\d*$/gm)
+      return found !== null ? true : false
+    },
+    invalidFeedback() {
+      const number = this.transferNumber
+      // eslint-disable-next-line no-useless-escape
+      
+      const found = String(number).match(/^0$|^[1-9]\d*$|^\.\d+$|^0\.\d*$|^[1-9]\d*\.\d*$/gm)
+      if (found === null) {
+        return 'Please enter a valid number'
+      }else {
+        return 'Please enter a valid number'
+      }
+    },
+    validFeedback() {
+      return this.state === true ? '' : ''
+    },
+  },
   name: 'dashboard',
   data() {
     return {
@@ -984,6 +1020,8 @@ export default {
   created() {
     this.getCurrentAccounts()
     this.getSavingsAccounts()
+    this.getTransactionsCurrent()
+    this.getTransactionSavings()
   },
   watch: {
     // call again the method if the route changes

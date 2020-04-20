@@ -142,6 +142,16 @@
 
           <b-form-group id="input-group-checkboxes">
             <b-button
+              v-if="this.loadingScreen === true"
+              class="t-and-c mt-2 mb-2"
+              squared
+              variant="warning"
+              size="sm"
+              disabled
+              >Terms & Conditions</b-button
+            >
+            <b-button
+            v-if="this.loadingScreen === false"
               v-b-popover.hover.top="'Read the terms and conditions.'"
               class="t-and-c mt-2 mb-2"
               squared
@@ -481,7 +491,7 @@ export default {
         const user = {
           fName: this.form.fName,
           lName: this.form.lName,
-          email: this.form.email,
+          email: this.form.email.toLowerCase(),
           password: this.form.password,
           phone: this.form.phone,
           verified: this.form.verified,

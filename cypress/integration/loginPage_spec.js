@@ -30,8 +30,8 @@ describe('Testing the login page', () => {
     cy.get('#vCode-input')
       .eq(0)
       .type('102938')
-      //cy.get('#login-button').eq(0).click()
-      //cy.wait(10000)
-      //cy.contains(".b-nav-item", "Logout").click();
+      cy.get('#login-button').eq(0).click()
+      cy.wait(10000)
+      cy.contains(".b-nav-item", "Logout").click();
   })
 })

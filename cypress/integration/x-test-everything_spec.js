@@ -21,7 +21,7 @@ describe('Testing all pages', () => {
               cy.get('#input-password').eq(0)
               cy.get('input[id=input-password]').type('123456')
               cy.get('button[type=button]').eq(0).click()
-              cy.wait(6000)
+              cy.wait(10000)
             })
         })
       cy.get('#modal-center').eq(0)

@@ -133,11 +133,11 @@ methods: {
       this.form.fi = null
       }
       if(res === true){
-      this.successFullDelete()
       this.loading = false
       this.form.checked = false
       this.form.fi = null
       this.$bvModal.hide('modal-remove')
+      this.successFullDelete()
       }
     })
     },

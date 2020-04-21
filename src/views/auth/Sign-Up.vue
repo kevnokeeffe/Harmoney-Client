@@ -167,6 +167,14 @@
               class="mt-2 mb-2"
               v-model="form.checked"
               value="true"
+              v-if="this.loadingScreen === false"
+              >Accept T&C's</b-form-checkbox
+            >
+            <b-form-checkbox
+              disabled
+              class="mt-2 mb-2"
+              value="true"
+              v-if="this.loadingScreen === true"
               >Accept T&C's</b-form-checkbox
             >
           </b-form-group>

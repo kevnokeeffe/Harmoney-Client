@@ -86,7 +86,10 @@
         <b-form-group id="input-group-4">
           <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false" class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
           <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true" disabled class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
-          <b-form-checkbox class="mt-2 mb-4" v-model="form.checked" id="checkboxes-4" value="true"
+          <b-form-checkbox v-if="this.loading ===false" class="mt-2 mb-4" v-model="form.checked" id="checkboxes-4" value="true"
+            >Accept Terms & Conditions</b-form-checkbox
+          >
+          <b-form-checkbox v-if="this.loading ===true" class="mt-2 mb-4" disabled id="checkboxes-4" value="true"
             >Accept Terms & Conditions</b-form-checkbox
           >
           <div>
@@ -280,8 +283,8 @@ export default {
                 this.showMsgBoxInvalid()
                 this.loading = false
               }else{
-                this.$router.push({ path: '/harmoney-dashboard' })
                 this.successFullAdd()
+                this.$router.push({ path: '/harmoney-dashboard' })
                 this.loading = false
               }
           })

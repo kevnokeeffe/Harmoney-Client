@@ -23,13 +23,26 @@
     </b-jumbotron>
     <b-modal hide-footer squared id="modal-sm" size="sm" centered title="Delete Account">
       <b-row class="ml-2 mr-2">Are you sure about this? There is no going back!</b-row>
-      <b-row class="ml-2 mt-2"> <b-form-checkbox
+      <b-row class="ml-2 mt-2"> 
+        <b-form-checkbox
               class="mt-2 mb-2"
               v-model="checked"
               value="true"
-              >Confirm Deletion</b-form-checkbox
+              v-if="this.loading === false"
+              >Confirm Deletion
+              </b-form-checkbox
+            >
+            <b-form-checkbox
+            v-if="this.loading === true"
+              class="mt-2 mb-2"
+              v-model="checked"
+              value="true"
+              disabled
+              >Confirm Deletion
+              </b-form-checkbox
             ></b-row>
-      <b-row class="mt-4"><b-col cols="6"><b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" @click="cancelModels()" squared variant="info">Cancel</b-button></b-col>
+      <b-row class="mt-4"><b-col cols="6"><b-button v-if="this.loading === false" style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" @click="cancelModels()" squared variant="info">Cancel</b-button>
+      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true" disabled squared variant="info">Cancel</b-button></b-col>
       <b-col cols="6">
         <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true" variant="danger" disabled>
     <b-spinner small type="grow"></b-spinner>

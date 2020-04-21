@@ -47,7 +47,6 @@ describe('Testing all pages', () => {
         cy.get("#state-current").contains("Statement").click();
         cy.wait(20000)
         cy.contains("Statement")
-        cy.contains("Previous Balance")
         cy.contains("Transaction Amount")
         cy.contains("Updated Balance")
         cy.get("#ok-close-state").click();

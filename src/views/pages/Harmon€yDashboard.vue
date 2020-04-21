@@ -1824,6 +1824,7 @@ export default {
     transition: 0.3s;
   }
 
+  
   .b-card-account:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }

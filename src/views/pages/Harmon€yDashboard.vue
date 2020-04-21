@@ -663,8 +663,9 @@
                   </b-row>
                   <b-row class="ml-2 mr-4">
                     <b-form-input
-                      v-model="enterIban"
+                      v-model.trim="enterIban"
                       required
+                      trim
                       placeholder="Enter IBAN"
                     ></b-form-input>
                   </b-row>
@@ -808,7 +809,7 @@
             </b-col>
 
            <b-col v-if="this.stateLoad === false" cols="11">
-              <b-row v-if="currentAccountTransactions.length > 0"><b-col cols="4"><h5 class="float-left" id="h5-titles">Previous Balance</h5></b-col><b-col cols="4"><h5 class="float-center" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="4"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
+              <b-row v-if="currentAccountTransactions.length > 0"><b-col cols="6"><h5 class="float-left" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="6"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
               <div
                 class="accounts mb-2 mt-2"
                 v-if="
@@ -823,11 +824,10 @@
                   :key="currentAccountTransactions.currentAccountTransactions"
                 >
                 <b-container fluid>  
-                  <b-row style="background-color:#f7f7f7;" class="state-row">  
-                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{currentAccountTransactions.updatedBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                       
-                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{currentAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
-                    <b-col cols="4"  v-if="currentAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{currentAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
-                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{currentAccountTransactions.currentBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
+                  <b-row style="background-color:#f7f7f7;" class="state-row">                        
+                    <b-col cols="6"  v-if="currentAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ -{{currentAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
+                    <b-col cols="6"  v-if="currentAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ +{{currentAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
+                    <b-col cols="6" ><h5 class="float-right" id="h5-statement">€{{currentAccountTransactions.updatedBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
                      <b-col  cols="12" v-if="currentAccountTransactions.credit_debit === 'credit' && currentAccountTransactions.accountFromName != null"> <h5 class="float-left" id="h5-statement-2">From: {{currentAccountTransactions.accountFromName}}</h5> </b-col>
                     <b-col  cols="12" v-if="currentAccountTransactions.credit_debit === 'debit' && currentAccountTransactions.accountFromName != null"> <h5 class="float-left" id="h5-statement-2">To: {{currentAccountTransactions.accountFromName}}</h5> </b-col>
                     <b-col cols="6"> <h5 class="float-left" id="h5-statement-2">Date: {{currentAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
@@ -913,7 +913,7 @@
               </div>
             </b-col>
             <b-col v-if="this.stateLoad === false" cols="11">
-              <b-row v-if="savingsAccountTransactions.length > 0"><b-col cols="4"><h5 class="float-left" id="h5-titles">Previous Balance</h5></b-col><b-col cols="4"><h5 class="float-center" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="4"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
+              <b-row v-if="savingsAccountTransactions.length > 0"><b-col cols="6"><h5 class="float-left" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="6"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
               <div
                 class="accounts mb-2 mt-2"
                 v-if="
@@ -928,11 +928,10 @@
                   :key="savingsAccountTransactions.savingsAccountTransactions"
                 >
                 <b-container fluid>  
-                  <b-row style="background-color:#f7f7f7;" class="state-row">  
-                    <b-col cols="4"><h5 class="float-left" id="h5-statement">€{{savingsAccountTransactions.updatedBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                       
-                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ +{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
-                    <b-col cols="4"  v-if="savingsAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
-                    <b-col cols="4" ><h5 class="float-right" id="h5-statement">€{{savingsAccountTransactions.currentBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
+                  <b-row style="background-color:#f7f7f7;" class="state-row">                        
+                    <b-col cols="6"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
+                    <b-col cols="6"  v-if="savingsAccountTransactions.credit_debit === 'credit'"><h5 class="float-center" id="h5-statement">€ +{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
+                    <b-col cols="6" ><h5 class="float-right" id="h5-statement">€{{savingsAccountTransactions.updatedBalance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>
                     <b-col  cols="12" v-if="savingsAccountTransactions.credit_debit === 'credit' && savingsAccountTransactions.accountFromName != null"> <h5 class="float-left" id="h5-statement-2">From: {{savingsAccountTransactions.accountFromName}}</h5> </b-col>
                     <b-col  cols="12" v-if="savingsAccountTransactions.credit_debit === 'debit' && savingsAccountTransactions.accountFromName != null"> <h5 class="float-left" id="h5-statement-2">To: {{savingsAccountTransactions.accountFromName}}</h5> </b-col>
                    <b-col cols="6"> <h5 class="float-left" id="h5-statement-2">Date: {{savingsAccountTransactions.createdAt.slice(0,10)}}</h5> </b-col>
@@ -1095,7 +1094,6 @@ export default {
         })
         .then(() => {
           this.stateLoad = false
-          this.getFIName(this.currentAccountTransactions)
         })
     },
     getTransactionSavings() {
@@ -1169,6 +1167,7 @@ export default {
                 this.transferNumber = 0
                 this.getCurrentAccounts()
                 this.getSavingsAccounts()
+                this.$bvModal.hide('modal-external')
               } else {
                 this.loading = false
                 this.makeToastTransferError()

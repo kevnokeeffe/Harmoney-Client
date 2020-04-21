@@ -412,8 +412,7 @@ export default {
   left: 0;
   right: 0;
   margin-bottom: 60px;
-background: rgb(246,75,60);
-background: linear-gradient(90deg, rgba(246,75,60,1) 3%, rgba(255,255,255,1) 3%, rgba(255,255,255,1) 82.9%, rgba(222,255,139,1) 82.9%); 
+background:#eff3c6
   }
 
   .vue-particles-add{

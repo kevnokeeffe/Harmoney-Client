@@ -412,8 +412,10 @@ export default {
   left: 0;
   right: 0;
   margin-bottom: 60px;
-  background: rgb(255,255,255);
-background: linear-gradient(90deg, rgba(255,255,255,1) 82.1%, rgba(222,255,139,1) 82.1%);   }
+background: rgb(246,75,60);
+background: linear-gradient(90deg, rgba(246,75,60,1) 3%, rgba(255,255,255,1) 3%, rgba(255,255,255,1) 82.9%, rgba(222,255,139,1) 82.9%); 
+  }
+
   .vue-particles-add{
   height: 100%;
   position: fixed;
@@ -421,6 +423,7 @@ background: linear-gradient(90deg, rgba(255,255,255,1) 82.1%, rgba(222,255,139,1
   right: 0;
         background: rgb(246,75,60);
 background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(222,255,139,1) 85%);  } 
+
 .overlay-add{
   position: absolute;
   top: 2;

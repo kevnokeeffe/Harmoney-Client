@@ -100,9 +100,12 @@
             ></vue-tel-input>
              <vue-tel-input
              v-if="this.loadingScreen === true"
-              v-b-popover.hover.top="'Enter phone number here.'"
+              v-b-popover.hover.top="'Enter mobile number here.'"
               disabled
             ></vue-tel-input>
+            <b-form-text id="mobile-help-block">
+              Your must enter a valid Mobile phone number.
+            </b-form-text>
           </b-form-group>
 
           <!-- <country-select v-model="country" :country="country" topCountry="US" />
@@ -139,6 +142,38 @@
               special characters and numbers, but should not contain spaces.
             </b-form-text>
           </b-form-group>
+
+
+
+          <b-form-group
+            id="input-group-password"
+            label="Retype password:"
+            label-for="input-password"
+          >
+            <b-form-input
+              v-b-popover.hover.top="'Re-enter password here.'"
+              type="password"
+              id="text-password"
+              aria-describedby="password-help-block"
+              v-model="form.passwordMatch"
+              required
+              :state="passwordState"
+              v-if="this.loadingScreen === false"
+              placeholder="Re-enter password"
+            ></b-form-input>
+            <b-form-input
+            v-if="this.loadingScreen === true"
+              type="password"
+              aria-describedby="password-help-block"
+              disabled
+              placeholder="Re-enter password"
+            ></b-form-input>
+            <b-form-text id="password-help-block">
+              This password must match the previous password.
+            </b-form-text>
+          </b-form-group>
+
+
 
           <b-form-group id="input-group-checkboxes">
             <b-button
@@ -368,6 +403,9 @@ export default {
       lNameState() {
         return this.form.lName.length > 2 ? true : false
       },
+      passwordState(){
+        return this.form.passwordMatch === this.form.password && this.form.passwordMatch != '' && this.form.passwordMatch.length > 5 ? true : false
+      },
     stateP() {
       let str = this.form.password
       let space = str.search(' ')
@@ -435,7 +473,7 @@ export default {
         disabledFetchingCountry: false,
         disabled: false,
         disabledFormatting: false,
-        placeholder: 'Enter a phone number',
+        placeholder: 'Enter a mobile number',
         required: true,
         enabledCountryCode: false,
         enabledFlags: true,
@@ -445,6 +483,7 @@ export default {
         autocomplete: 'on',
         name: 'telephone',
         maxLen: 25,
+        minLen:10,
         wrapperClasses: '',
         inputClasses: '',
         dropdownOptions: {
@@ -464,6 +503,7 @@ export default {
         password: '',
         checked: false,
         verified: true,
+        passwordMatch:'',
       },
       loading: false,
       vCode: null,
@@ -527,16 +567,12 @@ export default {
       this.$bvModal.hide('modal-center')
     },
     showContinueModal() {
+      if(this.form.password === this.form.passwordMatch && this.form.password.length > 5){
       this.loadingScreen = true
       if (
-        this.form.email != null &&
-        this.form.fName != null &&
-        this.form.lName != null &&
-        this.form.password != null &&
-        this.form.email != '' &&
-        this.form.fName != '' &&
-        this.form.lName != '' &&
-        this.form.password != ''
+        this.form.email.length>5 &&
+        this.form.fName.length>2 &&
+        this.form.lName.length>2
       ) {
         if (this.form.checked === 'true') {
           this.verifyPing()
@@ -551,6 +587,22 @@ export default {
         this.loadingScreen = false
         this.form.checked = false
       }
+    }else {
+      this.makeToastPasswordMatch()
+      this.loadingScreen = false
+        this.form.checked = false
+    }
+    },
+    makeToastPasswordMatch() {
+      this.$bvToast.toast(
+        "I'm so sorry but passwords don't match.",
+        {
+          title: 'Apologies!',
+          variant: 'danger',
+          solid: true,
+          center: true,
+        }
+      )
     },
     makeToastForm() {
       this.$bvToast.toast(
@@ -644,7 +696,11 @@ export default {
                 this.loadingScreen = false
 
                 this.$bvModal.hide('modal-center')
-              }
+              }else if (response.data.auth === false){
+this.invalidPhoneNumber()
+this.loadingScreen = false
+this.$bvModal.hide('modal-center')
+          }
               else{this.loadingScreen = false}
             })
           } else if (resp1.data.message === false) {
@@ -660,6 +716,14 @@ export default {
 
         this.$bvModal.hide('modal-center')
       }
+    },
+    invalidPhoneNumber() {
+      this.$bvToast.toast('Sorry you must enter a valid MOBILE phone number.', {
+        title: '2FA!',
+        variant: 'danger',
+        solid: true,
+        center: true,
+      })
     },
     showMsgBoxTNC: function() {
       this.boxTwo = ''

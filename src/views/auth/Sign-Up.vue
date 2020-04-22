@@ -775,7 +775,22 @@ this.$bvModal.hide('modal-center')
   left: 0;
   right: 0;
 }
-
+@media (min-width: 575px) {.b-jumbotron-signUp {background: rgb(108, 100, 139);
+  background: linear-gradient(
+    180deg,
+    rgba(108, 100, 139, 1) 13%,
+    rgba(254, 254, 254, 1) 13%,
+    rgba(254, 254, 254, 1) 98%,
+    rgba(108, 100, 139, 1) 98%
+  );}}
+@media (max-width: 575px) {.b-jumbotron-signUp {background: rgb(108, 100, 139);
+  background: linear-gradient(
+    180deg,
+    rgba(108, 100, 139, 1) 10%,
+    rgba(254, 254, 254, 1) 10%,
+    rgba(254, 254, 254, 1) 98%,
+    rgba(108, 100, 139, 1) 98%
+  );}}
 .b-jumbotron-signUp {
   display: block;
   margin-left: auto;
@@ -784,14 +799,7 @@ this.$bvModal.hide('modal-center')
   width: 90%;
   margin-top: 60px;
   max-width: 500px !important;
-  background: rgb(108, 100, 139);
-  background: linear-gradient(
-    180deg,
-    rgba(108, 100, 139, 1) 14%,
-    rgba(254, 254, 254, 1) 14%,
-    rgba(254, 254, 254, 1) 98%,
-    rgba(108, 100, 139, 1) 98%
-  );
+  
 }
 
 .h1-register {

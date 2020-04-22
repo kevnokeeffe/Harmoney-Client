@@ -431,7 +431,7 @@
                     size="md"
                     id="state-current-2"
                     class="float-left"
-                    @click="statementCurrent()"
+                    @click="statementSavings()"
                   >
                     <i class="fas fa-list"></i>
                   </b-button>

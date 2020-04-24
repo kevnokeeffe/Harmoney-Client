@@ -1,9 +1,10 @@
 # Harmon€y 
 ### A Financial Accounts Management System
-![](./README_Images/Harmoney.jpg =100x100)
+![](./README_Images/HarmoneyTwo.jpg)
  
 ### By Kevin O'Keeffe 
 This is a Final Year Project.
+
 BSc(Hons) in Software Systems Development,
 Department of Computing and Mathematics, 
 School of Science and Computing, WIT
@@ -19,6 +20,7 @@ The project is only made possible by the Payment Services  Directive (PSD2)
 and Open Banking.
 
 Harmon€y is built using the MEVN stack. MongoDB, Express.js, Vue,js and Node.js.
+Front-end 
 
 ### System features include:
 - User authentication and validation through the use of tokens.

@@ -1,13 +1,12 @@
 # Harmon€y 
-## A Financial Accounts Management System
-![](./README_Images/Harmoney.jpg)
+### A Financial Accounts Management System
+![](./README_Images/Harmoney.jpg =100x100)
  
-## By Kevin O'Keeffe 
-
-### This is a Final Year Project as part of a
-### BSc(Hons) in Software Systems Development,
-### Department of Computing and Mathematics, 
-### School of Science and Computing, WIT
+### By Kevin O'Keeffe 
+This is a Final Year Project.
+BSc(Hons) in Software Systems Development,
+Department of Computing and Mathematics, 
+School of Science and Computing, WIT
 
 [Demo Video Link]()
 
@@ -24,6 +23,7 @@ Harmon€y is built using the MEVN stack. MongoDB, Express.js, Vue,js and Node.j
 ### System features include:
 - User authentication and validation through the use of tokens.
 - Two Factor Authentication through mobile SMS.
+- Animated Background.
 - Dashboard accounts overview (gathering data from mulitable financial institutions).
 - Add financial institution accounts.
 - Preform transactions.
@@ -63,7 +63,7 @@ When an account is selected in the dashboard the user is presented with this mod
 The account transactions statement modal.
 A user can view this modal, by selecting the statement button in the accounts details modal. 
 
-![Transaction Wizard](./README_Images/TransferWizard.png)
+![Transaction Wizard](./README_Images/TransferWizzard.png)
 The transfer wizard modal.
 This modal is accessed when a user enters the account details modal and selects the transfer button.
 

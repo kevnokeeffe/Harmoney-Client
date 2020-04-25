@@ -556,6 +556,15 @@
                 </b-row>
                 <b-row class="ml-2 mr-2">
                   <b-form-select
+                  v-if="this.loading === false"
+                  id="b-form-select-account"
+                    required
+                    v-model="selectedAccount"
+                    :options="options"
+                  ></b-form-select>
+                  <b-form-select
+                  disabled 
+                  v-if="this.loading === true"
                   id="b-form-select-account"
                     required
                     v-model="selectedAccount"
@@ -572,6 +581,20 @@
           :valid-feedback="validFeedback"
           :state="state">
                   <b-form-input
+                  v-if="this.loading === false"
+                  :state="state"
+                  id="input-form"
+                    v-model="transferNumber"
+                    min="0.01"
+                    max="account.balance"
+                    required
+                    number
+                    placeholder="Enter Amount €.00"
+                    pattern="^\d*(\.\d{0,2})?$"
+                  ></b-form-input>
+                  <b-form-input
+                  v-if="this.loading === true"
+                  disabled
                   :state="state"
                   id="input-form"
                     v-model="transferNumber"
@@ -593,6 +616,21 @@
                 </b-row>
                 <b-row class="mt-2 ml-2">
                   <b-form-checkbox
+                    v-b-popover.hover.top="'Switch this to accept'"
+                    id="checkbox-internal-transfer"
+                    v-model="status"
+                    type="checkbox"
+                    name="Internal Transfer"
+                    value="true"
+                    unchecked-value="false"
+                    switch
+                    v-if="this.loading ===false"
+                  >
+                    I concent to the transfer.
+                  </b-form-checkbox>
+                  <b-form-checkbox
+                  v-if="this.loading ===true"
+                  disabled
                     v-b-popover.hover.top="'Switch this to accept'"
                     id="checkbox-internal-transfer"
                     v-model="status"
@@ -667,6 +705,15 @@
                       required
                       trim
                       placeholder="Enter IBAN"
+                      v-if="this.loading ===false"
+                    ></b-form-input>
+                    <b-form-input
+                    disabled
+                    v-if="this.loading ===true"
+                      v-model.trim="enterIban"
+                      required
+                      trim
+                      placeholder="Enter IBAN"
                     ></b-form-input>
                   </b-row>
                   <b-row class="ml-2 mr-2 mt-2">
@@ -678,6 +725,19 @@
           :valid-feedback="validFeedback"
           :state="state">
                     <b-form-input
+                    v-if="this.loading===false"
+                    :state="state"
+                      v-model="transferNumber"
+                      max="account.balance"
+                      min="0.01"
+                      required
+                      number
+                      placeholder="Enter Amount €.00"
+                      pattern="^\d*(\.\d{0,2})?$"
+                    ></b-form-input>
+                    <b-form-input
+                    disabled
+                    v-if="this.loading===true"
                     :state="state"
                       v-model="transferNumber"
                       max="account.balance"
@@ -698,6 +758,20 @@
                   </b-row>
                   <b-row class="mt-2 ml-2">
                     <b-form-checkbox
+                     v-if="this.loading === false"
+                      id="checkbox-external-transfer"
+                      v-model="statusEx"
+                      name="External Transfer"
+                      value="true"
+                      unchecked-value="false"
+                      switch
+                      v-b-popover.hover.top="'Switch this to accept'"
+                    >
+                      I concent to the transfer.
+                    </b-form-checkbox>
+                    <b-form-checkbox
+                    disabled
+                    v-if="this.loading === true"
                       id="checkbox-external-transfer"
                       v-model="statusEx"
                       name="External Transfer"
@@ -1142,6 +1216,9 @@ export default {
     },
     sendExternal() {
       this.loading = true
+      const checkIBAN = accountService.checkIBAN(this.enterIban)
+      Promise.resolve(checkIBAN).then((respIBAN) => {
+        if(respIBAN === true ){
       if (this.statusEx === 'true') {
         if (
           this.transferNumber <= this.account.balance &&
@@ -1172,6 +1249,9 @@ export default {
                 this.loading = false
                 this.makeToastTransferError()
               }
+            }).catch(()=>{
+              this.makeToastTransferError()
+                this.loading = false
             })
           } else {
             this.loading = false
@@ -1188,6 +1268,21 @@ export default {
         this.loading = false
         this.makeToastCheckbox()
       }
+        }else{
+          this.loading = false
+          this.invalidIBAN()}
+      }).catch(()=>{
+              this.makeToastTransferError()
+                this.loading = false
+            })
+    },
+    invalidIBAN(){
+      this.$bvToast.toast('You must enter a valid IBAN!', {
+        title: 'Apologies!',
+        variant: 'warning',
+        solid: true,
+        center: true,
+      })
     },
     mustEnterIBAN() {
       this.$bvToast.toast('You must enter an IBAN!', {
@@ -1281,6 +1376,9 @@ export default {
                 this.makeToastTransferError()
                 this.loading = false
               }
+            }).catch(()=>{
+              this.makeToastTransferError()
+                this.loading = false
             })
           } else {
             this.makeToastSelectAccountToTransfer()

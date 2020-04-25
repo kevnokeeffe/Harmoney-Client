@@ -20,7 +20,10 @@ import {Vuelidate} from 'vuelidate'
 import NProgress from 'vue-nprogress'
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
-
+import { BOverlay } from 'bootstrap-vue'
+import { OverlayPlugin } from 'bootstrap-vue'
+Vue.use(OverlayPlugin)
+Vue.component('b-overlay', BOverlay)
 Vue.use(Loading);
 Vue.use(BootstrapVueIcons)
 Vue.use(Progress)

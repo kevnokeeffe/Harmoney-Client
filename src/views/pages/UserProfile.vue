@@ -160,13 +160,12 @@ export default {
   background: rgb(34,193,195);
 background: linear-gradient(299deg, rgba(34,193,195,1) 11%, rgba(255,255,255,1) 11%, rgba(255,255,255,1) 64%, rgba(186,220,94,1) 64%, rgba(195,222,88,1) 78%, rgba(255,233,48,1) 78%);
 }
-
+@media(min-width:870px){
 .vue-particles-UP{
-  height: 100%;
-  position: fixed;
-  left: 0;
-  right: 0;
-} 
+ display:none;
+}
+}
+ 
 .profile-jumbo{
   width:80%;
   height:70%;
@@ -181,5 +180,14 @@ background: linear-gradient(299deg, rgba(34,193,195,1) 11%, rgba(255,255,255,1) 
      background: rgb(222,88,88);
 background: linear-gradient(90deg, rgba(222,88,88,1) 4%, rgba(255,255,255,1) 4%, rgba(255,255,255,1) 90%, rgba(255,169,48,1) 90%); 
 
+}
+
+@media(max-width:870px){
+  .vue-particles-UP{
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+} 
 }
 </style>

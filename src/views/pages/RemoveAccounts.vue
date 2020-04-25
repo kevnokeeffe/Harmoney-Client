@@ -2,7 +2,7 @@
   <div class="remove-account">
     <div class="overlay-remove">
     <b-jumbotron class="remove-jumbo">
-      <h3>Remove Account</h3>
+      <h3>Remove Financial Institution</h3>
       <b-container class="cont-rem">
         <b-row>
     <b-form-group
@@ -24,7 +24,7 @@
             <b-form-checkbox class="check-remove" v-model="form.checked" switch size="lg">Accept</b-form-checkbox>
           </b-row>
           <b-row>
-          <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="bt-remove" variant="danger" size="lg" squared @click="removeContinue()">Remove</b-button>
+          <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="bt-remove" variant="danger" size="lg" squared @click="removeContinue()"><i class="fas fa-minus-circle"></i> Remove</b-button>
           </b-row>
         </b-form-group>
         </b-row>
@@ -143,7 +143,7 @@ methods: {
     },
     successFullDelete() {
       this.$bvToast.toast(
-        'You have deleted the accounts successfully.',
+        'You have deleted the financial institution successfully.',
         {
           title: 'Congratulations!',
           variant: 'success',
@@ -226,12 +226,7 @@ methods: {
   right: 0;
   overflow: auto;
 }
-  .vue-particles-remove{
-  height: 100%;
-  position: fixed;
-  left: 0;
-  right: 0;
-} 
+  
 .overlay-remove{
   position: absolute;
   top: 2;
@@ -259,6 +254,9 @@ background: radial-gradient(circle, rgba(133,163,146,1) 4%, rgba(255,255,255,1) 
   overflow: auto;
 }
 @media (min-width: 870px){
+  .vue-particles-remove{
+  display:none;
+} 
 .remove-jumbo {
   display: block;
   margin-left: auto;
@@ -276,13 +274,21 @@ background: linear-gradient(0deg, rgba(133,163,146,1) 4%, rgba(255,255,255,1) 4%
 } 
         }
 @media (max-width: 870px){
+
+  .vue-particles-remove{
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+} 
+
 .remove-jumbo {
   display: block;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   width: 80%;
-  margin-top: 60px;
+  margin-top: 100px;
   max-height: 100%;
   min-height: 400px;
   max-width: 400px;

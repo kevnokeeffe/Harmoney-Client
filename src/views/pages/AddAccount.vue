@@ -1,11 +1,35 @@
 <template>
 <div class="top-one-add">
   <div class="overlay-add">
+    <b-overlay id="overlay-loading" :show="show" rounded="sm">
     <b-jumbotron
       class="b-jumbotron-add-account"
+      :aria-hidden="show ? 'true' : null"
     >
-    <h4><i class="fas fa-university"></i> Add Financial Institution</h4>
-      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+    <h3 id="h3-title"><i class="fas fa-university"></i> Link Financial Institution</h3>
+    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" size="sm" id="info-btn" squared variant="info" @click="instructions()"><b-icon-info></b-icon-info>Instructions</b-button>
+      <b-form @submit="onSubmit" @reset="onReset">
+
+<b-form-group
+          id="input-group-3"
+          label="Financial Instutition:"
+          label-for="input-3"
+        >
+          <b-form-select
+            id="input-3"
+            v-model="form.fi"
+            :options="fis"
+            required
+            v-if="this.loading === false"
+          ></b-form-select>
+          <b-form-select
+            id="input-3"
+            :options="fis"
+            disabled
+            v-if="this.loading ===true"
+          ></b-form-select>
+        </b-form-group>
+
         <b-form-group 
           
           id="input-group-1"
@@ -63,25 +87,7 @@
           ></b-form-input>
         </b-form-group>
 
-        <b-form-group
-          id="input-group-3"
-          label="Financial Instutition:"
-          label-for="input-3"
-        >
-          <b-form-select
-            id="input-3"
-            v-model="form.fi"
-            :options="fis"
-            required
-            v-if="this.loading === false"
-          ></b-form-select>
-          <b-form-select
-            id="input-3"
-            :options="fis"
-            disabled
-            v-if="this.loading ===true"
-          ></b-form-select>
-        </b-form-group>
+        
 
         <b-form-group id="input-group-4">
           <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false" class="mt-4" squared variant="warning" v-b-modal.modal-scrollable>Terms & Conditions</b-button>
@@ -176,6 +182,24 @@
         <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading===true" disabled class="ml-2" squared type="reset" variant="danger">Reset</b-button>
       </b-form>
     </b-jumbotron>
+    <template v-slot:overlay>
+        <div class="text-center">
+          <b-icon icon="stopwatch" font-scale="3" animation="cylon"></b-icon>
+          <p id="cancel-label">Please wait...</p>
+          <b-button
+            ref="cancel"
+            variant="outline-danger"
+            size="sm"
+            squared
+            aria-describedby="cancel-label"
+            @click="show = false"
+          >
+            Cancel
+          </b-button>
+        </div>
+      </template>
+    
+    </b-overlay>
   </div>
   <vue-particles
         class="vue-particles-add"
@@ -195,6 +219,21 @@
         :clickEffect="true"
         clickMode="push">
       </vue-particles>
+      <b-modal id="modal-instructions" title="Instructions" ok-only>
+    <b-container>
+      <b-row><b-col><p>Welcome to the link FI account instructions modal. To link your account follow the instructions below.</p></b-col></b-row>
+      <b-row><b-col><p>1) Select the Financial Institution your account is with.</p></b-col></b-row>
+      <b-row><b-col><p>2) You must now enter the login details given to you by your Financial Institution.
+        For this demo it is an email and password. <b-button @click="detailsOnOff()" squared size="sm">Show details</b-button></p></b-col></b-row>
+        <b-container style="background-color:#dae1e7; padding:10px; margin-top:10px; margin-bottom=10px;" v-if="this.details===true">
+        <b-row v-if="this.details===true"><b-col><p>NB. The details are the same for each financial institution.</p></b-col></b-row>
+        <b-row v-if="this.details===true"><b-col><p>email: <strong>kevokeeffe@gmail.com</strong></p></b-col></b-row>
+        <b-row v-if="this.details===true"><b-col><p>password: <strong>123456</strong></p></b-col></b-row>
+        </b-container>
+        <b-row><b-col><p>3) Accept the terms & conditions.</p></b-col></b-row>
+        <b-row><b-col><p>4) Now link your account by selecting the Submit button.</p></b-col></b-row>
+    </b-container>
+  </b-modal>
       </div>
       
 </template>
@@ -248,7 +287,9 @@ export default {
   },
   data() {
     return {
+      details:false,
       loading:false,
+      show:false,
       form: {
         email: '',
         password: '',
@@ -263,11 +304,18 @@ export default {
         'Credit Union',
         'Post Office'
       ],
-      show: true
     }
   },
   methods: {
+    detailsOnOff(){
+      if(this.details === false){
+        this.details=true
+      }else if (this.details === true){
+        this.details=false
+      }
+    },
     onSubmit: async function(evt) {
+      this.show = true
       this.loading = true
       evt.preventDefault()
       const connect = {
@@ -282,10 +330,12 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
                 this.loading = false
+                this.show = false
               }else{
                 this.successFullAdd()
                 this.$router.push({ path: '/harmoney-dashboard' })
                 this.loading = false
+                this.show = false
               }
           })
         } else if (this.form.fi === 'Allied Irish Bank') {
@@ -294,10 +344,12 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
                 this.loading = false
+                this.show = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
                 this.successFullAdd()
                 this.loading = false
+                this.show = false
               }
           })
         } else if (this.form.fi === 'Credit Union') {
@@ -306,10 +358,15 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
                 this.loading = false
+                this.show = false
               }else{
+                setTimeout(()=>{
+                this.successFullAdd()
+                },1000);
                 this.$router.push({ path: '/harmoney-dashboard' })
                 this.successFullAdd()
                 this.loading = false
+                this.show = false
               }
           })
         } else if (this.form.fi === 'Post Office') {
@@ -318,19 +375,24 @@ export default {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
                 this.loading = false
+                this.show = false
               }else{
                 this.$router.push({ path: '/harmoney-dashboard' })
                 this.successFullAdd()
                 this.loading = false
+                this.show = false
               }
           })
         }
       } else {
         this.showMsgBoxTwo()
         this.loading = false
+        this.show = false
       }
     },
+    instructions(){this.$bvModal.show('modal-instructions')},
     onReset(evt) {
+      this.show = false
       this.loading = false
       evt.preventDefault()
       // Reset our form values
@@ -399,29 +461,60 @@ export default {
 </script>
 
 <style>
+
+#overlay-loading{
+  min-height: 800px;
+}
+
+
+
+#input-group-1{
+  margin-top:20px;
+  overflow: auto;
+}
+
+#input-group-3{
+  margin-top:20px;
+}
+
+@media (min-width:870px) {
+  .vue-particles-add{
+display: none;
+
+  }
+
+  #info-btn{
+ margin-top: 60px;
+}
+}
+
+
+@media (max-width: 870px) {
+  #info-btn{
+ margin-top: 40px;
+}
 .add-account {
   height: 100%;
   position: fixed;
   left: 0;
   right: 0;
   overflow: auto;
+  background:#eff3c6
 }
-.top-one-add {
-  height: 100%;
+#h3-title{font-size: 22px;}
+.top-one-add{
+  height: 860px;
+  min-height: 650px;
   position: absolute;
   left: 0;
   right: 0;
-  margin-bottom: 60px;
-background:#eff3c6
-  }
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(246,75,60);
+background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(222,255,139,1) 85%);  
+}
 
-  .vue-particles-add{
-  height: 100%;
-  position: fixed;
-  left: 0;
-  right: 0;
-        background: rgb(246,75,60);
-background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(222,255,139,1) 85%);  } 
 
 .overlay-add{
   position: absolute;
@@ -430,14 +523,16 @@ background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15
   width: 100%;
   height: 100%;
   z-index: 10;
-  
+ 
 }
 
-#input-group-1{
-  margin-top:60px;
-  overflow: auto;
-}
-@media (max-width: 870px) {
+.vue-particles-add{
+  height: 100%;
+  position: fixed;
+  left: 0;
+  right: 0;
+        }
+
   .b-jumbotron-add-account {
   display: block;
   margin-left: auto;
@@ -454,7 +549,7 @@ background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   
         background: rgb(255,255,255);
-background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 86%, rgba(254,169,104,1) 86%, rgba(254,169,104,1) 93%); }
+background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 87.5%, rgba(254,169,104,1) 87.5%, rgba(254,169,104,1) 93%); }
 }
 
 @media (min-width: 870px){
@@ -467,7 +562,7 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 8
   margin-bottom: 40px;
   margin-top: 60px;
   max-height: 100%;
-  min-height: 650px;
+  min-height: 700px;
   max-width: 400px;
   padding-bottom: 20px;
   overflow: auto;
@@ -475,6 +570,19 @@ background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 8
   
         background: rgb(255,255,255);
 background: linear-gradient(0deg, rgba(255,255,255,1) 65%, rgba(255,255,255,1) 80%, rgba(254,169,104,1) 80%, rgba(254,169,104,1) 93%); }
+
+.top-one-add{
+  height: 860px;
+  min-height: 650px;
+  position: absolute;
+  left: 0;
+  right: 0;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    background: rgb(246,75,60);
+background: linear-gradient(73deg, rgba(246,75,60,1) 15%, rgba(255,255,255,1) 15%, rgba(255,255,255,1) 85%, rgba(222,255,139,1) 85%);  
+}
 }
 .form-select-options {
   max-width: 200px;

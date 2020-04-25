@@ -48,7 +48,7 @@
             <b-dropdown-item
             id="add-acc" 
               to="/add-account"
-              ><i class="fas fa-plus-circle"></i> Add Account</b-dropdown-item
+              ><i class="fas fa-plus-circle"></i> Link Account</b-dropdown-item
             >
             <b-dropdown-item
             id="remove-acc"

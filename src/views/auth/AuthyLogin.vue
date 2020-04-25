@@ -1,8 +1,10 @@
 <template>
   <div class="container-authyLogin">
-    <b-jumbotron class="b-jumbotron-login">
+
+    <b-jumbotron class="b-jumbotron-login"
+    >
       <h1 class="h1-login"><i class="fas fa-sign-in-alt"></i> Login</h1>
-      <b-form v-if="show">
+      <b-form>
         <b-form-group
           id="input-group-email"
           label="Email address:"
@@ -91,6 +93,7 @@
           >Continue</b-button
         >
         <b-modal
+      
           id="modal-center"
           centered
           hide-footer
@@ -177,8 +180,10 @@
             </b-col></b-row
           >
         </b-modal>
+        
       </b-form>
     </b-jumbotron>
+    
     <!-- <b-card class="mt-3" header="Form Data Result">
       <pre class="m-0">{{ form }}</pre>
     </b-card> -->
@@ -238,7 +243,7 @@ export default {
         email: '',
         password: '',
       },
-      show: true,
+      show: false,
       vCode: null,
       loading: false,
       loadingContinue:false,
@@ -247,6 +252,7 @@ export default {
   },
   methods: {
     onSubmit() {
+      this.show = true
       this.loading = true
       if (this.vCode != null && this.vCode.length === 6) {
         const code = {
@@ -263,15 +269,18 @@ export default {
             await Promise.resolve(loginPromise)
             this.hideModal()
             this.loading = false
+            this.show = false
             await this.$router.push({ path: '/harmoney-dashboard' })
           } else if (response.data.message === false) {
             this.codeInValid()
             this.loading = false
+            this.show = false
           }
         })
       } else {
         this.codeInValid()
         this.loading = false
+        this.show = false
       }
     },
     hideModal() {

@@ -30,6 +30,24 @@ export async function getAllSavingsAccounts(id) {
     })
 }
 
+export function checkIBAN(iban) {
+  return http()
+    .post(`api/account/check-iban`, {
+      iban,
+      method: 'GET',
+    })
+    .then(res => {
+      if (res.data.message === false) {
+        return false
+      }
+      if (res.data.message === true) {
+        return true
+      }
+    }).catch(error => {
+      return error
+    })
+  }
+
 export async function getPostCurrentAccounts(id) {
   let message = false
   return http()

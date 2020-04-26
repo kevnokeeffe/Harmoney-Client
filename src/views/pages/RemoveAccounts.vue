@@ -21,7 +21,7 @@
           ></b-form-select>
           </b-row>
           <b-row>
-            <b-form-checkbox class="check-remove" v-model="form.checked" switch size="lg">Accept</b-form-checkbox>
+            <b-form-checkbox id="cb-remove" class="check-remove" v-model="form.checked" size="lg">Accept</b-form-checkbox>
           </b-row>
           <b-row>
           <b-button id="remove-btn" style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="bt-remove" variant="danger" size="lg" squared @click="removeContinue()"><i class="fas fa-minus-circle"></i> Remove</b-button>
@@ -135,15 +135,14 @@ methods: {
       if(res === true){
       this.loading = false
       this.form.checked = false
-      this.form.fi = null
       this.$bvModal.hide('modal-remove')
       this.successFullDelete()
       }
-    })
+    }).then(()=>{this.form.fi = null})
     },
     successFullDelete() {
       this.$bvToast.toast(
-        'You have deleted the financial institution successfully.',
+        `You have deleted your ${this.form.fi} account successfully.`,
         {
           title: 'Congratulations!',
           variant: 'success',
@@ -165,7 +164,7 @@ methods: {
     },
     mustAccept() {
       this.$bvToast.toast(
-        'Please switch accept!',
+        'Please check accept!',
         {
           title: 'Apologies!',
           variant: 'danger',

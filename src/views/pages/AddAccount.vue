@@ -7,8 +7,8 @@
       :aria-hidden="show ? 'true' : null"
     >
     <h3 id="h3-title"><i class="fas fa-university"></i> Link Financial Institution</h3>
-    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" size="sm" id="info-btn" squared variant="info" @click="instructions()"><b-icon-info></b-icon-info>Instructions</b-button>
-      <b-form @submit="onSubmit" @reset="onReset">
+    <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" size="md" id="info-btn" squared variant="info" @click="instructions()"><b-icon-info></b-icon-info>Instructions</b-button>
+      <b-form @submit="onSubmit">
 
 <b-form-group
           id="input-group-3"
@@ -176,10 +176,8 @@
         <b-spinner small type="grow"></b-spinner>
           Loading...
         </b-button>
-        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" disabled v-if="this.state === false && this.stateP === false && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
-        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.state === true && this.stateP === true && this.loading === false" class="mr-2" squared type="submit" variant="info">Submit</b-button>
-        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading===false" class="ml-2" squared type="reset" variant="danger">Reset</b-button>
-        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading===true" disabled class="ml-2" squared type="reset" variant="danger">Reset</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" disabled v-if="this.state === false && this.stateP === false && this.loading === false" squared type="submit" variant="info">Submit</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.state === true && this.stateP === true && this.loading === false" squared type="submit" variant="info">Submit</b-button>
       </b-form>
     </b-jumbotron>
     <template v-slot:overlay>
@@ -224,8 +222,8 @@
       <b-row><b-col><p>Welcome to the link FI account instructions modal. To link your account follow the instructions below.</p></b-col></b-row>
       <b-row><b-col><p>1) Select the Financial Institution your account is with.</p></b-col></b-row>
       <b-row><b-col><p>2) You must now enter the login details given to you by your Financial Institution.
-        For this demo it is an email and password. <b-button @click="detailsOnOff()" squared size="sm">Show details</b-button></p></b-col></b-row>
-        <b-container style="background-color:#dae1e7; padding:10px; margin-top:10px; margin-bottom=10px;" v-if="this.details===true">
+        For this demo it is an email and password. <b-button id="show-details-btn" style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" @click="detailsOnOff()" squared size="sm">Show details</b-button></p></b-col></b-row>
+        <b-container class="mb-2" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); background-color:#dae1e7; padding:10px; margin-top:2px;" v-if="this.details===true">
         <b-row v-if="this.details===true"><b-col><p>NB. The details are the same for each financial institution.</p></b-col></b-row>
         <b-row v-if="this.details===true"><b-col><p>email: <strong>kevokeeffe@gmail.com</strong></p></b-col></b-row>
         <b-row v-if="this.details===true"><b-col><p>password: <strong>123456</strong></p></b-col></b-row>
@@ -332,7 +330,9 @@ export default {
                 this.loading = false
                 this.show = false
               }else{
+                setTimeout(()=>{
                 this.successFullAdd()
+                },1000);
                 this.$router.push({ path: '/harmoney-dashboard' })
                 this.loading = false
                 this.show = false
@@ -346,8 +346,10 @@ export default {
                 this.loading = false
                 this.show = false
               }else{
-                this.$router.push({ path: '/harmoney-dashboard' })
+                setTimeout(()=>{
                 this.successFullAdd()
+                },1000);
+                this.$router.push({ path: '/harmoney-dashboard' })
                 this.loading = false
                 this.show = false
               }
@@ -364,21 +366,22 @@ export default {
                 this.successFullAdd()
                 },1000);
                 this.$router.push({ path: '/harmoney-dashboard' })
-                this.successFullAdd()
                 this.loading = false
                 this.show = false
               }
           })
         } else if (this.form.fi === 'Post Office') {
           const connectPromise = auth.loginPO(connect)
-          await Promise.all([connectPromise]).then(res => {
+          await Promise.all([connectPromise]).then(async res => {
               if (res[0] === false){
                 this.showMsgBoxInvalid()
                 this.loading = false
                 this.show = false
               }else{
-                this.$router.push({ path: '/harmoney-dashboard' })
+                setTimeout(()=>{
                 this.successFullAdd()
+                },1000);
+                this.$router.push({ path: '/harmoney-dashboard' })
                 this.loading = false
                 this.show = false
               }
@@ -391,22 +394,6 @@ export default {
       }
     },
     instructions(){this.$bvModal.show('modal-instructions')},
-    onReset(evt) {
-      this.show = false
-      this.loading = false
-      evt.preventDefault()
-      // Reset our form values
-      this.form.email = ''
-      this.form.password = ''
-      this.form.fi = null
-      this.form.checked = null
-      // Trick to reset/clear native browser form validation state
-      this.show = false
-      this.$nextTick(() => {
-        this.show = true
-      })
-    },
-    // @click="showMsgBoxTwo"
     showMsgBoxTwo: function() {
       this.boxTwo = ''
       this.$bvModal
@@ -447,7 +434,7 @@ export default {
     },
     successFullAdd() {
       this.$bvToast.toast(
-        'You have add the account successfully.',
+        `You have successfully linked your ${this.form.fi} account.`,
         {
           title: 'Congratulations!',
           variant: 'success',

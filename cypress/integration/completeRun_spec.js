@@ -132,7 +132,7 @@ cy.contains(".nav-item", "Options")
         cy.contains(".nav-item", "Logout").click()
 });
 
-it("should login", () => {
+it("should do a complete run through test of the site.", () => {
     cy.visit("http://localhost:8080/#/login");
         cy.get('.container-authyLogin')
           .eq(0)
@@ -165,12 +165,13 @@ it("should login", () => {
     cy.visit("http://localhost:8080/#/add-account");
     cy.get("#h3-title").contains("Link Financial Institution")
     cy.get("#info-btn").contains("Instructions").click()
+    cy.wait(1000)
+    cy.get("#show-details-btn").contains("Show details").click()
     cy.contains("OK").click()
     cy.get("#input-3").select("Bank of WIT")
     cy.get("#input-1").type("kevokeeffe@gmail.com")
     cy.get("#input-2").type("123456")
     cy.get("#checkboxes-4").check({ force: true })
-    cy.get('button[type=reset]').contains("Reset")
     cy.get('button[type=submit]').contains("Submit").click()
           cy.wait(25000)
 // Add second FI accounts from Post Office
@@ -181,7 +182,6 @@ it("should login", () => {
     cy.get("#input-1").type("kevokeeffe@gmail.com")
     cy.get("#input-2").type("123456")
     cy.get("#checkboxes-4").check({ force: true })
-    cy.get('button[type=reset]').contains("Reset")
     cy.get('button[type=submit]').contains("Submit").click()
           cy.wait(25000)
 // Select Post Office Account
@@ -237,7 +237,8 @@ it("should login", () => {
         cy.contains("Remove Financial Institution")
         cy.contains("Financial Instutition:")
         cy.get('#input-remove').select("Bank of WIT")
-        cy.get("#check-remove").check({ force: true })
+        cy.wait(1000)
+        cy.get("#cb-remove").check({ force: true })
         cy.get('button[id=remove-btn]').contains("Remove").click()
         cy.wait(1000)
         cy.contains("Delete")
@@ -255,10 +256,4 @@ it("should login", () => {
         cy.get("#cb-delete").check({ force: true })
         cy.get('button[id=btn-d-delete]').contains("Delete").click()
 });
-
-
-    
-
-
-
 })

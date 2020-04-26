@@ -64,6 +64,18 @@ export function getName() {
   }
 }
 
+export function getPhone() {
+  const token = decodeToken();
+  if (!token) {
+    return null;
+  }
+  try {
+    return token.phone;
+  } catch (error) {
+    return null;
+  }
+}
+
 export function getLastName() {
   const token = decodeToken();
   if (!token) {

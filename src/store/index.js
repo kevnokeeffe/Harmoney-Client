@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     apiUrl: 'https://harmoney-server.herokuapp.com/',
     fName: null,
     email: null,
-    userId: null
+    userId: null,
+    phone:null
   },
   mutations: {
     authenticate(state) {
@@ -21,11 +22,13 @@ const store = new Vuex.Store({
         state.fName = auth.getName();
         state.email = auth.getEmail();
         state.userId = auth.getUserId();
+        state.phone = auth.getPhone();
       } else {
         state.userId = null;
         state.email = null;
         state.fName = null;
         state.lName = null;
+        state.phone = null;
       }
     }
   },

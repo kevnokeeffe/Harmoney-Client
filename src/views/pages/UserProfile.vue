@@ -13,6 +13,9 @@
    <b-row class="ml-2">
       <h6>E-mail: {{this.email}}</h6>
    </b-row>
+   <b-row class="ml-2">
+      <h6>Phone: {{this.phone}}</h6>
+   </b-row>
    <b-row class="ml-2 mt-4">
      <b-button id="delete-acc-btn" style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-b-modal.modal-sm squared>
        <i class="far fa-trash-alt"></i> Delete Account
@@ -83,6 +86,7 @@ export default {
       fName: auth.getName(),
       lName: auth.getLastName(),
       email: auth.getEmail(),
+      phone: auth.getPhone(),
       checked:null
     }
   },

@@ -111,9 +111,10 @@ it("should create a new user", () => {
           cy.get("#b-checkbox-tnc").check({ force: true })
           .eq(0)
           cy.get('button[type=button]').contains("Continue").click()
-          cy.wait(40000)
+          cy.wait(60000)
       });
     });
+    cy.wait(3000)
     cy.get("#modal-center")
     cy.get("#h5-modal").contains("Mobile Validation").eq(0)
     cy.get("#p-modal").contains("Enter the code you recive on your mobile into the input field below.").eq(0)
@@ -191,7 +192,7 @@ it("should do a complete run through test of the site.", () => {
         cy.contains(".text-ac-details","IBAN:").eq(0)
         cy.contains(".text-ac-details","Account Name:").eq(0)
         cy.contains(".text-ac-details","Updated on").eq(0)
-        cy.wait(1000)
+        cy.wait(3000)
 
         cy.get("#state-current").contains("Statement").click();
         cy.wait(30000)
@@ -203,22 +204,22 @@ it("should do a complete run through test of the site.", () => {
         cy.wait(3000)
 
         cy.get('button[id=trans-current]').contains("Transfer").click()
-        cy.wait(3000)
+        cy.wait(6000)
 
         cy.contains("Transfer Wizzard")
         cy.contains(`Welcome to the transfer wizzard.`)
         cy.contains("Close")
         cy.get('button[id=close-btn]').eq(0).click()
-        cy.wait(1000)
+        cy.wait(3000)
 
         cy.get(".b-card-account").eq(0).click();
-        cy.wait(1000)
+        cy.wait(3000)
 
         cy.get('button[id=trans-current]').contains("Transfer").click()
-        cy.wait(1000)
+        cy.wait(3000)
 
         cy.get("button[id=trans-int]").contains("Internal Transfer").click();
-        cy.wait(1000)
+        cy.wait(3000)
 
         cy.contains("Internal Transfer")
         cy.contains("Please select an account to transfer to:")
@@ -227,20 +228,20 @@ it("should do a complete run through test of the site.", () => {
         cy.get("#input-form").type("10")
         cy.contains("Maximum for this account is")
         cy.get("#checkbox-internal-transfer").check({ force: true })
-        cy.wait(1000)
+        cy.wait(3000)
 
         cy.get('button[id=send-internal]').contains("Send").click()
-        cy.wait(1000)
+        cy.wait(3000)
 
         // Remove FI accounts
         cy.visit("http://localhost:8080/#/remove-account");
         cy.contains("Remove Financial Institution")
         cy.contains("Financial Instutition:")
         cy.get('#input-remove').select("Bank of WIT")
-        cy.wait(1000)
+        cy.wait(3000)
         cy.get("#cb-remove").check({ force: true })
         cy.get('button[id=remove-btn]').contains("Remove").click()
-        cy.wait(1000)
+        cy.wait(3000)
         cy.contains("Delete")
         cy.contains("Are you sure you wish to delete this account!")
         cy.get('button[id=btn-no]').contains("No")
@@ -250,7 +251,7 @@ it("should do a complete run through test of the site.", () => {
         cy.contains("Name:")
         cy.contains("E-mail:")
         cy.get('button[id=delete-acc-btn]').contains("Delete Account").click()
-        cy.wait(1000)
+        cy.wait(3000)
         cy.contains("Delete Account")
         cy.contains("Are you sure about this? There is no going back!")
         cy.get("#cb-delete").check({ force: true })

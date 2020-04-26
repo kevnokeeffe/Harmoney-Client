@@ -24,7 +24,7 @@
             <b-form-checkbox class="check-remove" v-model="form.checked" switch size="lg">Accept</b-form-checkbox>
           </b-row>
           <b-row>
-          <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="bt-remove" variant="danger" size="lg" squared @click="removeContinue()"><i class="fas fa-minus-circle"></i> Remove</b-button>
+          <b-button id="remove-btn" style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="bt-remove" variant="danger" size="lg" squared @click="removeContinue()"><i class="fas fa-minus-circle"></i> Remove</b-button>
           </b-row>
         </b-form-group>
         </b-row>
@@ -56,11 +56,11 @@
     </b-row>
     <b-row>
       <b-col cols="6">
-      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false"  @click="cancel()" class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
+      <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === false" id="btn-no"  @click="cancel()" class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.loading === true"  disabled class="float-left mt-2 mb-2" squared variant="info"><i class="fas fa-times-circle"></i> No</b-button>
       </b-col>
       <b-col class="float-right" cols="6">
-       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger"><i class="fas fa-trash"></i> Delete</b-button>
+       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" id="btn-delete" @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger"><i class="fas fa-trash"></i> Delete</b-button>
        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="float-right mt-2 mb-2" v-if="this.loading === true" squared variant="danger" disabled>
       <b-spinner small type="grow"></b-spinner>
         Loading....

@@ -146,14 +146,14 @@
 
 
           <b-form-group
-            id="input-group-password"
+            id="input-group-password-re"
             label="Retype password:"
             label-for="input-password"
           >
             <b-form-input
               v-b-popover.hover.top="'Re-enter password here.'"
               type="password"
-              id="text-password"
+              id="text-password-re"
               aria-describedby="password-help-block"
               v-model="form.passwordMatch"
               required
@@ -200,6 +200,7 @@
                 'Click here to accept the terms and conditions.'
               "
               class="mt-2 mb-2"
+              id="b-checkbox-tnc"
               v-model="form.checked"
               value="true"
               v-if="this.loadingScreen === false"
@@ -247,14 +248,14 @@
           >
           
             <template v-slot:modal-header>
-              <h5>Mobile Validation</h5>
+              <h5 id="h5-modal">Mobile Validation</h5>
             </template>
             
             <template>
               <b-row>
                 <b-col cols="1"></b-col>
                 <b-col cols="10">
-                  <p>
+                  <p id="p-modal">
                     Enter the code you recive on your mobile into the input
                     field below.
                   </p>
@@ -265,6 +266,7 @@
                 <b-col cols="1"></b-col>
                 <b-col cols="10">
                   <b-form-input
+                  id="input-modal"
                     v-b-popover.hover.top="
                       'Please enter your 10 digit verification code here..'
                     "
@@ -279,6 +281,7 @@
                 <b-button
                 class="float-right ml-2  mt-4"
                 squared
+                
                 type="submit"
                 variant="primary"
                 disabled
@@ -288,6 +291,7 @@
               <b-button
                 class="float-right ml-2  mt-4"
                 squared
+                id="submit-code"
                 type="submit"
                 variant="primary"
                 @click="onSubmit()"
@@ -299,6 +303,7 @@
             Loading...
           </b-button>
               <b-button
+              id="cancel-modal"
                 class="float-right mt-4"
                 squared
                 variant="danger"

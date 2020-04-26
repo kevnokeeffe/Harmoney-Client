@@ -111,7 +111,7 @@ it("should create a new user", () => {
           cy.get("#b-checkbox-tnc").check({ force: true })
           .eq(0)
           cy.get('button[type=button]').contains("Continue").click()
-          cy.wait(30000)
+          cy.wait(40000)
       });
     });
     cy.get("#modal-center")

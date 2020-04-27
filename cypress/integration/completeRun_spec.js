@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
-const email = Math.floor(Math.random() * 10000000 + 10000000)
-
-describe("Testing the home page", () => {
+describe("Testing application", () => {
 
 it("should create a new user", () => {
     cy.visit("http://localhost:8080/#/sign-up");
@@ -32,7 +30,7 @@ it("should create a new user", () => {
           .eq(0)
           .within(() => {
             cy.get(".form__input")
-            cy.get("input[id=email]").type(`${email}@gmail.com`);
+            cy.get("input[id=email]").type(`0987654321@gmail.com`);
           });
 
 
@@ -93,7 +91,7 @@ it("should do a complete run through test of the site.", () => {
     
                 cy.get('#input-group-email').eq(0)
                 cy.get('#input-email').eq(0)
-                cy.get('input[id=input-email]').type(`${email}@gmail.com`)
+                cy.get('input[id=input-email]').type(`0987654321@gmail.com`)
                 cy.get('#input-password-group').eq(0)
                 cy.get('#input-password').eq(0)
                 cy.get('input[id=input-password]').type('123456')

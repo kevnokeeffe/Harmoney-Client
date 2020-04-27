@@ -2,8 +2,10 @@
 const email = Math.floor(Math.random() * 10000000 + 10000000)
 
 describe('Testing application', () => {
+    before(() => {
+        cy.visit("http://localhost:8080/#/sign-up");
+      });
   it('should create a new user', () => {
-    cy.visit('http://localhost:8080/#/sign-up')
     cy.get('.container-signUp').eq(0)
     cy.get('.b-jumbotron-signUp').eq(0)
     cy.get('.h1-register')
@@ -46,8 +48,8 @@ describe('Testing application', () => {
     cy.get('button[id=showContinueModal]')
       .contains('Continue')
       .click()
-    cy.wait(60000)
-    cy.get('input[id=input-modal-ver-code]')
+    cy.wait(20000)
+    cy.get('#input-modal-ver-code')
       .type('1234567890')
       .eq(0)
     cy.get('button[id=cancel-modal]')

@@ -53,7 +53,7 @@ it("should check the about page", () => {
           });
     });
 });
-})
+});
 
 it("should create a new user", () => {
     cy.visit("http://localhost:8080/#/sign-up");
@@ -114,15 +114,12 @@ it("should create a new user", () => {
           cy.wait(10000)
       });
     });
-    cy.wait(10000)
-    // cy.get("#modal-center")
-    cy.get("#h5-modal").contains("Mobile Validation").eq(0)
     cy.get("#p-modal").contains("Enter the code you recive on your mobile into the input field below.").eq(0)
     cy.get("input[id=input-modal]").type("1234567890").eq(0)
     cy.get("button[id=cancel-modal]").contains("Cancel").eq(0)
     cy.get("button[id=submit-code]").contains("Submit").click()
     cy.wait(10000)
-})
+});
 it("should logout", () => {
 cy.contains(".nav-item", "Options")
         cy.contains(".nav-item", "Link Account")
@@ -153,8 +150,8 @@ it("should do a complete run through test of the site.", () => {
                 cy.get('input[id=input-password]').type('123456')
                 cy.get('button[type=button]').eq(0).click()
                 cy.wait(6000)
-              })
-          })
+              });
+          });
         cy.get('#modal-center').eq(0)
         cy.get('.p-log').eq(0)
         cy.get('#vCode-input')
@@ -204,7 +201,7 @@ it("should do a complete run through test of the site.", () => {
         cy.wait(3000)
 
         cy.get('button[id=trans-current]').contains("Transfer").click()
-        cy.wait(6000)
+        cy.wait(3000)
 
         cy.contains("Transfer Wizzard")
         cy.contains(`Welcome to the transfer wizzard.`)
@@ -257,4 +254,4 @@ it("should do a complete run through test of the site.", () => {
         cy.get("#cb-delete").check({ force: true })
         cy.get('button[id=btn-d-delete]').contains("Delete").click()
 });
-})
+});

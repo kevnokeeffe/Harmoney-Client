@@ -111,17 +111,17 @@ it("should create a new user", () => {
           cy.get("#b-checkbox-tnc").check({ force: true })
           .eq(0)
           cy.get('button[type=button]').contains("Continue").click()
-          cy.wait(60000)
+          cy.wait(10000)
       });
     });
     cy.wait(10000)
-    cy.get("#modal-center")
+    // cy.get("#modal-center")
     cy.get("#h5-modal").contains("Mobile Validation").eq(0)
     cy.get("#p-modal").contains("Enter the code you recive on your mobile into the input field below.").eq(0)
     cy.get("input[id=input-modal]").type("1234567890").eq(0)
     cy.get("button[id=cancel-modal]").contains("Cancel").eq(0)
     cy.get("button[id=submit-code]").contains("Submit").click()
-    cy.wait(30000)
+    cy.wait(10000)
 })
 it("should logout", () => {
 cy.contains(".nav-item", "Options")

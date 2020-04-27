@@ -47,7 +47,7 @@ describe('Testing application', () => {
     cy.wait(3000)
     cy.get('#showContinueModal')
       .click()
-    cy.wait(20000)
+    cy.wait(200000)
     cy.get('#input-modal-ver-code')
       .type('1234567890')
       .eq(0)

@@ -46,7 +46,7 @@ describe('Testing application', () => {
     cy.get('button[type=button]')
       .contains('Continue')
       .click()
-    cy.wait(1200000)
+    cy.wait(12000)
     cy.get('input[id=input-modal]')
       .type('1234567890')
       .eq(0)

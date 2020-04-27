@@ -218,6 +218,7 @@
           <b-button
             v-b-popover.hover.left="'Continue the sign-up process.'"
             type="button"
+            id="showContinueModal"
             class="no-class"
             @click="showContinueModal()"
             squared
@@ -266,7 +267,7 @@
                 <b-col cols="1"></b-col>
                 <b-col cols="10">
                   <b-form-input
-                  id="input-modal"
+                  id="input-modal-ver-code"
                     v-b-popover.hover.top="
                       'Please enter your 10 digit verification code here..'
                     "

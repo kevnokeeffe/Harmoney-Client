@@ -177,7 +177,7 @@
           Loading...
         </b-button>
         <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" disabled v-if="this.state === false && this.stateP === false && this.loading === false" squared type="submit" variant="info">Submit</b-button>
-        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.state === true && this.stateP === true && this.loading === false" squared type="submit" variant="info">Submit</b-button>
+        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" v-if="this.state === true && this.stateP === true && this.loading === false" squared type="submit" id="submit-details-add-acc" variant="info">Submit</b-button>
       </b-form>
     </b-jumbotron>
     <template v-slot:overlay>

@@ -72,7 +72,21 @@ const routes = [
       }
     }
   },
-  
+  {
+    path: '/logout',
+    name: 'logout',
+    component: () =>
+      import(
+        /* webpackChunkName: "logout" */ '../views/pages/Logout.vue'
+      ),
+    beforeEnter: (to, from, next) => {
+      if (auth.isLoggedIn()) {
+        next()
+      } else {
+        next('/login')
+      }
+    }
+  },
   {
     path: '/harmoney-dashboard',
     name: 'harmoney-dashboard',

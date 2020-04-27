@@ -114,6 +114,7 @@ export function deleteFiInfo(id) {
 export function deleteFiIndividual(body) {
   return http().post(`/api/account/delete/fi-individual`,body).then(res => {
       if (res) {
+        console.log(res.data.message)
         return res.data.message
       }
     }).catch(err => {

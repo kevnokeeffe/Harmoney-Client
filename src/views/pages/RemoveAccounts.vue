@@ -61,7 +61,7 @@
       </b-col>
       <b-col class="float-right" cols="6">
        <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" id="btn-delete" @click="deleteAccount()" v-if="this.loading === false" class="float-right mt-2 mb-2" squared variant="danger"><i class="fas fa-trash"></i> Delete</b-button>
-       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="float-right mt-2 mb-2" v-if="this.loading === true" squared variant="danger" disabled>
+       <b-button style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);" class="float-right mt-2 mb-2" @click="deleteAccount()" v-if="this.loading === true" squared variant="danger" disabled>
       <b-spinner small type="grow"></b-spinner>
         Loading....
       </b-button>
@@ -117,14 +117,17 @@ methods: {
       this.form.checked = false
       this.form.fi = null
     },
-    deleteAccount: async function(){
+    deleteAccount(){
     this.show = true
     this.loading = true
     let id = this.form.userId
     let fiName = this.form.fi
     let data = [fiName , id]
+    console.log(fiName)
+    console.log(id)
+    console.log(data)
     const deletePromise = auth.deleteFiIndividual(data)
-    await Promise.resolve(deletePromise).then(res => {
+    Promise.resolve(deletePromise).then(res => {
       if (res === false){
         this.noMatchingAccount()
         this.loading = false

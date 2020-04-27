@@ -1,8 +1,6 @@
 /* eslint-disable no-useless-escape */ /* eslint-disable no-useless-escape */
 <template>
   <div class="container-signUp">
-   
-
     <b-jumbotron class="b-jumbotron-signUp">
       <h1 class="h1-register"><i class="fas fa-user-plus"></i> Sign-Up</h1>
       <div>
@@ -108,9 +106,6 @@
             </b-form-text>
           </b-form-group>
 
-          <!-- <country-select v-model="country" :country="country" topCountry="US" />
-  <region-select v-model="region" :country="country" :region="region" /> -->
-
           <b-form-group
             id="input-group-password"
             label="Your Password:"
@@ -183,7 +178,7 @@
               variant="warning"
               size="sm"
               disabled
-              >Terms & Conditions</b-button
+              ><i class="far fa-file-alt"></i> Terms & Conditions</b-button
             >
             <b-button
             v-if="this.loadingScreen === false"
@@ -193,7 +188,7 @@
               variant="warning"
               size="sm"
               v-b-modal.modal-scrollable
-              >Terms & Conditions</b-button
+              ><i class="far fa-file-alt"></i> Terms & Conditions</b-button
             >
             <b-form-checkbox
               v-b-popover.hover.top="
@@ -204,14 +199,14 @@
               v-model="form.checked"
               value="true"
               v-if="this.loadingScreen === false"
-              >Accept T&C's</b-form-checkbox
+              > Accept T&C's</b-form-checkbox
             >
             <b-form-checkbox
               disabled
               class="mt-2 mb-2"
               value="true"
               v-if="this.loadingScreen === true"
-              >Accept T&C's</b-form-checkbox
+              > Accept T&C's</b-form-checkbox
             >
           </b-form-group>
 
@@ -224,7 +219,7 @@
             squared
             variant="info"
             v-if="this.loadingScreen === false  && this.form.checked !== false"
-            >Continue</b-button
+            >Continue </b-button
           >
           <b-button
             type="button"
@@ -233,7 +228,7 @@
             disabled
             variant="info"
             v-if="this.loadingScreen === false && this.form.checked === false"
-            >Continue</b-button
+            >Continue </b-button
           >
           <b-button class="no-class" v-b-popover.hover.top="'Its Loading...'" variant="primary" disabled squared v-if="this.loadingScreen === true">
           <b-spinner small type="grow"></b-spinner>
@@ -483,7 +478,7 @@ export default {
         required: true,
         enabledCountryCode: false,
         enabledFlags: true,
-        preferredCountries: ['US', 'UK'],
+        preferredCountries: ['IRL', 'UK'],
         onlyCountries: [],
         ignoredCountries: [],
         autocomplete: 'on',

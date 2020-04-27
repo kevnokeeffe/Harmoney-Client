@@ -57,17 +57,6 @@ describe('Testing application', () => {
       .contains('Submit')
       .click()
     cy.wait(10000)
-    cy.get('input[id=input-modal]')
-      .type('1234567890')
-      .eq(0)
-    cy.get('button[id=cancel-modal]')
-      .contains('Cancel')
-      .eq(0)
-    cy.get('button[id=submit-code]')
-      .contains('Submit')
-      .click()
-      .eq(0)
-    cy.wait(10000)
   })
 
   it('should logout', () => {

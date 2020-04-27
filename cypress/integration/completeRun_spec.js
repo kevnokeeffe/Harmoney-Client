@@ -60,12 +60,6 @@ describe('Testing application', () => {
   })
 
   it('should logout', () => {
-    cy.contains('.nav-item', 'Options')
-    cy.contains('.nav-item', 'Link Account')
-    cy.contains('.nav-item', 'Remove Account')
-    cy.contains('.nav-item', 'User Profile')
-    cy.contains('.nav-item', 'Dashboard')
-    cy.contains('.nav-item', 'About Us')
     cy.contains('.nav-item', 'Logout').click()
   })
 
@@ -83,8 +77,10 @@ describe('Testing application', () => {
     cy.get('#input-password-group').eq(0)
     cy.get('#input-password').eq(0)
     cy.get('input[id=input-password]').type('123456')
-    cy.get('button[type=button]')
-    .click().eq(0)
+    cy.wait(1000)
+
+    cy.get('button[id=press-me]').click()
+
     cy.wait(6000)
     cy.get('#modal-center').eq(0)
     cy.get('.p-log').eq(0)

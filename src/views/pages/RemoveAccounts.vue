@@ -140,6 +140,7 @@ methods: {
       }
     }).then(()=>{this.form.fi = null})
     },
+    
     successFullDelete() {
       this.$bvToast.toast(
         `You have deleted your ${this.form.fi} account successfully.`,

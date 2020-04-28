@@ -156,6 +156,5 @@ describe('Testing application', () => {
     cy.get('#cb-delete').check({ force: true })
     cy.get('button[id=btn-d-delete]')
       .contains('Delete')
-      .click()
   })
 })

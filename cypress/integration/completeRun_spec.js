@@ -20,7 +20,7 @@ describe('Testing application', () => {
     cy.get('button[id=press-me]').contains("Continue").click()
 
     cy.wait(20000)
-    cy.get('#modal-center').eq(0)
+    cy.get('#modal-center-1')
     cy.get('.p-log').eq(0)
     cy.get('#vCode-input')
       .eq(0)
@@ -47,7 +47,7 @@ describe('Testing application', () => {
     cy.get('button[id=submit-details-add-acc]')
       .contains('Submit')
       .click()
-    cy.wait(25000)
+    cy.wait(15000)
     // Add second FI accounts from Post Office
     cy.visit('http://localhost:8080/#/add-account')
     cy.get('#h3-title').contains('Link Financial Institution')
@@ -59,7 +59,7 @@ describe('Testing application', () => {
     cy.get('button[id=submit-details-add-acc]')
       .contains('Submit')
       .click()
-    cy.wait(25000)
+    cy.wait(15000)
     // Select Post Office Account
     cy.get('.b-card-account')
       .eq(0)

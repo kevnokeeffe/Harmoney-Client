@@ -94,7 +94,7 @@
         >
         <b-modal
       
-          id="modal-center"
+          id="modal-center-1"
           centered
           hide-footer
           headerBgVariant="dark"

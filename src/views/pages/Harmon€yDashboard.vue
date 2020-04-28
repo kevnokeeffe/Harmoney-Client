@@ -65,7 +65,7 @@
               class="add-current"
             >
               <h5 class="add-h5">
-                <i class="fas fa-plus-circle"></i> Add Account
+                <i class="fas fa-plus-circle"></i> Link Account
               </h5>
             </b-card>
           </div>
@@ -300,7 +300,7 @@
               class="add-savings"
             >
               <h5 class="add-h5">
-                <i class="fas fa-plus-circle"></i> Add Account
+                <i class="fas fa-plus-circle"></i> Link Account
               </h5>
             </b-card>
           </div>

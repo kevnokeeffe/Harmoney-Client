@@ -15,11 +15,11 @@ describe('Testing application', () => {
     cy.get('#input-password-group').eq(0)
     cy.get('#input-password').eq(0)
     cy.get('input[id=input-password]').type('123456')
-    cy.wait(1000)
+    cy.wait(2000)
 
-    cy.get('button[id=press-me]').click()
+    cy.get('button[id=press-me]').contains("Continue").click()
 
-    cy.wait(40000)
+    cy.wait(20000)
     cy.get('#modal-center').eq(0)
     cy.get('.p-log').eq(0)
     cy.get('#vCode-input')

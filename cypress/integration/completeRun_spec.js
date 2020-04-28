@@ -19,7 +19,7 @@ describe('Testing application', () => {
 
     cy.get('button[id=press-me]').click()
 
-    cy.wait(6000)
+    cy.wait(25000)
     cy.get('#modal-center').eq(0)
     cy.get('.p-log').eq(0)
     cy.get('#vCode-input')

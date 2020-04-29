@@ -835,7 +835,7 @@
               ><h4  class="ml-2 mt-2">
                 <i class="far fa-list-alt"></i> Statement 
               </h4></b-col
-            ><b-col style="background-color:#cbe2b0;" cols="2"><b-button style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); margin-top:40%" @click="closeStatement()" variant="danger" class="float-right" squared size="sm"><i class="fas fa-times"></i></b-button></b-col>
+            ><b-col style="background-color:#cbe2b0;" cols="2"><b-button id="ok-close-state" style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); margin-top:40%" @click="closeStatement()" variant="danger" class="float-right" squared size="sm"><i class="fas fa-times"></i></b-button></b-col>
           </b-row>
           <b-row>
             <b-col cols="1" style="background-color:#ffeb99;"> </b-col>
@@ -935,7 +935,7 @@
               ><h4 class="ml-2 mt-2">
                 <i class="far fa-list-alt"></i> Statement
               </h4></b-col
-            ><b-col style="background-color:#c3f584;" cols="2"><b-button style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); margin-top:40%" @click="closeStatement()" variant="danger" class="float-right" squared size="sm"><i class="fas fa-times"></i></b-button></b-col>
+            ><b-col style="background-color:#c3f584;" cols="2"><b-button style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); margin-top:40%" @click="closeStatement()" variant="danger" class="float-right" id="ok-close-state" squared size="sm"><i class="fas fa-times"></i></b-button></b-col>
           </b-row>
           <b-row>
             <b-col cols="1" style="background-color:#dff6f0;"> </b-col>

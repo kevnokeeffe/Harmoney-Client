@@ -500,8 +500,7 @@
               </b-row>
               <b-row class="ml-2 mr-2 mb-2">
                 <p>
-                  Please select one of the
-                  options below. "Internal transfer", move funds between
+                  Please select one of the options below. "Internal transfer", move funds between
                   your Harmon€y registered accounts. "External transfer"  move funds from a linked account to another account .</p>
               </b-row>
               <b-row class="mb-4">

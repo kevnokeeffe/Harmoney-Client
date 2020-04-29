@@ -86,7 +86,7 @@ describe('Testing application', () => {
     cy.wait(1000)
 
     cy.contains('Transfer Wizzard')
-    cy.contains(`Welcome to the transfer wizzard.`)
+    cy.contains(`Please select one of the options below.`)
     cy.contains('Close')
     cy.get('button[id=close-btn]')
       .eq(0)

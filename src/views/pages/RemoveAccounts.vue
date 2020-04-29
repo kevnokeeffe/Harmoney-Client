@@ -123,9 +123,6 @@ methods: {
     let id = this.form.userId
     let fiName = this.form.fi
     let data = [fiName , id]
-    console.log(fiName)
-    console.log(id)
-    console.log(data)
     const deletePromise = auth.deleteFiIndividual(data)
     Promise.resolve(deletePromise).then(res => {
       if (res === false){

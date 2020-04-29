@@ -65,7 +65,7 @@
               class="add-current"
             >
               <h5 class="add-h5">
-                <i class="fas fa-plus-circle"></i> Link Account
+                <i class="fas fa-plus-circle"></i> Link FI Accounts
               </h5>
             </b-card>
           </div>
@@ -300,7 +300,7 @@
               class="add-savings"
             >
               <h5 class="add-h5">
-                <i class="fas fa-plus-circle"></i> Link Account
+                <i class="fas fa-plus-circle"></i> Link FI Accounts
               </h5>
             </b-card>
           </div>
@@ -421,7 +421,7 @@
                     class="float-left"
                     @click="statementSavings()"
                   >
-                    Statement
+                    Statement 
                   </b-button>
                    <b-button
                    style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
@@ -500,10 +500,9 @@
               </b-row>
               <b-row class="ml-2 mr-2 mb-2">
                 <p>
-                  Welcome to the transfer wizzard. Please select one of the
-                  options below. "Internal transfer", to transfer money between
-                  your accounts registered on Harmon€y. "External transfers" to
-                  transfer funds from your account to any other anywhere.</p>
+                  Please select one of the
+                  options below. "Internal transfer", move funds between
+                  your Harmon€y registered accounts. "External transfer"  move funds from a linked account to another account .</p>
               </b-row>
               <b-row class="mb-4">
                 <b-col cols="6">
@@ -573,7 +572,13 @@
                 </b-row>
                 <b-row class="ml-2 mr-2 mt-4">
                   <h6>Please enter the amount to transfer:</h6>
+                  <h6>
+                    Maximum for this account is €{{
+                      this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                    }}
+                  </h6>
                 </b-row>
+
                 <b-row class="ml-2 mr-2"
                 >
                 <b-form-group
@@ -607,13 +612,6 @@
                   ></b-form-input>
                 </b-form-group>
                 </b-row>
-                <b-row class="ml-2 mt-1">
-                  <h6 style="text-shadow: .12px .12px .12px black;">
-                    Maximum for this account is €{{
-                      this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-                    }}
-                  </h6>
-                </b-row>
                 <b-row class="mt-2 ml-2">
                   <b-form-checkbox
                     v-b-popover.hover.top="'Switch this to accept'"
@@ -626,7 +624,7 @@
                     switch
                     v-if="this.loading ===false"
                   >
-                    I concent to the transfer.
+                    I consent to the transfer.
                   </b-form-checkbox>
                   <b-form-checkbox
                   v-if="this.loading ===true"
@@ -640,7 +638,7 @@
                     unchecked-value="false"
                     switch
                   >
-                    I concent to the transfer.
+                    I consent to the transfer.
                   </b-form-checkbox>
                 </b-row>
                 <b-row class="mt-4">
@@ -718,6 +716,11 @@
                   </b-row>
                   <b-row class="ml-2 mr-2 mt-2">
                     <h6>Please enter the amount to transfer</h6>
+                    <h6>
+                    Maximum for this account is €{{
+                      this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+                    }}
+                  </h6>
                   </b-row>
                   <b-row class="ml-2 mr-4">
                      <b-form-group
@@ -748,13 +751,6 @@
                       pattern="^\d*(\.\d{0,2})?$"
                     ></b-form-input>
                      </b-form-group>
-                  </b-row>
-                  <b-row class="ml-2 mt-1">
-                    <h6>
-                      Maximum for this account is €{{
-                        this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
-                      }}
-                    </h6>
                   </b-row>
                   <b-row class="mt-2 ml-2">
                     <b-form-checkbox
@@ -830,16 +826,16 @@
         </b-col>
       </b-row>
       <!-- Here -->
-      <b-modal hide-footer hide-header id="modal-tall" title="Bank Statement">
+      <b-modal hide-footer scrollable hide-header id="modal-tall" title="Bank Statement">
         <b-container>
           <b-row>
-            <b-col
+            <b-col cols="10"
               style="background-color:#cbe2b0;font-family: 'Roboto', sans-serif;
   font-family: 'Open Sans', sans-serif; padding:10px;"
               ><h4  class="ml-2 mt-2">
                 <i class="far fa-list-alt"></i> Statement 
               </h4></b-col
-            >
+            ><b-col style="background-color:#cbe2b0;" cols="2"><b-button style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); margin-top:40%" @click="closeStatement()" variant="danger" class="float-right" squared size="sm"><i class="fas fa-times"></i></b-button></b-col>
           </b-row>
           <b-row>
             <b-col cols="1" style="background-color:#ffeb99;"> </b-col>
@@ -883,7 +879,9 @@
             </b-col>
 
            <b-col v-if="this.stateLoad === false" cols="11">
-              <b-row v-if="currentAccountTransactions.length > 0"><b-col cols="6"><h5 class="float-left" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="6"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
+            
+            <b-row class="state-row-2"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col></b-row>
+
               <div
                 class="accounts mb-2 mt-2"
                 v-if="
@@ -909,24 +907,15 @@
                 </b-row> 
                 </b-container>
                 </div>
-   <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col></b-row>
+   
               </div>
             </b-col>
           </b-row>
           <b-row
             >
             
-            <b-col style="background-color:#ffeb99;"  cols="10"></b-col>
-            <b-col class="float-right">
-              <b-button
-              style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
-                squared
-                id="ok-close-state"
-                variant="success"
-                @click="closeStatement()"
-                class="float-right"
-                ><i class="fas fa-check-circle"></i></b-button></b-col
-          ></b-row>
+            <b-col style="background-color:#ffeb99;" ></b-col>
+            </b-row>
         </b-container>
       </b-modal>
 
@@ -934,6 +923,7 @@
       <b-modal
         hide-footer
         hide-header
+        scrollable
         id="modal-tall-save"
         title="Bank Statement"
       >
@@ -945,7 +935,7 @@
               ><h4 class="ml-2 mt-2">
                 <i class="far fa-list-alt"></i> Statement
               </h4></b-col
-            >
+            ><b-col style="background-color:#c3f584;" cols="2"><b-button style="box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); margin-top:40%" @click="closeStatement()" variant="danger" class="float-right" squared size="sm"><i class="fas fa-times"></i></b-button></b-col>
           </b-row>
           <b-row>
             <b-col cols="1" style="background-color:#dff6f0;"> </b-col>
@@ -987,7 +977,8 @@
               </div>
             </b-col>
             <b-col v-if="this.stateLoad === false" cols="11">
-              <b-row v-if="savingsAccountTransactions.length > 0"><b-col cols="6"><h5 class="float-left" id="h5-titles">Transaction Amount</h5></b-col><b-col cols="6"><h5 class="float-right" id="h5-titles">Updated Balance</h5></b-col></b-row>
+              <b-row class="state-row-2"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col></b-row>
+              
               <div
                 class="accounts mb-2 mt-2"
                 v-if="
@@ -1001,6 +992,7 @@
                   v-for="savingsAccountTransactions in savingsAccountTransactions"
                   :key="savingsAccountTransactions.savingsAccountTransactions"
                 >
+                
                 <b-container fluid>  
                   <b-row style="background-color:#f7f7f7;" class="state-row">                        
                     <b-col cols="6"  v-if="savingsAccountTransactions.credit_debit === 'debit'"><h5 class="float-center" id="h5-statement">€ -{{savingsAccountTransactions.amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col>                                
@@ -1013,23 +1005,14 @@
                 </b-row> 
                 </b-container>
                 </div>
-                 <b-row style="background-color:f4eeff;" class="state-row"><b-col cols="12"><h5 class="float-left" id="h5-statement-b">Balance:</h5><h5 class="float-left ml-2" id="h5-statement"> €{{this.account.balance.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}}</h5></b-col></b-row>
+               
    
               </div>
             </b-col>
           </b-row>
           <b-row
-            ><b-col cols="10" style="background-color:#dff6f0;"></b-col>
-            <b-col class="float-right">
-              <b-button
-              style=" box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);"
-                squared
-                id="ok-close-state"
-                variant="success"
-                @click="closeStatement()"
-                class="float-right"
-                ><i class="fas fa-check-circle"></i></b-button></b-col
-          ></b-row>
+            ><b-col style="background-color:#dff6f0;"></b-col>
+            </b-row>
         </b-container>
       </b-modal>
     </b-container>
@@ -1164,7 +1147,7 @@ export default {
               this.currentAccountTransactions[x] = catArray[x]
             }
           }
-          this.currentAccountTransactions = this.currentAccountTransactions.flat()
+          this.currentAccountTransactions = this.currentAccountTransactions.flat().reverse()
         })
         .then(() => {
           this.stateLoad = false
@@ -1186,7 +1169,7 @@ export default {
               this.accountTransactions[i] = resp[i].data.transactions
             }
           }
-          this.transactions = this.accountTransactions.flat()
+          this.transactions = this.accountTransactions.flat().reverse()
         })
         .then(() => {
           let catArray = this.transactions
@@ -1624,6 +1607,20 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
+
+.state-row-2{
+  padding:8px;
+  width:100%;
+  margin:auto;
+  margin-top:15px;
+  max-width:250px;
+  min-width:250px;
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+   
+  background-color:f4eeff;
+}
+
 #h5-statement-b{
   margin-top:6px;
   text-shadow: 0.15px 0.15px 0.15px black;
@@ -1638,12 +1635,16 @@ export default {
 }
 
 #h5-titles{
-  margin-top:6px;
+  margin-top:10px;
   margin-left:6px;
   text-shadow: 0.15px 0.15px 0.15px black;
 }
 
 .state-row:hover{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.state-row-2:hover{
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
@@ -1665,6 +1666,17 @@ export default {
   min-width:260px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
+}
+
+.state-row-2{
+  width:100%;
+  
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  margin:auto;
+  margin-top:15px;
+  max-width:200px;
+  min-width:200px;
 }
 
 #h5-statement-b{
@@ -1693,6 +1705,10 @@ export default {
 }
 
 .state-row:hover{
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.state-row-2:hover{
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 

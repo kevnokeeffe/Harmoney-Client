@@ -77,8 +77,6 @@ describe('Testing application', () => {
     cy.wait(30000)
 
     cy.contains('Statement')
-    cy.contains('Transaction Amount')
-    cy.contains('Updated Balance')
     cy.get('#ok-close-state').click()
     cy.wait(1000)
 

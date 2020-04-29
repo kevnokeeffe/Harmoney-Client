@@ -456,7 +456,6 @@ export default {
 
 
 #input-group-1{
-  margin-top:20px;
   overflow: auto;
 }
 

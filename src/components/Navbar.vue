@@ -48,12 +48,12 @@
             <b-dropdown-item
             id="add-acc" 
               to="/add-account"
-              ><i class="fas fa-plus-circle"></i> Link Account</b-dropdown-item
+              ><i class="fas fa-plus-circle"></i> Link Financial Institution</b-dropdown-item
             >
             <b-dropdown-item
             id="remove-acc"
               to="/remove-account"
-              ><i class="fas fa-minus-circle"></i> Remove Account</b-dropdown-item
+              ><i class="fas fa-minus-circle"></i> Remove Financial Institution</b-dropdown-item
             >
             <b-dropdown-item
             id="user-profile"

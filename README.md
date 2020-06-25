@@ -21,7 +21,6 @@ The project is only made possible by the Payment Services  Directive (PSD2)
 and Open Banking.
 
 Harmon€y is built using the MEVN stack. MongoDB, Express.js, Vue,js and Node.js.
-Front-end 
 
 ### System features include:
 - User authentication and validation through the use of tokens.
